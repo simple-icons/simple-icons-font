@@ -1,0 +1,21 @@
+body {
+	font-family: sans-serif;
+}
+
+body.dark {
+	background-color: #333;
+	color: #FFF;
+}
+
+p {
+	margin-left: -4px;
+	margin-right: -4px;
+}
+
+i.simpleicons {
+	display: inline-block;
+	margin: 0 4px;
+	padding: 4px;
+	font-size: 32px;
+	cursor: help;
+}

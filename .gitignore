@@ -1,5 +1,7 @@
 # Node modules
 node_modules/
 
-# Generated icon font
-/font/
+# Generated icon font and additional files
+/font/*
+!/font/test-assets/
+!/font/font.css
