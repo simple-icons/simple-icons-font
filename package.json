@@ -1,0 +1,25 @@
+{
+  "name": "simple-icons-font",
+  "version": "0.0.0",
+  "description": "Icon font generated from https://simpleicons.org",
+  "homepage": "https://www.simpleicons.org",
+  "keywords": [
+    "svg",
+    "icons",
+    "font",
+    "typeface"
+  ],
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/simple-icons/simple-icons-font.git"
+  },
+  "bugs": {
+    "url": "https://github.com/simple-icons/simple-icons-font/issues"
+  },
+  "author": "Simple Icons Collaborators",
+  "license": "CC0-1.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
