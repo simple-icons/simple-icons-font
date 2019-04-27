@@ -4,7 +4,7 @@
 	     url(SimpleIcons.woff2) format('woff2');
 }
 
-i.simpleicons {
+.simpleicons {
 	font-style: normal;
 	font-family: 'Simple Icons', sans-serif;
 }
