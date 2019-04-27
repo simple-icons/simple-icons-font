@@ -16,4 +16,4 @@ body
 
 	p
 		each icon in icons
-			i.simpleicons(title=icon.name, style=`color: #${icon.color}`)= icon.ligature
+			i.simpleicons.simpleicons--color(class=`simpleicons-${icon.cssClass}`, title=icon.name)
