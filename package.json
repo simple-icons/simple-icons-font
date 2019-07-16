@@ -27,7 +27,7 @@
     "version": "node scripts/version"
   },
   "devDependencies": {
-    "icon-font-buildr": "^1.3.2",
+    "icon-font-buildr": "^1.3.3",
     "pug": "^2.0.3",
     "simple-icons": "1.9.25"
   }
