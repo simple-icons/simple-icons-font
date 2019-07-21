@@ -8,6 +8,9 @@ const SimpleIcons = require('simple-icons'),
 // utils
 const { titleToFilename } = require('../lib/utils')
 
+// Exclude the Elsevier icon for now, it seems to be too big
+delete SimpleIcons['Elsevier'];
+
 // script
 const builder = new IconFontBuildr({
 	sources: [
