@@ -5,23 +5,17 @@ const fs = require('fs'),
 // npm packages
 const simpleIcons = require('simple-icons')
 
+// utils
+const { titleToFilename } = require('../lib/utils')
+
 
 const basePath = path.join(__dirname, '..')
 
 const attributedIcons = Object.values(simpleIcons).map(icon => {
 	return {
 		color: icon.hex,
-		cssClass: icon.title
-			.toLowerCase()
-			.replace(/[ !’]/g, '')
-			.replace(/-/g, '_') // hyphens not supported in ligatures
-			.replace(/\./g, 'dot') // dot not supported in css class names
-			.replace(/\+/g, 'plus') // plus not supported in css class names
-			.replace(/&/g, 'and') // ampersand not supported in css class names
-		,
-		ligature: icon.title
-			.replace(/[ !’]/g, '')
-			.replace(/-/g, '_') // hyphens not supported in ligatures
+		cssClass: titleToFilename(icon.title),
+		ligature: titleToFilename(icon.title)
 	}
 })
 
