@@ -24,7 +24,7 @@ pug.renderFile(
 	(err, html) => {
 		if(err) throw err
 
-		fs.writeFile(path.join(basePath, 'font', 'testpage.html'), html, err => {
+		fs.writeFile(path.join(basePath, 'src', 'testpage.html'), html, err => {
 			if(err) throw err
 			console.info('Test page built.')
 		})
