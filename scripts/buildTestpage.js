@@ -9,7 +9,7 @@ const pug = require('pug')
 const basePath = path.join(__dirname, '..')
 
 pug.renderFile(
-	path.join(basePath, 'preview', 'html', 'test.pug'),
+	path.join(basePath, 'preview', 'html', 'testpage.pug'),
 	{
 		icons: Object.values(require('simple-icons')).map(icon => {
 			return {
