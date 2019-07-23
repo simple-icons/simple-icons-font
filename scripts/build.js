@@ -8,6 +8,9 @@ const SimpleIcons = require('simple-icons'),
 // utils
 const { titleToFilename } = require('../lib/utils')
 
+// Disable `.get` API function to allow simple iteration
+delete SimpleIcons.get
+
 // Exclude the Elsevier icon for now, it seems to be too big
 delete SimpleIcons['Elsevier'];
 
