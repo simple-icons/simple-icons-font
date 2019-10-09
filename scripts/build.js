@@ -5,9 +5,6 @@ const path = require('path')
 const SimpleIcons = require('simple-icons'),
       IconFontBuildr = require('icon-font-buildr')
 
-// utils
-// const { titleToFilename } = require('../lib/utils')
-
 // Exclude the Elsevier icon for now, it seems to be too big
 delete SimpleIcons['Elsevier'];
 
