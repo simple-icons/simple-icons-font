@@ -5,9 +5,6 @@ const path = require('path')
 const SimpleIcons = require('simple-icons'),
       IconFontBuildr = require('icon-font-buildr')
 
-// utils
-const { titleToFilename } = require('../lib/utils')
-
 // Exclude the Elsevier icon for now, it seems to be too big
 delete SimpleIcons['Elsevier'];
 
@@ -17,11 +14,11 @@ const builder = new IconFontBuildr({
 		path.join(path.dirname(require.resolve('simple-icons')), 'icons', '[icon].svg')
 	],
 	icons: Object.values(SimpleIcons).map(icon => ({
-		icon: titleToFilename(icon.title), // source file name, e.g. "about-dot-me"
+		icon: icon.slug, // source file name, e.g. "about-dot-me"
 		ligatures: [ // strings that get replaced with the icon in this font
 			icon.title.replace(/[ !’]/g, ''),                  // "About.me"
 			icon.title.replace(/[ !’]/g, '').toLowerCase(),    // "about.me"
-			titleToFilename(icon.title)                        // "about_dot_me"
+			icon.slug                                          // "about_dot_me"
 		].filter((v, i, a) => a.indexOf(v) === i) // and filtering duplicates
 	})),
 	output: {
