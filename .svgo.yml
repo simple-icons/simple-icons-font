@@ -1,0 +1,6 @@
+multipass: true
+
+plugins:
+  - convertPathData:
+      floatPrecision: 4
+      noSpaceAfterFlags: false
