@@ -9,7 +9,7 @@ const pug = require('pug')
 const basePath = path.join(__dirname, '..')
 
 pug.renderFile(
-	path.join(basePath, 'src', 'html', 'test.pug'),
+	path.join(basePath, 'preview', 'html', 'testpage.pug'),
 	{
 		icons: Object.values(require('simple-icons')).map(icon => {
 			return {
@@ -24,7 +24,7 @@ pug.renderFile(
 	(err, html) => {
 		if(err) throw err
 
-		fs.writeFile(path.join(basePath, 'font', 'testpage.html'), html, err => {
+		fs.writeFile(path.join(basePath, 'preview', 'testpage.html'), html, err => {
 			if(err) throw err
 			console.info('Test page built.')
 		})
