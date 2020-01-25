@@ -23,7 +23,7 @@
     "build": "node scripts/build.js",
     "build:testpage": "node scripts/buildTestpage.js",
     "prepublishOnly": "npm run build",
-    "test": "npm run build:testpage && anywhere -h localhost -d ./font -f /testpage.html",
+    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
     "version": "node scripts/version"
   },
   "devDependencies": {
