@@ -5,6 +5,9 @@ const path = require('path')
 const SimpleIcons = require('simple-icons'),
       IconFontBuildr = require('icon-font-buildr')
 
+// local packages
+const svgo = require('./svgo');
+
 // Exclude the Elsevier icon for now, it seems to be too big
 delete SimpleIcons['Elsevier'];
 
@@ -33,7 +36,8 @@ const builder = new IconFontBuildr({
 	}
 })
 
-module.exports =  builder.build()
-	.then(() => {
-		console.log('Font created successfully!')
-	})
+module.exports = svgo()
+  .then(() => console.log('Simple Icons SVGs optimized'))
+  .then(() => builder.build())
+  .then(() => console.log('Font created successfully!'))
+  .catch(err => console.error('An error occured while creating the font:', err))
