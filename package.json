@@ -27,11 +27,11 @@
     "version": "node scripts/version"
   },
   "devDependencies": {
-    "anywhere": "^1.5.0",
-    "icon-font-buildr": "^1.3.3",
-    "js-yaml": "^3.13.1",
-    "pug": "^2.0.3",
+    "anywhere": "1.5.0",
+    "icon-font-buildr": "1.3.3",
+    "js-yaml": "3.13.1",
+    "pug": "2.0.3",
     "simple-icons": "^2.3.0",
-    "svgo": "^1.3.2"
+    "svgo": "1.3.2"
   }
 }
