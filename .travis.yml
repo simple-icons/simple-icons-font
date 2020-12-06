@@ -1,19 +1,33 @@
+os: linux
+language: node_js
+
 jobs:
   include:
-	- stage: deploy
-	  name: "NPM Package"
-	  language: node_js
-	  node_js: 8
-	  if: branch = master
+    - stage: "Test"
+      name: "Build font"
+      language: node_js
+      node_js: 8
+      script:
+        - npm run build
 
-	  deploy:
-		provider: npm
-		email: "johanringmann@gmail.com"
-		api_key: "$NPM_KEY"
-		on:
-		  branch: master
+    - stage: deploy
+      name: "NPM Package"
+      language: node_js
+      node_js: 8
+      if: branch = master
+
+      script:
+        - npm run build
+
+      deploy:
+        edge: true
+        provider: npm
+        email: "$NPM_EMAIL"
+        api_token: "$NPM_KEY"
+        on:
+          branch: master
 
 notifications:
   email:
-	on_success: never
-	on_failure: change
+    on_success: never
+    on_failure: change

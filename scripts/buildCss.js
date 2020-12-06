@@ -6,7 +6,7 @@ const fs = require('fs'),
 const simpleIcons = require('simple-icons')
 
 // utils
-const { titleToFilename } = require('../lib/utils')
+const { titleToFilename } = require('./utils')
 
 
 const basePath = path.join(__dirname, '..')
@@ -19,7 +19,7 @@ const attributedIcons = Object.values(simpleIcons).map(icon => {
 	}
 })
 
-fs.readFile(path.join(basePath, 'src', 'css', 'base.css'), (err, baseCss) => {
+fs.readFile(path.join(basePath, 'preview', 'css', 'base.css'), (err, baseCss) => {
 	if(err) throw err
 
 	attributedIcons.forEach(icon => {

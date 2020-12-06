@@ -1,6 +1,6 @@
 {
   "name": "simple-icons-font",
-  "version": "1.9.25",
+  "version": "1.10.0",
   "description": "Icon font generated from https://simpleicons.org",
   "homepage": "https://www.simpleicons.org",
   "keywords": [
@@ -24,13 +24,16 @@
     "build:css": "node scripts/buildCss.js",
     "build:font": "node scripts/buildFont.js",
     "build:testpage": "npm run build && node scripts/buildTestpage.js",
-    "prepublish": "npm run build",
-    "test": "npm run build:testpage",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
     "version": "node scripts/version"
   },
   "devDependencies": {
-    "icon-font-buildr": "^1.3.2",
-    "pug": "^2.0.3",
-    "simple-icons": "1.9.25"
+    "anywhere": "1.5.0",
+    "icon-font-buildr": "1.3.4",
+    "js-yaml": "3.14.0",
+    "pug": "3.0.0",
+    "simple-icons": "2.3.0",
+    "svgo": "1.3.2"
   }
 }
