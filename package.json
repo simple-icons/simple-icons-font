@@ -23,7 +23,7 @@
     "build": "npm run build:font && npm run build:css",
     "build:css": "node scripts/buildCss.js",
     "build:font": "node scripts/buildFont.js",
-    "build:testpage": "npm run build:css && node scripts/buildTestpage.js",
+    "build:testpage": "npm run build && node scripts/buildTestpage.js",
     "prepublish": "npm run build",
     "test": "npm run build:testpage",
     "version": "node scripts/version"
