@@ -24,7 +24,9 @@
     "build:css": "node scripts/buildCss.js",
     "build:font": "node scripts/buildFont.js",
     "build:testpage": "npm run build && node scripts/buildTestpage.js",
+    "clean": "rm -rf font/ preview/testpage.html",
     "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
     "version": "node scripts/version"
   },
