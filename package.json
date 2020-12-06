@@ -20,9 +20,13 @@
   "author": "Simple Icons Collaborators",
   "license": "CC0-1.0",
   "scripts": {
-    "build": "node scripts/build.js",
-    "build:testpage": "node scripts/buildTestpage.js",
+    "build": "npm run build:font && npm run build:css",
+    "build:css": "node scripts/buildCss.js",
+    "build:font": "node scripts/buildFont.js",
+    "build:testpage": "npm run build && node scripts/buildTestpage.js",
+    "clean": "rm -rf font/ preview/testpage.html",
     "prepublishOnly": "npm run build",
+    "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
     "version": "node scripts/version"
   },
@@ -31,7 +35,7 @@
     "icon-font-buildr": "1.3.4",
     "js-yaml": "3.14.0",
     "pug": "3.0.0",
-    "simple-icons": "^2.3.0",
+    "simple-icons": "2.3.0",
     "svgo": "1.3.2"
   }
 }
