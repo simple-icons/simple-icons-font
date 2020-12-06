@@ -1,0 +1,25 @@
+name: Publish
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  npm:
+    name: NPM Package
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Install dependencies
+      run: npm ci
+    - name: Build font
+      run: npm run build
+    - name: Deploy to NPM
+      uses: JS-DevTools/npm-publish@v1
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
