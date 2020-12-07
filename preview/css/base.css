@@ -1,7 +1,6 @@
 @font-face {
 	font-family: 'Simple Icons';
-	src: url(SimpleIcons.svg) format('ttf'),
-		 url(SimpleIcons.woff) format('woff'),
+	src: url(SimpleIcons.woff) format('woff'),
 	     url(SimpleIcons.woff2) format('woff2');
 }
 
