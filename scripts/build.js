@@ -64,8 +64,8 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
     // &#xF26E; -> \f26e
     const cssDecodedUnicode = icon.unicode.replace('&#x', '\\').replace(';', '').toLowerCase();
     simpleIconsCss += '\n'
-		                +   `.simpleicons-${slug}::before { content: "${cssDecodedUnicode}"; }\n`
-		                +   `.simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }\n`;
+                    +   `.simpleicons-${slug}::before { content: "${cssDecodedUnicode}"; }\n`
+                    +   `.simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }\n`;
   }
   
   const outputFilePath = path.join(DISTDIR, 'SimpleIcons.css');
