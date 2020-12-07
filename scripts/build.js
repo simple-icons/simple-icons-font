@@ -98,7 +98,12 @@ const buildSimpleIconsWoff2FontFile = () => {
 }
 
 const main = () => {
-  buildSimpleIconsCssFile(buildSimpleIconsSvgFontFile());
+  if (!fs.existsSync(DISTDIR)) {
+    fs.mkdirSync(DISTDIR)
+  }
+  
+  const unicodeHexBySlug = buildSimpleIconsSvgFontFile();
+  buildSimpleIconsCssFile(unicodeHexBySlug);
   buildSimpleIconsTtfFontFile();
   buildSimpleIconsWoffFontFile();
   buildSimpleIconsWoff2FontFile();
