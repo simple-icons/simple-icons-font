@@ -17,8 +17,8 @@ const buildSimpleIconsSvgFontFile = () => {
                   + '<svg xmlns="http://www.w3.org/2000/svg">\n'
                   + '<metadata>CC0 1.0 Universal | simple-icons contributors</metadata>\n'
                   + '<defs>\n'
-                  + '<font id="iconfont" horiz-adv-x="2400">\n'
-                  + '<font-face font-family="iconfont" units-per-em="2400" ascent="2400" descent="0" />\n'
+                  + '<font id="Simple Icons" horiz-adv-x="1200">\n'
+                  + '<font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />\n'
                   + '<missing-glyph horiz-adv-x="0" />\n';
   
   let startUnicode = 0xea01;
@@ -35,9 +35,9 @@ const buildSimpleIconsSvgFontFile = () => {
     }
     
     let icon = SimpleIcons[iconTitle];
-    const verticalTransformedPath = SVGPath(icon.path).scale(100, -100).toString();
+    const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).toString();
     
-    fileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicode}" d="${verticalTransformedPath}" horiz-adv-x="2400" />\n`;
+    fileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicode}" d="${verticalTransformedPath}" horiz-adv-x="1200" />\n`;
     usedUnicodes.push(unicode);
 
     unicodeHexBySlug[icon.slug] = {
