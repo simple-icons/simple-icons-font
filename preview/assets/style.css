@@ -7,6 +7,18 @@ body.dark {
 	color: #FFF;
 }
 
+.buttons-list {
+	display: flex;
+	justify-content: space-around;
+	width: 250px;
+	margin-bottom: 25px;
+}
+
+.buttons-list button {
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
 p {
 	margin-left: -4px;
 	margin-right: -4px;

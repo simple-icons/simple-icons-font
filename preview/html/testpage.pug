@@ -12,8 +12,10 @@ body
 	header
 		h1 Icon font test page
 
-	button.toggle Light / dark
+	.buttons-list
+		button.background-mode Dark background
+		button.icons-color Black icons
 
 	p
 		each icon in icons
-			i.simpleicons(title=icon.name, style=`color: #${icon.color}`)= icon.ligature
+			i.simpleicons.simpleicons--color(class=`simpleicons-${icon.cssClass}`, title=icon.name)
