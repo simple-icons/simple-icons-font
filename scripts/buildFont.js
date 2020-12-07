@@ -8,6 +8,7 @@ const SimpleIcons = require('simple-icons'),
 // local packages
 const svgo = require('./svgo');
 
+
 // Exclude the Elsevier icon for now, it seems to be too big
 delete SimpleIcons['Elsevier'];
 
@@ -18,11 +19,7 @@ const builder = new IconFontBuildr({
 	],
 	icons: Object.values(SimpleIcons).map(icon => ({
 		icon: icon.slug, // source file name, e.g. "about-dot-me"
-		ligatures: [ // strings that get replaced with the icon in this font
-			icon.title.replace(/[ !’]/g, ''),                  // "About.me"
-			icon.title.replace(/[ !’]/g, '').toLowerCase(),    // "about.me"
-			icon.slug                                          // "about_dot_me"
-		].filter((v, i, a) => a.indexOf(v) === i) // and filtering duplicates
+		ligatures: [icon.slug]
 	})),
 	output: {
 		ligatures: true,
@@ -40,4 +37,4 @@ module.exports = svgo()
   .then(() => console.log('Simple Icons SVGs optimized'))
   .then(() => builder.build())
   .then(() => console.log('Font created successfully!'))
-  .catch(err => console.error('An error occured while creating the font:', err))
+  .catch(err => console.error('An error occurred while creating the font:', err))
