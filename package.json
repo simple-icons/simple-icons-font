@@ -20,9 +20,7 @@
   "author": "Simple Icons Collaborators",
   "license": "CC0-1.0",
   "scripts": {
-    "build": "npm run build:font && npm run build:css",
-    "build:css": "node scripts/buildCss.js",
-    "build:font": "node scripts/buildFont.js",
+    "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/buildTestpage.js",
     "clean": "rm -rf font/ preview/testpage.html",
     "prepublishOnly": "npm run build",
