@@ -6,16 +6,13 @@ const fs = require('fs'),
 const pug = require('pug'),
       simpleIcons = require('simple-icons')
 
-// utils
-const { titleToFilename } = require('./utils')
-
 
 const basePath = path.join(__dirname, '..')
 
 const attributedIcons = Object.values(simpleIcons).map(icon => {
 	return {
 		name: icon.title,
-		cssClass: titleToFilename(icon.title)
+		cssClass: icon.slug
 	}
 })
 

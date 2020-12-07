@@ -5,17 +5,14 @@ const fs = require('fs'),
 // npm packages
 const simpleIcons = require('simple-icons')
 
-// utils
-const { titleToFilename } = require('./utils')
-
 
 const basePath = path.join(__dirname, '..')
 
 const attributedIcons = Object.values(simpleIcons).map(icon => {
 	return {
 		color: icon.hex,
-		cssClass: titleToFilename(icon.title),
-		ligature: titleToFilename(icon.title)
+		cssClass: icon.slug,
+		ligature: icon.slug
 	}
 })
 
