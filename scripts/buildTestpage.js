@@ -3,24 +3,25 @@ const fs = require('fs'),
       path = require('path')
 
 // npm packages
-const pug = require('pug')
+const pug = require('pug'),
+      simpleIcons = require('simple-icons')
+
+// utils
+const { titleToFilename } = require('./utils')
 
 
 const basePath = path.join(__dirname, '..')
 
+const attributedIcons = Object.values(simpleIcons).map(icon => {
+	return {
+		name: icon.title,
+		cssClass: titleToFilename(icon.title)
+	}
+})
+
 pug.renderFile(
 	path.join(basePath, 'preview', 'html', 'testpage.pug'),
-	{
-		icons: Object.values(require('simple-icons')).map(icon => {
-			return {
-				name: icon.title,
-				color: icon.hex,
-				ligature: icon.title
-					.replace(/[ !’]/g, '')
-					.replace(/-/g, '_') // hyphens not supported
-			}
-		})
-	},
+	{ icons: attributedIcons },
 	(err, html) => {
 		if(err) throw err
 
