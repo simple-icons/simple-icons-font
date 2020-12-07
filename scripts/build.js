@@ -82,9 +82,7 @@ const buildSimpleIconsTtfFontFile = () => {
 
 const buildSimpleIconsWoffFontFile = () => {
   var ttf = new Uint8Array(fs.readFileSync(path.join(DISTDIR, 'SimpleIcons.ttf')));
-  var woff = Buffer.from ?
-             Buffer.from(ttf2woff(ttf).buffer) :
-             new Buffer(ttf2woff(ttf).buffer);
+  var woff = new Buffer(ttf2woff(ttf).buffer);
   const outputFilePath = path.join(DISTDIR, 'SimpleIcons.woff');
   fs.writeFileSync(outputFilePath, woff);
   console.log(`'${outputFilePath}' file built`);
