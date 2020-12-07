@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (icons[0].classList.contains('simpleicons--color')) {
 			iconsColorButton.innerText = 'Colored icons';
 		} else {
-			iconsColorButton.innerText = 'Black icons';
+			iconsColorButton.innerText = 'Colorless icons';
 		}
 
 		for (let i=0; i<icons.length; i++) {
