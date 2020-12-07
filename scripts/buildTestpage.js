@@ -7,6 +7,9 @@ const pug = require('pug'),
       simpleIcons = require('simple-icons')
 
 
+// Exclude the Elsevier icon for now, it seems to be too big
+delete simpleIcons['Elsevier'];
+
 const basePath = path.join(__dirname, '..')
 
 const attributedIcons = Object.values(simpleIcons).map(icon => {
