@@ -68,7 +68,7 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
                     +   `.simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }\n`;
   }
   
-  const outputFilePath = path.join(DISTDIR, 'SimpleIcons.css');
+  const outputFilePath = path.join(DISTDIR, 'simple-icons.css');
   fs.writeFileSync(outputFilePath, simpleIconsCss);
   console.log(`'${outputFilePath}' file built`);
 }
