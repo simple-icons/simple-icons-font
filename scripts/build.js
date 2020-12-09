@@ -11,6 +11,11 @@ const ttf2woff2 = require('ttf2woff2');
 
 const DISTDIR = path.resolve(__dirname, '..', 'font');
 
+const cssDecodeUnicode = (value) => {
+  // &#xF26E; -> \f26e
+  return value.replace('&#x', '\\').replace(';', '').toLowerCase();
+}
+
 const buildSimpleIconsSvgFontFile = () => {
   let fileContent = '<?xml version="1.0" standalone="no"?>\n'
                   + '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
@@ -59,11 +64,9 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
   
   for (let slug in unicodeHexBySlug) {
     let icon = unicodeHexBySlug[slug];
-    
-    // &#xF26E; -> \f26e
-    const cssDecodedUnicode = icon.unicode.replace('&#x', '\\').replace(';', '').toLowerCase();
+
     simpleIconsCss += `
-.simpleicons-${slug}::before { content: "${cssDecodedUnicode}"; }
+.simpleicons-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
 .simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }`;
   }
   
