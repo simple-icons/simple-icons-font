@@ -44,7 +44,7 @@ const buildSimpleIconsSvgFontFile = () => {
     let icon = SimpleIcons[iconTitle];
     const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).round(6).toString();
 
-    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200" />`;
+    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200"/>`;
     usedUnicodes.push(unicodeString);
 
     unicodeHexBySlug[icon.slug] = {

@@ -4,8 +4,8 @@
   <metadata>CC0 1.0 Universal | simple-icons contributors</metadata>
   <defs>
     <font id="Simple Icons" horiz-adv-x="1200">
-    <font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />
-    <missing-glyph horiz-adv-x="0" />
+    <font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200"/>
+    <missing-glyph horiz-adv-x="0"/>
     %s
     </font>
   </defs>
