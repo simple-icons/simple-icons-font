@@ -24,14 +24,14 @@ const cssDecodeUnicode = (value) => {
 }
 
 const buildSimpleIconsSvgFontFile = () => {
-  let svgFileContent = '<?xml version="1.0" standalone="no"?>\n'
-                     + '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">\n'
-                     + '<svg xmlns="http://www.w3.org/2000/svg">\n'
-                     + '<metadata>CC0 1.0 Universal | simple-icons contributors</metadata>\n'
-                     + '<defs>\n'
-                     + '<font id="Simple Icons" horiz-adv-x="1200">\n'
-                     + '<font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />\n'
-                     + '<missing-glyph horiz-adv-x="0" />\n';
+  let svgFileContent = `<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>CC0 1.0 Universal | simple-icons contributors</metadata>
+<defs>
+<font id="Simple Icons" horiz-adv-x="1200">
+<font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />
+<missing-glyph horiz-adv-x="0" />`;
   
   let startUnicode = 0xea01;
   let usedUnicodes = [];
