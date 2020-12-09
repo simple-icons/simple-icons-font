@@ -25,23 +25,22 @@ const buildSimpleIconsSvgFontFile = () => {
   let usedUnicodes = [];
   
   let unicodeHexBySlug = {}
-  
+
   for (let iconTitle in SimpleIcons) {
-    let unicode = ucs2.decode(
-      String.fromCodePoint(startUnicode++)).map(
-        point => '&#x' + point.toString(16).toUpperCase() + ';')[0];
-    if (usedUnicodes.includes(unicode)) {
-      throw Error(`Unicodes must be unique. Found '${unicode}' repeated`)
+    let nextUnicode = ucs2.decode(String.fromCodePoint(startUnicode++));
+    let unicodeString = nextUnicode.map(point => `&#x${point.toString(16).toUpperCase()};`).join('');
+    if (usedUnicodes.includes(unicodeString)) {
+      throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`)
     }
     
     let icon = SimpleIcons[iconTitle];
     const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).toString();
     
-    fileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicode}" d="${verticalTransformedPath}" horiz-adv-x="1200" />\n`;
-    usedUnicodes.push(unicode);
+    fileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200" />\n`;
+    usedUnicodes.push(unicodeString);
 
     unicodeHexBySlug[icon.slug] = {
-      unicode: unicode,
+      unicode: unicodeString,
       hex: icon.hex
     };
   }
