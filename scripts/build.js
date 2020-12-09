@@ -82,7 +82,7 @@ const buildSimpleIconsTtfFontFile = (svgFileContent) => {
   const ttfFileContent = new Buffer.from(ttf.buffer);
   fs.writeFileSync(TTF_OUTPUT_FILEPATH, ttfFileContent);
   console.log(`'${TTF_OUTPUT_FILEPATH}' file built`);
-  return {ttfFileContent};
+  return ttfFileContent;
 }
 
 const buildSimpleIconsWoffFontFile = (ttfFileContent) => {
@@ -104,7 +104,7 @@ const main = () => {
 
   const {unicodeHexBySlug, svgFileContent} = buildSimpleIconsSvgFontFile();
   buildSimpleIconsCssFile(unicodeHexBySlug);
-  const {ttfFileContent} = buildSimpleIconsTtfFontFile(svgFileContent);
+  const ttfFileContent = buildSimpleIconsTtfFontFile(svgFileContent);
   buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
 }
