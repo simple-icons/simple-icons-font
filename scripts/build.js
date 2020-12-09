@@ -32,10 +32,10 @@ const buildSimpleIconsSvgFontFile = () => {
 <font id="Simple Icons" horiz-adv-x="1200">
 <font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />
 <missing-glyph horiz-adv-x="0" />`;
-  
+
   let startUnicode = 0xea01;
   let usedUnicodes = [];
-  
+
   let unicodeHexBySlug = {}
 
   for (let iconTitle in SimpleIcons) {
@@ -44,10 +44,10 @@ const buildSimpleIconsSvgFontFile = () => {
     if (usedUnicodes.includes(unicodeString)) {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`)
     }
-    
+
     let icon = SimpleIcons[iconTitle];
     const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).toString();
-    
+
     svgFileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200" />\n`;
     usedUnicodes.push(unicodeString);
 
@@ -60,14 +60,14 @@ const buildSimpleIconsSvgFontFile = () => {
 
   fs.writeFileSync(SVG_OUTPUT_FILEPATH, svgFileContent);
   console.log(`'${SVG_OUTPUT_FILEPATH}' file built`);
-  
+
   return {unicodeHexBySlug, svgFileContent};
 }
 
 const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
   let simpleIconsCss = fs.readFileSync(
       path.resolve(__dirname, '..', 'preview', 'css', 'base.css'));
-  
+
   for (let slug in unicodeHexBySlug) {
     let icon = unicodeHexBySlug[slug];
 
@@ -104,7 +104,7 @@ const main = () => {
   if (!fs.existsSync(DISTDIR)) {
     fs.mkdirSync(DISTDIR)
   }
-  
+
   const {unicodeHexBySlug, svgFileContent} = buildSimpleIconsSvgFontFile();
   buildSimpleIconsCssFile(unicodeHexBySlug);
   const {ttfFileContent} = buildSimpleIconsTtfFontFile(svgFileContent);
