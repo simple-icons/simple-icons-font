@@ -79,14 +79,14 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
 
 const buildSimpleIconsTtfFontFile = (svgFileContent) => {
   const ttf = svg2ttf(svgFileContent, {});
-  const ttfFileContent = new Buffer(ttf.buffer);
+  const ttfFileContent = new Buffer.from(ttf.buffer);
   fs.writeFileSync(TTF_OUTPUT_FILEPATH, ttfFileContent);
   console.log(`'${TTF_OUTPUT_FILEPATH}' file built`);
   return {ttfFileContent};
 }
 
 const buildSimpleIconsWoffFontFile = (ttfFileContent) => {
-  var woff = new Buffer(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
+  var woff = new Buffer.from(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
   fs.writeFileSync(WOFF_OUTPUT_FILEPATH, woff);
   console.log(`'${WOFF_OUTPUT_FILEPATH}' file built`);
 }
