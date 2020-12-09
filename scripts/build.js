@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const util = require('util');
 
 const { ucs2 } = require("punycode"); 
 const SimpleIcons = require('simple-icons');
@@ -9,6 +10,8 @@ const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 
 
+const UTF8 = 'utf8';
+
 const DISTDIR = path.resolve(__dirname, '..', 'font');
 
 const CSS_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.css');
@@ -17,6 +20,8 @@ const TTF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.ttf');
 const WOFF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff');
 const WOFF2_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff2');
 
+const SVG_TEMPLATE_FILEPATH = path.join(__dirname, 'templates', 'font.svg');
+
 
 const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
@@ -24,19 +29,10 @@ const cssDecodeUnicode = (value) => {
 }
 
 const buildSimpleIconsSvgFontFile = () => {
-  let svgFileContent = `<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns="http://www.w3.org/2000/svg">
-<metadata>CC0 1.0 Universal | simple-icons contributors</metadata>
-<defs>
-<font id="Simple Icons" horiz-adv-x="1200">
-<font-face font-family="Simple Icons" units-per-em="1200" ascent="-1" descent="1200" />
-<missing-glyph horiz-adv-x="0" />`;
-
-  let startUnicode = 0xea01;
-  let usedUnicodes = [];
-
-  let unicodeHexBySlug = {}
+  let startUnicode = 0xea01,
+      usedUnicodes = [],
+      unicodeHexBySlug = [],
+      glyphsContent = '';
 
   for (let iconTitle in SimpleIcons) {
     let nextUnicode = ucs2.decode(String.fromCodePoint(startUnicode++));
@@ -46,9 +42,9 @@ const buildSimpleIconsSvgFontFile = () => {
     }
 
     let icon = SimpleIcons[iconTitle];
-    const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).toString();
+    const verticalTransformedPath = SVGPath(icon.path).scale(50, -50).round(6).toString();
 
-    svgFileContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200" />\n`;
+    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200" />`;
     usedUnicodes.push(unicodeString);
 
     unicodeHexBySlug[icon.slug] = {
@@ -56,8 +52,9 @@ const buildSimpleIconsSvgFontFile = () => {
       hex: icon.hex
     };
   }
-  svgFileContent += '</font>\n</defs>\n</svg>\n';
 
+  const svgFontTemplate = fs.readFileSync(SVG_TEMPLATE_FILEPATH, UTF8);
+  const svgFileContent = util.format(svgFontTemplate, glyphsContent);
   fs.writeFileSync(SVG_OUTPUT_FILEPATH, svgFileContent);
   console.log(`'${SVG_OUTPUT_FILEPATH}' file built`);
 
