@@ -9,6 +9,7 @@ const SVGPath = require('svgpath');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 
+
 const UTF8 = 'utf8';
 
 const DISTDIR = path.resolve(__dirname, '..', 'font');
