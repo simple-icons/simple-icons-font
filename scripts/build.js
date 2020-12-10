@@ -9,12 +9,12 @@ const SVGPath = require('svgpath');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 
-
 const UTF8 = 'utf8';
 
 const DISTDIR = path.resolve(__dirname, '..', 'font');
 
 const CSS_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.css');
+const CSS_MINIFIED_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.min.css');
 const SVG_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.svg');
 const TTF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.ttf');
 const WOFF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff');
@@ -61,7 +61,7 @@ const buildSimpleIconsSvgFontFile = () => {
   return {unicodeHexBySlug, svgFileContent};
 }
 
-const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
+const buildSimpleIconsCssFile = (unicodeHexBySlug, outputFilePath, minify=false) => {
   let simpleIconsCss = fs.readFileSync(
       path.resolve(__dirname, '..', 'preview', 'css', 'base.css'));
 
@@ -73,8 +73,12 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
 .simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }`;
   }
 
-  fs.writeFileSync(CSS_OUTPUT_FILEPATH, simpleIconsCss);
-  console.log(`'${CSS_OUTPUT_FILEPATH}' file built`);
+  if (minify) {
+    simpleIconsCss = simpleIconsCss.replace(/[\n\t ]/g, '');
+  }
+
+  fs.writeFileSync(outputFilePath, simpleIconsCss);
+  console.log(`'${outputFilePath}' file built`);
 }
 
 const buildSimpleIconsTtfFontFile = (svgFileContent) => {
@@ -103,7 +107,8 @@ const main = () => {
   }
 
   const {unicodeHexBySlug, svgFileContent} = buildSimpleIconsSvgFontFile();
-  buildSimpleIconsCssFile(unicodeHexBySlug);
+  buildSimpleIconsCssFile(unicodeHexBySlug, CSS_OUTPUT_FILEPATH);
+  buildSimpleIconsCssFile(unicodeHexBySlug, CSS_MINIFIED_OUTPUT_FILEPATH, minify=true);
   const ttfFileContent = buildSimpleIconsTtfFontFile(svgFileContent);
   buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
