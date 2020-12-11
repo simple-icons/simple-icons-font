@@ -9,6 +9,8 @@ const SVGPath = require('svgpath');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 
+const packageJson = require('./../package.json');
+
 
 const UTF8 = 'utf8';
 
@@ -78,7 +80,11 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
 }
 
 const buildSimpleIconsTtfFontFile = (svgFileContent) => {
-  const ttf = svg2ttf(svgFileContent, {});
+  const ttf = svg2ttf(svgFileContent, {
+    version: `Version ${packageJson.version.split('.').slice(0, 2).join('.')}`,
+    description: packageJson.description,
+    url: packageJson.homepage
+  });
   const ttfFileContent = new Buffer.from(ttf.buffer);
   fs.writeFileSync(TTF_OUTPUT_FILEPATH, ttfFileContent);
   console.log(`'${TTF_OUTPUT_FILEPATH}' file built`);
