@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const util = require('util');
 
+const CleanCSS = require('clean-css');
 const { ucs2 } = require("punycode"); 
 const SimpleIcons = require('simple-icons');
 const svg2ttf = require('svg2ttf');
@@ -17,6 +18,7 @@ const UTF8 = 'utf8';
 const DISTDIR = path.resolve(__dirname, '..', 'font');
 
 const CSS_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.css');
+const CSS_MINIFIED_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.min.css');
 const SVG_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.svg');
 const TTF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.ttf');
 const WOFF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff');
@@ -64,19 +66,30 @@ const buildSimpleIconsSvgFontFile = () => {
 }
 
 const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
-  let simpleIconsCss = fs.readFileSync(
+  let cssFileContent = fs.readFileSync(
       path.resolve(__dirname, '..', 'preview', 'css', 'base.css'));
 
   for (let slug in unicodeHexBySlug) {
     let icon = unicodeHexBySlug[slug];
 
-    simpleIconsCss += `
+    cssFileContent += `
 .simpleicons-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
 .simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }`;
   }
 
-  fs.writeFileSync(CSS_OUTPUT_FILEPATH, simpleIconsCss);
+  fs.writeFileSync(CSS_OUTPUT_FILEPATH, cssFileContent);
   console.log(`'${CSS_OUTPUT_FILEPATH}' file built`);
+
+  return cssFileContent;
+}
+
+const buildSimpleIconsMinCssFile = (cssFileContent) => {
+  var cssMinifiedFile = new CleanCSS({
+    compatibility: 'ie7'
+  }).minify(cssFileContent);
+
+  fs.writeFileSync(CSS_MINIFIED_OUTPUT_FILEPATH, cssMinifiedFile.styles);
+  console.log(`'${CSS_MINIFIED_OUTPUT_FILEPATH}' file built`);
 }
 
 const buildSimpleIconsTtfFontFile = (svgFileContent) => {
@@ -109,7 +122,8 @@ const main = () => {
   }
 
   const {unicodeHexBySlug, svgFileContent} = buildSimpleIconsSvgFontFile();
-  buildSimpleIconsCssFile(unicodeHexBySlug);
+  const cssFileContent = buildSimpleIconsCssFile(unicodeHexBySlug);
+  buildSimpleIconsMinCssFile(cssFileContent);
   const ttfFileContent = buildSimpleIconsTtfFontFile(svgFileContent);
   buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
