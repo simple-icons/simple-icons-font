@@ -13,7 +13,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 ```html
 <link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/simple-icons-font/font/simple-icons.min.css"
+      href="https://cdn.jsdelivr.net/npm/simple-icons-font@v2/font/simple-icons.min.css"
       type="text/css">
 ```
 
