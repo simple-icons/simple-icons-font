@@ -22,5 +22,5 @@ a basic setup.
 
 ## Status
 
-[![Build Status](https://travis-ci.com/simple-icons/simple-icons-font.svg?branch=develop)](https://travis-ci.com/simple-icons/simple-icons-font)
+[![Build Status](https://github.com/simple-icons/simple-icons-font/workflows/Verify/badge.svg)](https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop)
 [![npm version](https://img.shields.io/npm/v/simple-icons-font.svg)](https://www.npmjs.com/package/simple-icons-font)

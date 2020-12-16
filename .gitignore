@@ -3,5 +3,4 @@ node_modules/
 
 # Generated icon font and additional files
 /font/*
-!/font/test-assets/
-!/font/font.css
+preview/testpage.html
