@@ -28,7 +28,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 ### Using module bundlers
 
 ```
-npm install simple-icons-font
+$ npm install simple-icons-font
 ```
 
 After installation, the icon font can then be found in `node_modules/simple-icons-font/font` along with stylesheets for a basic setup.
