@@ -27,7 +27,7 @@ After installation, the icon font can then be found in `node_modules/simple-icon
 
 ### Manual download
 
-1. Download the latest version of the package from [here][npm-registry-tarball-link], extract it and move the content of the `font` folder to your desired location. 
+1. [Download the latest version of the package][npm-registry-tarball-link], extract it, and move the content of the `font` folder to your desired location.
 1. Reference the CSS file in a `link` tag of your HTML:
 
 ```html
