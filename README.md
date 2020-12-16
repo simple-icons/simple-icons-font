@@ -31,14 +31,11 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 npm install simple-icons-font
 ```
 
-After installation, the icon font can then be found in
-`node_modules/simple-icons-font/font` along with stylesheets for a basic setup.
+After installation, the icon font can then be found in `node_modules/simple-icons-font/font` along with stylesheets for a basic setup.
 
 ### Manual download
 
-1. Download the latest version of the package from
-[here][npm-registry-tarball-link], extract it and move the content of the
-`font` folder to your desired location. 
+1. Download the latest version of the package from [here][npm-registry-tarball-link], extract it and move the content of the `font` folder to your desired location. 
 1. Reference the CSS file in a `link` tag of your HTML:
 
 ```html
@@ -59,9 +56,7 @@ The CSS files of simple-icons-font contains next classes:
 
 - `simpleicons`: Adds the font to the container that will display the icon.
 - `simpleicons--color`: Colorizes the icon with the main color of the brand.
-- `simpleicons-<ICON SLUG>`: Replace here `<ICON SLUG>` by with the
- correspondent slug for the icon. Their slugs correpond to filenames, which you
- can see listed [here][simple-icons--icons-dir-link]. 
+- `simpleicons-[ICON SLUG]`: Replace here `[ICON SLUG]` by with the correspondent slug for the icon. Their slugs correpond to filenames, which you can see listed [here][simple-icons--icons-dir-link].
 
 ## Status
 
