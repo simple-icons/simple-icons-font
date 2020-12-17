@@ -28,7 +28,7 @@ The font is also available through our npm package. To install, simply run:
 $ npm install simple-icons-font
 ```
 
-After installation, the icons font and stylesheet font can then be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
+After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
 
 ### Manual download
 
