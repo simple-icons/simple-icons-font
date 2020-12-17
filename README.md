@@ -11,13 +11,10 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 ### From CDN
 
-The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unkpkg-link]. Simply use the `simple-icons-font` npm package and specify a version in the URL like the following:
+The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v2/font/simple-icons.min.css" type="text/css">
-```
-
-```html
 <link rel="stylesheet" href="https://unpkg.com/simple-icons-font@2/font/simple-icons.min.css" type="text/css">
 ```
 
@@ -29,7 +26,7 @@ The font is also available through our npm package. To install, simply run:
 $ npm install simple-icons-font
 ```
 
-After installation, the icon and stylesheet font can then be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tools to include them into your project.
+After installation, the icons font and stylesheet font can then be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
 
 ### Manual download
 
@@ -57,11 +54,6 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
-### Example
-
-```html
-<i class="simpleicons simpleicons--color simpleicons-simpleicons"></i>
-```
 
 ## Status
 
