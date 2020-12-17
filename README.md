@@ -11,38 +11,47 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 ### From CDN
 
+The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unkpkg-link]. Simply use the `simple-icons-font` npm package and specify a version in the URL like the following:
+
 ```html
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/simple-icons-font@v2/font/simple-icons.min.css"
-      type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v2/font/simple-icons.min.css" type="text/css">
 ```
 
 ### NodeJS
+
+The font is also available through our npm package. To install, simply run:
 
 ```
 $ npm install simple-icons-font
 ```
 
-After installation, the icon font can then be found in `node_modules/simple-icons-font/font` along with stylesheets for a basic setup.
+After installation, the icon and stylesheet font can then be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tools to include them into your project.
 
 ### Manual download
 
-1. [Download the latest version of the package][npm-registry-tarball-link], extract it, and move the content of the `font` folder to your desired location.
-1. Reference the CSS file in a `link` tag of your HTML:
+You can also [download the latest version of the package][npm-registry-tarball-link] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
 
 ```html
-<link rel="stylesheet"
-      href="/path/to/simple-icons.min.css"
-      type="text/css">
+<link rel="stylesheet" href="/path/to/simple-icons.min.css" type="text/css">
 ```
 
 ## Usage
 
-The CSS files of simple-icons-font contains next classes:
+Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `simple-icons--color` class to apply the brand's color to the icon.
 
-- `simpleicons`: Adds the font to the container that will display the icon.
-- `simpleicons--color`: Colorizes the icon with the main color of the brand.
-- `simpleicons-[ICON SLUG]`: Replace here `[ICON SLUG]` by with the correspondent slug for the icon. Their slugs correpond to filenames, which you can see listed in [simple-icons/icons][simple-icons--icons-dir-link].
+```html
+<i class="simpleicons simpleicons-[ICON NAME]"></i>
+<i class="simpleicons simpleicons-[ICON NAME] simple-icons--color"></i>
+```
+
+Where `[ICON NAME]` is replaced by the icon name, for example:
+
+```html
+<i class="simpleicons simpleicons-simpleicons"></i>
+<i class="simpleicons simpleicons-simpleicons simple-icons--color"></i>
+```
+
+In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
 ### Example
 
@@ -59,5 +68,6 @@ The CSS files of simple-icons-font contains next classes:
 [build-status-link]: https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop
 [npm-version-image]: https://img.shields.io/npm/v/simple-icons-font?logo=npm
 [npm-package-link]: https://www.npmjs.com/package/simple-icons-font
-[simple-icons--icons-dir-link]: https://github.com/simple-icons/simple-icons/tree/develop/icons
 [npm-registry-tarball-link]: https://registry.npmjs.org/simple-icons-font/-/simple-icons-font-2.0.0.tgz
+[jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
+[unpkg-link]: https://unpkg.com/browse/simple-icons-font/
