@@ -18,6 +18,8 @@ The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][u
 <link rel="stylesheet" href="https://unpkg.com/simple-icons-font@2/font/simple-icons.min.css" type="text/css">
 ```
 
+These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However, this will result in a icons not showing as expected if an icon is removed.
+
 ### NodeJS
 
 The font is also available through our npm package. To install, simply run:
