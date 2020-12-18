@@ -9,7 +9,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 ## Setup
 
-### From CDN
+### CDN
 
 The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
@@ -18,7 +18,7 @@ The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][u
 <link rel="stylesheet" href="https://unpkg.com/simple-icons-font@2/font/simple-icons.min.css" type="text/css">
 ```
 
-These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However, this will result in icons not showing as expected if an icon is removed.
+These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However this may cause an icon to disappear if it has been removed in the latest version.
 
 ### NodeJS
 
