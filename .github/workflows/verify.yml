@@ -25,7 +25,8 @@ jobs:
       run: npm ci
     - name: Build font
       run: npm run build
-    - uses: actions/upload-artifact@v2
+    - name: Upload font files
+      uses: actions/upload-artifact@v2
       with:
         name: fonts
         path: font/
@@ -51,7 +52,8 @@ jobs:
           ${{ runner.os }}-
     - name: Install dependencies
       run: npm ci
-    - uses: actions/download-artifact@v2
+    - name: Download font files
+      uses: actions/download-artifact@v2
       with:
         name: fonts
     - name: Build test page
