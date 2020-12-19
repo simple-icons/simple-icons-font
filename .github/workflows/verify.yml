@@ -29,6 +29,6 @@ jobs:
         node-version: 12.x
     - name: Install dependencies
       run: npm ci
-    - name: Build font
+    - name: Build test page
       run: npm run build:testpage
 
