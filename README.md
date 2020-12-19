@@ -7,20 +7,65 @@
 Free SVG icon font for popular brands. See them all on one page at <a href="https://simpleicons.org">SimpleIcons.org</a>. Contributions, corrections & requests can be made on GitHub. Started by <a href="https://twitter.com/bathtype">Dan Leech</a>.</p>
 </p>
 
-## Usage
+## Setup
 
-### General Usage
+### CDN Setup
 
-This package can be installed into your project with NPM to provide all of our icons as an icon font.
+The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
-```bash
-npm install simple-icons-font
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v2/font/simple-icons.min.css" type="text/css">
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@2/font/simple-icons.min.css" type="text/css">
 ```
 
-After installation, the icon font can then be found in `node_modules/simple-icons-font/font` along with a stylesheet for
-a basic setup.
+These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However this may cause an icon to disappear if it has been removed in the latest version.
+
+### Node Setup
+
+The font is also available through our npm package. To install, simply run:
+
+```
+$ npm install simple-icons-font
+```
+
+After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
+
+### Manual Setup
+
+You can also [download the latest version of the package][latest-release] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
+
+```html
+<link rel="stylesheet" href="/path/to/simple-icons.min.css" type="text/css">
+```
+
+## Usage
+
+Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `simple-icons--color` class to apply the brand's color to the icon.
+
+```html
+<i class="simpleicons simpleicons-[ICON NAME]"></i>
+<i class="simpleicons simpleicons-[ICON NAME] simple-icons--color"></i>
+```
+
+Where `[ICON NAME]` is replaced by the icon name, for example:
+
+```html
+<i class="simpleicons simpleicons-simpleicons"></i>
+<i class="simpleicons simpleicons-simpleicons simple-icons--color"></i>
+```
+
+In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
+
 
 ## Status
 
-[![Build Status](https://github.com/simple-icons/simple-icons-font/workflows/Verify/badge.svg)](https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop)
-[![npm version](https://img.shields.io/npm/v/simple-icons-font.svg)](https://www.npmjs.com/package/simple-icons-font)
+[![Build Status][build-status-image]][build-status-link]
+[![NPM version][npm-version-image]][npm-package-link]
+
+[build-status-image]: https://img.shields.io/github/workflow/status/simple-icons/simple-icons-font/Verify/develop?logo=github
+[build-status-link]: https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop
+[npm-version-image]: https://img.shields.io/npm/v/simple-icons-font?logo=npm
+[npm-package-link]: https://www.npmjs.com/package/simple-icons-font
+[latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
+[jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
+[unpkg-link]: https://unpkg.com/browse/simple-icons-font/
