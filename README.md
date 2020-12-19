@@ -32,7 +32,7 @@ After installation, the icons font and stylesheet font can be found in `node_mod
 
 ### Manual Setup
 
-You can also [download the latest version of the package][npm-registry-tarball-link] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
+You can also [download the latest version of the package][latest-release] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
 
 ```html
 <link rel="stylesheet" href="/path/to/simple-icons.min.css" type="text/css">
@@ -66,6 +66,6 @@ In this example we use the `<i>` tag, but any inline HTML tag should work as you
 [build-status-link]: https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop
 [npm-version-image]: https://img.shields.io/npm/v/simple-icons-font?logo=npm
 [npm-package-link]: https://www.npmjs.com/package/simple-icons-font
-[npm-registry-tarball-link]: https://registry.npmjs.org/simple-icons-font/-/simple-icons-font-2.0.0.tgz
+[latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
 [jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
 [unpkg-link]: https://unpkg.com/browse/simple-icons-font/
