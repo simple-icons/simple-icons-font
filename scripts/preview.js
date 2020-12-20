@@ -1,5 +1,5 @@
 // npm packages
-const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer");
 
 const capture = async () => {
   const browser = await puppeteer.launch({
@@ -7,6 +7,7 @@ const capture = async () => {
     defaultViewport: {
       height: 720,
       width: 1280,
+      deviceScaleFactor: 2,
     },
   });
   const page = await browser.newPage();
