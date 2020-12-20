@@ -22,7 +22,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/buildTestpage.js",
-    "clean": "rm -rf font/ preview/testpage.html",
+    "clean": "rm -rf font/ preview/testpage.html screenshot.png",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
