@@ -2,10 +2,19 @@
 const puppeteer = require('puppeteer');
 
 const capture = async () => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({
+    // 720p screen
+    defaultViewport: {
+      height: 720,
+      width: 1280,
+    },
+  });
   const page = await browser.newPage();
   await page.goto("http://localhost:8080/");
-  await page.screenshot({ path: "./screenshot.png" });
+  await page.screenshot({
+    path: "./screenshot.png",
+    fullPage: true,
+  });
   await browser.close();
 };
 
