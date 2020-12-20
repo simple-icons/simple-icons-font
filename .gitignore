@@ -4,3 +4,6 @@ node_modules/
 # Generated icon font and additional files
 /font/*
 preview/testpage.html
+
+# Miscellaneous
+screenshot.png

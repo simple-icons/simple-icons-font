@@ -22,7 +22,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/buildTestpage.js",
-    "clean": "rm -rf font/ preview/testpage.html",
+    "clean": "rm -rf font/ preview/testpage.html screenshot.png",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
@@ -33,6 +33,7 @@
     "clean-css": "4.2.3",
     "pug": "3.0.0",
     "punycode": "2.1.1",
+    "puppeteer": "5.5.0",
     "simple-icons": "2.3.0",
     "svg2ttf": "5.0.0",
     "svgpath": "2.3.0",
