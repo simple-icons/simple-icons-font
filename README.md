@@ -40,18 +40,18 @@ You can also [download the latest version of the package][latest-release] and co
 
 ## Usage
 
-Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `simple-icons--color` class to apply the brand's color to the icon.
+Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `simpleicons--color` class to apply the brand's color to the icon.
 
 ```html
 <i class="simpleicons simpleicons-[ICON NAME]"></i>
-<i class="simpleicons simpleicons-[ICON NAME] simple-icons--color"></i>
+<i class="simpleicons simpleicons-[ICON NAME] simpleicons--color"></i>
 ```
 
 Where `[ICON NAME]` is replaced by the icon name, for example:
 
 ```html
 <i class="simpleicons simpleicons-simpleicons"></i>
-<i class="simpleicons simpleicons-simpleicons simple-icons--color"></i>
+<i class="simpleicons simpleicons-simpleicons simpleicons--color"></i>
 ```
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
