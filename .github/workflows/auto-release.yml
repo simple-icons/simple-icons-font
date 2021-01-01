@@ -1,0 +1,16 @@
+name: Automated Releases
+on: workflow_dispatch
+
+# This Workflow is triggered through the GitHub API:
+#   curl -X Post \
+#        -H "Authorization: Bearer <token>" \
+#        -d '{"ref":"develop"}' \
+#        https://api.github.com/repos/simple-icons/simple-icons-font/actions/workflows/auto-release.yml/dispatches
+# Replacing <token> by a personal access token with scope `public_repo`
+
+jobs:
+  auto-release:
+    name: Automated release
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "Triggered successfully"
