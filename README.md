@@ -52,6 +52,9 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 ```html
 <i class="si si-simpleicons si--color"></i>
 ```
+
+In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
+
 ## Status
 
 [![Build Status][build-status-image]][build-status-link]
