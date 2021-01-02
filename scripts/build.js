@@ -73,8 +73,8 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
     let icon = unicodeHexBySlug[slug];
 
     cssFileContent += `
-.simpleicons-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
-.simpleicons-${slug}.simpleicons--color::before { color: #${icon.hex}; }`;
+.si-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
+.si-${slug}.si--color::before { color: #${icon.hex}; }`;
   }
 
   fs.writeFileSync(CSS_OUTPUT_FILEPATH, cssFileContent);
