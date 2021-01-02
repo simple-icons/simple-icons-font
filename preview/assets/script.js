@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 	// DOM elements
 	const body = document.querySelector('body'),
-	      icons = document.getElementsByClassName('simpleicons');
+	      icons = document.getElementsByClassName('si');
 
 	// Buttons
 	const backgroundModeButton = document.querySelector('button.background-mode'),
@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	// Icons black/colored toggle
 	iconsColorButton.addEventListener('click', () => {
-		if (icons[0].classList.contains('simpleicons--color')) {
+		if (icons[0].classList.contains('si--color')) {
 			iconsColorButton.innerText = 'Colored icons';
 		} else {
 			iconsColorButton.innerText = 'Colorless icons';
 		}
 
 		for (let i=0; i<icons.length; i++) {
-			icons[i].classList.toggle('simpleicons--color');
+			icons[i].classList.toggle('si--color');
 		}
 	})
 })

@@ -58,7 +58,7 @@ jobs:
         name: fonts
         path: font/
     - name: Build test page
-      run: node scripts/buildTestpage.js
+      run: node scripts/build-testpage.js
     - name: Serve testpage
       run: ./node_modules/.bin/anywhere -s -p 8080 -d . -f /preview/testpage.html &
     - name: Take screenshot of testpage
