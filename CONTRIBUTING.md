@@ -1,25 +1,37 @@
-# Contribution guide
+# Contributing to Simple Icons Font
 
-## 1. Versioning
-This package is being versioned analog to the `simple-icons` package.
-This ensures that installing a version of this package also uses the icons of the `simple-icons` package with the same
-version.
+Simple Icons welcomes contributions and corrections. Before contributing, please make sure you have read the guidelines below. If you decide to contribute anything, please do the following:
 
-Please keep in mind to update the version of this package using the `npm version` command **after** a new version of
-`simple-icons` is being released.
+1. Fork this repository
+1. Create [a new branch][github flow] from the latest `develop`
+1. Start hacking on the new branch
+1. Commit and push to the new branch
+1. Make a pull request
 
+## Local Development
 
-## 2. Building
+### Building Font Locally
 
-1. Building the font
-	```bash
-	npm run build
-	```
+* Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
+* Install the dependencies using `$ npm install`.
+* Build the font using `$ npm run build`.
+* The font files can be found in the `font/` directory.
 
-1. Building the test page
-	```bash
-	npm run build:testpage
-	```
-	
-**NOTE:** Using `npm version` or `npm publish` will call the `prepublish` hook which will also build the project
-automatically.
+### Testing Font Locally
+
+* Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
+* Install the dependencies using `$ npm install`.
+* Build the font and the test page using `$ npm test`.
+* Your browser will be opened at `http://localhost:8000/` where all icons should be displayed.
+
+---
+
+# Versioning
+
+This package is being versioned analog to the `simple-icons` package, the details of which can be found in [the contributing guidelines][simple-icons versioning].
+
+Additionally, patches may be used for non-breaking improvements to the font and major releases may be used to introduce breakings changes beyond removed icons.
+
+[github flow]: https://guides.github.com/introduction/flow/
+[NodeJS]: https://nodejs.org/en/download/
+[simple-icons versioning]: https://github.com/simple-icons/simple-icons/blob/develop/CONTRIBUTING.md#versioning
