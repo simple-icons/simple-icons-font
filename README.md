@@ -50,6 +50,7 @@ Use any of the icons available in simple-icons by adding the following classes t
 Where `[ICON NAME]` is replaced by the icon name, for example:
 
 ```html
+<i class="si si-simpleicons"></i>
 <i class="si si-simpleicons si--color"></i>
 ```
 
