@@ -31,7 +31,7 @@ jobs:
           name: fonts
           path: font/
   lint:
-    name: Lint
+    name: Enforce code style
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check code style
-        run: npm run lint
+        run: npm run prettier
   testpage:
     name: Test page
     needs: build
