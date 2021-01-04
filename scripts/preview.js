@@ -1,5 +1,5 @@
 // npm packages
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer');
 
 const capture = async () => {
   const browser = await puppeteer.launch({
@@ -11,14 +11,14 @@ const capture = async () => {
     },
   });
   const page = await browser.newPage();
-  await page.goto("http://localhost:8080/");
+  await page.goto('http://localhost:8080/');
   await page.screenshot({
-    path: "./screenshot.png",
+    path: './screenshot.png',
     fullPage: true,
   });
   await browser.close();
 };
 
 capture()
-  .then(() => console.log("Screenshot token"))
-  .catch((err) => console.error("Screenshot failed:", err));
+  .then(() => console.log('Screenshot token'))
+  .catch((err) => console.error('Screenshot failed:', err));

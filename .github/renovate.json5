@@ -1,9 +1,9 @@
 {
-  extends: ["config:base"],
+  extends: ['config:base'],
 
   // We will keep simple-icons up-to-date separately from renovate
-  ignoreDeps: ["simple-icons"],
+  ignoreDeps: ['simple-icons'],
 
   // Use our labelling system
-  labels: ["dependencies"],
+  labels: ['dependencies'],
 }

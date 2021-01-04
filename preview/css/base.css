@@ -1,11 +1,11 @@
 @font-face {
-  font-family: "Simple Icons";
-  src: url(SimpleIcons.woff) format("woff"),
-    url(SimpleIcons.woff2) format("woff2"),
-    url(SimpleIcons.ttf) format("truetype");
+  font-family: 'Simple Icons';
+  src: url(SimpleIcons.woff) format('woff'),
+    url(SimpleIcons.woff2) format('woff2'),
+    url(SimpleIcons.ttf) format('truetype');
 }
 
 .si {
   font-style: normal;
-  font-family: "Simple Icons", sans-serif;
+  font-family: 'Simple Icons', sans-serif;
 }
