@@ -8,6 +8,8 @@ Simple Icons welcomes contributions and corrections. Before contributing, please
 1. Commit and push to the new branch
 1. Make a pull request
 
+If you want to request an icon, please [open an issue here][new icon request].
+
 ## Local Development
 
 ### Building Font Locally
@@ -33,5 +35,6 @@ This package is being versioned analog to the `simple-icons` package, the detail
 Additionally, patches may be used for non-breaking improvements to the font and major releases may be used to introduce breakings changes beyond removed icons.
 
 [github flow]: https://guides.github.com/introduction/flow/
+[new icon request]: https://github.com/simple-icons/simple-icons/issues/new?labels=new+icon&template=icon_request.md
 [NodeJS]: https://nodejs.org/en/download/
 [simple-icons versioning]: https://github.com/simple-icons/simple-icons/blob/develop/CONTRIBUTING.md#versioning
