@@ -14,16 +14,8 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
 ```html
-<link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/simple-icons-font@v4/font/simple-icons.min.css"
-  type="text/css"
-/>
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/simple-icons-font@4/font/simple-icons.min.css"
-  type="text/css"
-/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v4/font/simple-icons.min.css" type="text/css">
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@4/font/simple-icons.min.css" type="text/css">
 ```
 
 These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However this may cause an icon to disappear if it has been removed in the latest version.
@@ -43,7 +35,7 @@ After installation, the icons font and stylesheet font can be found in `node_mod
 You can also [download the latest version of the package][latest-release] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
 
 ```html
-<link rel="stylesheet" href="/path/to/simple-icons.min.css" type="text/css" />
+<link rel="stylesheet" href="/path/to/simple-icons.min.css" type="text/css">
 ```
 
 ## Usage
@@ -51,13 +43,15 @@ You can also [download the latest version of the package][latest-release] and co
 Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `si--color` class to apply the brand's color to the icon.
 
 ```html
-<i class="si si-[ICON NAME]"></i> <i class="si si-[ICON NAME] si--color"></i>
+<i class="si si-[ICON NAME]"></i>
+<i class="si si-[ICON NAME] si--color"></i>
 ```
 
 Where `[ICON NAME]` is replaced by the icon name, for example:
 
 ```html
-<i class="si si-simpleicons"></i> <i class="si si-simpleicons si--color"></i>
+<i class="si si-simpleicons"></i>
+<i class="si si-simpleicons si--color"></i>
 ```
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
