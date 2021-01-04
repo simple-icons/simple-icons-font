@@ -4,10 +4,10 @@ root=true
 charset=utf-8
 insert_final_newline=true
 
-[LICENSE.md]
+[*.md]
 indent_size=unset
 indent_style=space
 
-[*.{json,yml}]
+[*.{js,css,json,yml}]
 indent_size=2
 indent_style=space

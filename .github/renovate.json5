@@ -1,7 +1,5 @@
 {
-  extends: [
-    "config:base"
-  ],
+  extends: ["config:base"],
 
   // We will keep simple-icons up-to-date separately from renovate
   ignoreDeps: ["simple-icons"],

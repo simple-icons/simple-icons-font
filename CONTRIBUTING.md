@@ -12,17 +12,17 @@ Simple Icons welcomes contributions and corrections. Before contributing, please
 
 ### Building Font Locally
 
-* Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
-* Install the dependencies using `$ npm install`.
-* Build the font using `$ npm run build`.
-* The font files can be found in the `font/` directory.
+- Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
+- Install the dependencies using `$ npm install`.
+- Build the font using `$ npm run build`.
+- The font files can be found in the `font/` directory.
 
 ### Testing Font Locally
 
-* Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
-* Install the dependencies using `$ npm install`.
-* Build the font and the test page using `$ npm test`.
-* Your browser will be opened at `http://localhost:8000/` where all icons should be displayed.
+- Make sure you have [NodeJS] installed. At least version 12.0.0 is required.
+- Install the dependencies using `$ npm install`.
+- Build the font and the test page using `$ npm test`.
+- Your browser will be opened at `http://localhost:8000/` where all icons should be displayed.
 
 ---
 
@@ -33,5 +33,5 @@ This package is being versioned analog to the `simple-icons` package, the detail
 Additionally, patches may be used for non-breaking improvements to the font and major releases may be used to introduce breakings changes beyond removed icons.
 
 [github flow]: https://guides.github.com/introduction/flow/
-[NodeJS]: https://nodejs.org/en/download/
+[nodejs]: https://nodejs.org/en/download/
 [simple-icons versioning]: https://github.com/simple-icons/simple-icons/blob/develop/CONTRIBUTING.md#versioning
