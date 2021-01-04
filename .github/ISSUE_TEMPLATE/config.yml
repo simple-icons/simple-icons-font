@@ -5,6 +5,3 @@ contact_links:
 - name: Icon update
   about: Help us improve by reporting outdated icons
   url: https://github.com/simple-icons/simple-icons/issues/new?labels=icon+outdated&template=icon_update.md
-- name: Packages
-  about: Issues and improvements for the packages
-  url: https://github.com/simple-icons/simple-icons/issues/new?labels=package&template=package.md
