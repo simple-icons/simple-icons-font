@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Check code style
-        run: npm run format
+        run: npm run lint
   testpage:
     name: Test page
     needs: build
