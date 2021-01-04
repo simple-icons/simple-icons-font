@@ -23,8 +23,8 @@
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/build-testpage.js",
     "clean": "rm -rf font/ preview/testpage.html screenshot.png",
+    "format": "prettier --check .",
     "prepublishOnly": "npm run build",
-    "prettier": "prettier --check .",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
     "version": "node scripts/version"
