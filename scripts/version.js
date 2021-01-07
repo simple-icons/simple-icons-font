@@ -1,13 +1,16 @@
 // core packages
-const path = require('path'),
-      util = require('util'),
-      exec = util.promisify(require('child_process').exec)
+const path = require('path');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
+const packageJson = require('./../package.json');
 
 async function main() {
-	const packageJson = require(path.join(__dirname, '..', 'package.json'))
-	const { stdout, stderr } = await exec(`npm i -E simple-icons@${packageJson.version}`)
+  const { stdout, stderr } = await exec(
+    `npm i -E simple-icons@${packageJson.version}`
+  );
 
-	if(stderr) console.error(`error: ${stderr}`)
+  if (stderr) console.error(`error: ${stderr}`);
 }
 
-main()
+main();

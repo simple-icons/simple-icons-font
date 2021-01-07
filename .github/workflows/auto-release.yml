@@ -13,4 +13,4 @@ jobs:
     name: Automated release
     runs-on: ubuntu-latest
     steps:
-    - run: echo "Triggered successfully"
+      - run: echo "Triggered successfully"

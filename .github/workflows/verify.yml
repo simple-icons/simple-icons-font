@@ -6,65 +6,88 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 12.x
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm install
-    - name: Build font
-      run: npm run build
-    - name: Upload font files
-      uses: actions/upload-artifact@v2
-      with:
-        name: fonts
-        path: font/
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Build font
+        run: npm run build
+      - name: Upload font files
+        uses: actions/upload-artifact@v2
+        with:
+          name: fonts
+          path: font/
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Check code style
+        run: npm run lint
   testpage:
     name: Test page
     needs: build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Use Node.js 12.x
-      uses: actions/setup-node@v2
-      with:
-        node-version: 12.x
-    - name: Cache node modules
-      uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm install
-    - name: Download font files
-      uses: actions/download-artifact@v2
-      with:
-        name: fonts
-        path: font/
-    - name: Build test page
-      run: node scripts/build-testpage.js
-    - name: Serve testpage
-      run: ./node_modules/.bin/anywhere -s -p 8080 -d . -f /preview/testpage.html &
-    - name: Take screenshot of testpage
-      run: node scripts/preview.js
-    - name: Upload testpage screenshot
-      uses: actions/upload-artifact@v2
-      with:
-        name: preview
-        path: screenshot.png
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: npm install
+      - name: Download font files
+        uses: actions/download-artifact@v2
+        with:
+          name: fonts
+          path: font/
+      - name: Build test page
+        run: node scripts/build-testpage.js
+      - name: Serve testpage
+        run: ./node_modules/.bin/anywhere -s -p 8080 -d . -f /preview/testpage.html &
+      - name: Take screenshot of testpage
+        run: node scripts/preview.js
+      - name: Upload testpage screenshot
+        uses: actions/upload-artifact@v2
+        with:
+          name: preview
+          path: screenshot.png
