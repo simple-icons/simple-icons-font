@@ -27,8 +27,7 @@
     "lint": "prettier --check --single-quote .",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
-    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
-    "version": "node scripts/version.js"
+    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "1.13.1",
