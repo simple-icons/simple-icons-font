@@ -10,7 +10,7 @@ function stringifyJson(object) {
   return JSON.stringify(object, null, 2);
 }
 
- function updateSimpleIconsDependency() {
+function updateSimpleIconsDependency() {
   try {
     execSync('npm uninstall simple-icons');
     execSync('npm install --save-dev --save-exact simple-icons');
@@ -39,22 +39,25 @@ function updateVersionNumber() {
 
     fs.writeFileSync(PACKAGE_JSON_FILE, stringifyJson(packageFile) + '\n');
     fs.writeFileSync(PACKAGE_LOCK_FILE, stringifyJson(packageLock) + '\n');
+    return [simpleIconsVersion, null];
   } catch (err) {
     console.error('Failed to version bump this package:', err);
-    return err;
+    return [null, err];
   }
 }
 
 function main() {
-  let err = updateSimpleIconsDependency();
-  if (err) {
+  const errorA = updateSimpleIconsDependency();
+  if (errorA) {
     return;
   }
 
-  err = updateVersionNumber();
-  if (err) {
+  const [newVersion, errorB] = updateVersionNumber();
+  if (errorB) {
     return;
   }
+
+  console.log(`::set-output name=NEW_VERSION::${newVersion}`);
 }
 
 main();
