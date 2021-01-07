@@ -23,14 +23,18 @@
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/build-testpage.js",
     "clean": "rm -rf font/ preview/testpage.html screenshot.png",
+    "format": "prettier --write --single-quote .",
+    "lint": "prettier --check --single-quote .",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
-    "version": "node scripts/version"
+    "version": "node scripts/version.js"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "1.13.1",
     "anywhere": "1.5.0",
     "clean-css": "4.2.3",
+    "prettier": "2.2.1",
     "pug": "3.0.0",
     "punycode": "2.1.1",
     "puppeteer": "5.5.0",
