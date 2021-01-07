@@ -25,7 +25,6 @@ const WOFF2_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff2');
 
 const SVG_TEMPLATE_FILEPATH = path.join(__dirname, 'templates', 'font.svg');
 
-
 const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();

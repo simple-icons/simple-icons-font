@@ -31,6 +31,7 @@
     "version": "node scripts/version.js"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "1.13.1",
     "anywhere": "1.5.0",
     "clean-css": "4.2.3",
     "prettier": "2.2.1",
