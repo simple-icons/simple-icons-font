@@ -3,11 +3,9 @@ root=true
 [*]
 charset=utf-8
 insert_final_newline=true
+indent_size=2
+indent_style=space
 
 [LICENSE.md]
 indent_size=unset
-indent_style=space
-
-[*.{js,css,json,yml,pug}]
-indent_size=2
 indent_style=space
