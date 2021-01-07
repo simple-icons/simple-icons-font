@@ -1,7 +1,7 @@
 // core packages
-const path = require('path'),
-  util = require('util'),
-  exec = util.promisify(require('child_process').exec);
+const path = require('path');
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
 
 const packageJson = require('./../package.json');
 

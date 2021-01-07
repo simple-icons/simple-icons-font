@@ -1,10 +1,10 @@
 // core packages
-const fs = require('fs'),
-  path = require('path');
+const fs = require('fs');
+const path = require('path');
 
 // npm packages
-const pug = require('pug'),
-  simpleIcons = require('simple-icons');
+const pug = require('pug');
+const simpleIcons = require('simple-icons');
 
 const basePath = path.join(__dirname, '..');
 
