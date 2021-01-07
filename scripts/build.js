@@ -13,14 +13,18 @@ const ttf2woff2 = require('ttf2woff2');
 const packageJson = require('./../package.json');
 
 const UTF8 = 'utf8';
+
 const DISTDIR = path.resolve(__dirname, '..', 'font');
+
 const CSS_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.css');
 const CSS_MINIFIED_OUTPUT_FILEPATH = path.join(DISTDIR, 'simple-icons.min.css');
 const SVG_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.svg');
 const TTF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.ttf');
 const WOFF_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff');
 const WOFF2_OUTPUT_FILEPATH = path.join(DISTDIR, 'SimpleIcons.woff2');
+
 const SVG_TEMPLATE_FILEPATH = path.join(__dirname, 'templates', 'font.svg');
+
 
 const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
@@ -70,8 +74,8 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
     path.resolve(__dirname, '..', 'preview', 'css', 'base.css')
   );
 
-  for (const slug in unicodeHexBySlug) {
-    const icon = unicodeHexBySlug[slug];
+  for (let slug in unicodeHexBySlug) {
+    let icon = unicodeHexBySlug[slug];
 
     cssFileContent += `
 .si-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
