@@ -2,5 +2,5 @@
 . "$(dirname $0)/_/husky.sh"
 
 git stash -q --keep-index
-npm run format
+npm run format || exit $?
 git stash pop -q
