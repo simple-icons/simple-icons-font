@@ -25,7 +25,7 @@ jobs:
       - name: Update simple-icons and package version
         id: update
         run: |
-          newVersion="$(node scripts/version.js)"
+          newVersion="$(node scripts/bump-version.js)"
           echo ::set-output name=NEW_VERSION::$newVersion
       - name: Commit updates
         run: |
