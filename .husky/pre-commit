@@ -3,4 +3,5 @@
 
 git stash -q --keep-index
 npm run format
+git add .
 git stash pop -q
