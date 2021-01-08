@@ -4,7 +4,7 @@ const path = require('path');
 
 // npm packages
 const pug = require('pug');
-const simpleIcons = require('simple-icons');
+const simpleIcons = require("simple-icons");
 
 const basePath = path.join(__dirname, '..');
 
