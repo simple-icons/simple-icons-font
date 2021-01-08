@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname $0)/_/husky.sh"
+
+git stash -q --keep-index
+
+# Add formatted files to commit
+files=$(npm run format | tail -n +5) || exit $?
+printf "$files" | while read line ; do
+  file="$(printf "$line" | cut -d' ' -f1)"
+  git add "$file"
+done;
+
+git stash pop -q
