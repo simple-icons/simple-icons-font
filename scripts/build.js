@@ -3,7 +3,7 @@ const path = require('path');
 const util = require('util');
 
 const CleanCSS = require('clean-css');
-const { ucs2 } = require('punycode');
+const { ucs2 } = require('punycode/');
 const SimpleIcons = require('simple-icons');
 const svg2ttf = require('svg2ttf');
 const SVGPath = require('svgpath');
