@@ -58,7 +58,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`::set-output name=NEW_VERSION::${newVersion}`);
+  console.log(newVersion);
 }
 
 main();

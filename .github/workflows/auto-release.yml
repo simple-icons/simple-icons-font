@@ -24,7 +24,9 @@ jobs:
           fetch-depth: 0
       - name: Update simple-icons and package version
         id: update
-        run: node scripts/version.js
+        run: |
+          newVersion="$(node scripts/version.js)"
+          echo ::set-output name=NEW_VERSION::$newVersion
       - name: Commit updates
         run: |
           # Set up git credential
