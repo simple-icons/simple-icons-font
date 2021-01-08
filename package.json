@@ -27,8 +27,7 @@
     "lint": "prettier --check --single-quote .",
     "prepublishOnly": "npm run build",
     "postpublish": "npm run clean",
-    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html",
-    "version": "node scripts/version.js"
+    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "1.13.1",
@@ -38,6 +37,7 @@
     "pug": "3.0.0",
     "punycode": "2.1.1",
     "puppeteer": "5.5.0",
+    "semver": "7.3.4",
     "simple-icons": "4.5.0",
     "svg2ttf": "5.0.0",
     "svgpath": "2.3.0",

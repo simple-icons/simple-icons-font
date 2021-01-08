@@ -13,4 +13,41 @@ jobs:
     name: Automated release
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Triggered successfully"
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          # Ensure we are checked out on the develop branch
+          ref: develop
+          # Ensure custom credentials are used when pushing
+          persist-credentials: false
+          # Fetch everything so we can checkout master
+          fetch-depth: 0
+      - name: Update simple-icons and package version
+        id: update
+        run: |
+          newVersion="$(node scripts/bump-version.js)"
+          echo ::set-output name=NEW_VERSION::$newVersion
+      - name: Commit updates
+        run: |
+          # Set up git credential
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+
+          # Create a version bump commit
+          git add .
+          git commit -m "Version bump"
+      - name: Merge develop into master
+        run: |
+          git checkout master
+          git merge develop --no-ff -m "Release ${{ steps.update.outputs.NEW_VERSION }}"
+      - name: Push version bump
+        run: |
+          # Set up remote using a Personal Access Token
+          git remote remove origin
+          git remote add origin https://${{secrets.RELEASE_TOKEN}}@github.com/simple-icons/simple-icons-font.git
+
+          # Push develop first, to prevent conflicts with parallel activity
+          git push origin develop
+
+          # Push master only after develop was safely pushed
+          git push origin master
