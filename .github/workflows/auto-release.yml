@@ -40,8 +40,9 @@ jobs:
           git merge develop --no-ff -m "Release ${{ steps.update.outputs.NEW_VERSION }}"
       - name: Push version bump
         run: |
+          # Set up remote using a Personal Access Token
           git remote remove origin
-          git remote add origin https://${{secrets.RELEASE_TOKEN}}@github.com/ericcornelissen/to-repo.git
+          git remote add origin https://${{secrets.RELEASE_TOKEN}}@github.com/simple-icons/simple-icons-font.git
 
           # Push develop first, to prevent conflicts with parallel activity
           git push origin develop
