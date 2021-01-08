@@ -48,13 +48,13 @@ function updateVersionNumber() {
 function main() {
   const errorA = updateSimpleIconsDependency();
   if (errorA) {
-    console.error('Failed to update simple-icons to latest version:', err);
+    console.error('Failed to update simple-icons to latest version:', errorA);
     process.exit(1);
   }
 
   const [newVersion, errorB] = updateVersionNumber();
   if (errorB) {
-    console.error('Failed to version bump this package:', err);
+    console.error('Failed to version bump this package:', errorB);
     process.exit(1);
   }
 
