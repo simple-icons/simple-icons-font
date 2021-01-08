@@ -15,7 +15,6 @@ function updateSimpleIconsDependency() {
     execSync('npm uninstall simple-icons');
     execSync('npm install --save-dev --save-exact simple-icons');
   } catch (err) {
-    console.error('Failed to update simple-icons to latest version:', err);
     return err;
   }
 }
@@ -34,14 +33,14 @@ function updateVersionNumber() {
       packageFile.version = simpleIconsVersion;
       packageLock.version = simpleIconsVersion;
     } else {
-      throw new Error(`Version already exists (${currentVersion})`);
+      const err = new Error(`Version already exists (${currentVersion})`);
+      return [null, err];
     }
 
     fs.writeFileSync(PACKAGE_JSON_FILE, stringifyJson(packageFile) + '\n');
     fs.writeFileSync(PACKAGE_LOCK_FILE, stringifyJson(packageLock) + '\n');
     return [simpleIconsVersion, null];
   } catch (err) {
-    console.error('Failed to version bump this package:', err);
     return [null, err];
   }
 }
@@ -49,12 +48,14 @@ function updateVersionNumber() {
 function main() {
   const errorA = updateSimpleIconsDependency();
   if (errorA) {
-    return;
+    console.error('Failed to update simple-icons to latest version:', err);
+    process.exit(1);
   }
 
   const [newVersion, errorB] = updateVersionNumber();
   if (errorB) {
-    return;
+    console.error('Failed to version bump this package:', err);
+    process.exit(1);
   }
 
   console.log(`::set-output name=NEW_VERSION::${newVersion}`);
