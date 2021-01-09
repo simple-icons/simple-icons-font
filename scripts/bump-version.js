@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /**
  * @fileoverview
- * Update the simple-icons dependency to the latest version and update the
- * version of this package accordingly. Upon success, the new version is
- * outputted.
+ * Update the simple-icons dependency to the latest version and the version of
+ * this package accordingly. Upon success, the new version is outputted.
  */
 
 const { execSync } = require('child_process');

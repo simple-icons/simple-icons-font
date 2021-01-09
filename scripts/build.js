@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
  * @fileoverview
- * Builds the simple-icons-font based on the installed simple-icons dependency.
+ * Builds the simple-icons-font package based on the installed simple-icons
+ * dependency.
  */
 
 const fs = require('fs');
