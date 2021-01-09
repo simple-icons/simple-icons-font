@@ -1,3 +1,9 @@
+#!/usr/bin/env node
+/**
+ * @fileoverview
+ * Builds a test page to display the simple-icons-font.
+ */
+
 const fs = require('fs');
 const pug = require('pug');
 const path = require('path');

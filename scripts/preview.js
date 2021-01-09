@@ -1,3 +1,10 @@
+#!/usr/bin/env node
+/**
+ * @fileoverview
+ * Produce a screenshot of the testpage. The screenshot will be saved in the
+ * root of this repository.
+ */
+
 const path = require('path');
 const puppeteer = require('puppeteer');
 
