@@ -32,12 +32,12 @@ const WOFF2_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff2');
 const CSS_BASE_FILE = path.resolve(__dirname, 'templates', 'base.css');
 const SVG_TEMPLATE_FILEPATH = path.join(__dirname, 'templates', 'font.svg');
 
-const cssDecodeUnicode = (value) => {
+function cssDecodeUnicode(value) {
   // &#xF26E; -> \f26e
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
-};
+}
 
-const buildSimpleIconsSvgFontFile = () => {
+function buildSimpleIconsSvgFontFile() {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
   let startUnicode = 0xea01;
@@ -73,9 +73,9 @@ const buildSimpleIconsSvgFontFile = () => {
   console.log(`'${SVG_OUTPUT_FILEPATH}' file built`);
 
   return { unicodeHexBySlug, svgFileContent };
-};
+}
 
-const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
+function buildSimpleIconsCssFile(unicodeHexBySlug) {
   let cssFileContent = fs.readFileSync(CSS_BASE_FILE);
 
   for (let slug in unicodeHexBySlug) {
@@ -90,18 +90,18 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) => {
   console.log(`'${CSS_OUTPUT_FILEPATH}' file built`);
 
   return cssFileContent;
-};
+}
 
-const buildSimpleIconsMinCssFile = (cssFileContent) => {
+function buildSimpleIconsMinCssFile(cssFileContent) {
   const cssMinifiedFile = new CleanCSS({
     compatibility: 'ie7',
   }).minify(cssFileContent);
 
   fs.writeFileSync(CSS_MIN_OUTPUT_FILEPATH, cssMinifiedFile.styles);
   console.log(`'${CSS_MIN_OUTPUT_FILEPATH}' file built`);
-};
+}
 
-const buildSimpleIconsTtfFontFile = (svgFileContent) => {
+function buildSimpleIconsTtfFontFile(svgFileContent) {
   const ttf = svg2ttf(svgFileContent, {
     version: `Version ${packageJson.version.split('.').slice(0, 2).join('.')}`,
     description: packageJson.description,
@@ -111,21 +111,21 @@ const buildSimpleIconsTtfFontFile = (svgFileContent) => {
   fs.writeFileSync(TTF_OUTPUT_FILEPATH, ttfFileContent);
   console.log(`'${TTF_OUTPUT_FILEPATH}' file built`);
   return ttfFileContent;
-};
+}
 
-const buildSimpleIconsWoffFontFile = (ttfFileContent) => {
+function buildSimpleIconsWoffFontFile(ttfFileContent) {
   const woff = new Buffer.from(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
   fs.writeFileSync(WOFF_OUTPUT_FILEPATH, woff);
   console.log(`'${WOFF_OUTPUT_FILEPATH}' file built`);
-};
+}
 
-const buildSimpleIconsWoff2FontFile = (ttfFileContent) => {
+function buildSimpleIconsWoff2FontFile(ttfFileContent) {
   const woff2 = ttf2woff2(ttfFileContent);
   fs.writeFileSync(WOFF2_OUTPUT_FILEPATH, woff2);
   console.log(`'${WOFF2_OUTPUT_FILEPATH}' file built`);
-};
+}
 
-const main = () => {
+function main() {
   if (!fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(DIST_DIR);
   }
@@ -136,6 +136,6 @@ const main = () => {
   buildSimpleIconsMinCssFile(cssFileContent);
   buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
-};
+}
 
 main();
