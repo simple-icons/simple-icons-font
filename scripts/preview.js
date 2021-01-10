@@ -16,17 +16,21 @@ const VIEWPORT_720P = {
   deviceScaleFactor: 2,
 };
 
-const capture = async () => {
-  const browser = await puppeteer.launch({ defaultViewport: VIEWPORT_720P });
-  const page = await browser.newPage();
-  await page.goto(TEST_PAGE_URL);
-  await page.screenshot({
-    path: SCREENSHOT_PATH,
-    fullPage: true,
-  });
-  await browser.close();
-};
+async function capture() {
+  try {
+    const browser = await puppeteer.launch({ defaultViewport: VIEWPORT_720P });
+    const page = await browser.newPage();
+    await page.goto(TEST_PAGE_URL);
+    await page.screenshot({
+      path: SCREENSHOT_PATH,
+      fullPage: true,
+    });
+    await browser.close();
+    console.log('Screenshot token');
+  } catch (err) {
+    console.error('Screenshot failed:', err);
+    process.exit(1);
+  }
+}
 
-capture()
-  .then(() => console.log('Screenshot token'))
-  .catch((err) => console.error('Screenshot failed:', err));
+capture();
