@@ -21,8 +21,8 @@ function updateSimpleIconsDependency() {
   try {
     execSync('npm uninstall simple-icons');
     execSync('npm install --save-dev --save-exact simple-icons');
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 }
 
@@ -40,15 +40,15 @@ function updateVersionNumber() {
       packageFile.version = simpleIconsVersion;
       packageLock.version = simpleIconsVersion;
     } else {
-      const err = new Error(`Version already exists (${currentVersion})`);
-      return [null, err];
+      const error = new Error(`Version already exists (${currentVersion})`);
+      return [null, error];
     }
 
     fs.writeFileSync(PACKAGE_JSON_FILE, stringifyJson(packageFile) + '\n');
     fs.writeFileSync(PACKAGE_LOCK_FILE, stringifyJson(packageLock) + '\n');
     return [simpleIconsVersion, null];
-  } catch (err) {
-    return [null, err];
+  } catch (error) {
+    return [null, error];
   }
 }
 

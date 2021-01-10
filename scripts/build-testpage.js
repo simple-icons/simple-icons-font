@@ -20,11 +20,16 @@ const attributedIcons = Object.values(simpleIcons).map((icon) => {
   };
 });
 
-pug.renderFile(INPUT_FILE, { icons: attributedIcons }, (err, html) => {
-  if (err) throw err;
+pug.renderFile(INPUT_FILE, { icons: attributedIcons }, (renderError, html) => {
+  if (renderError) {
+    throw renderError;
+  }
 
-  fs.writeFile(OUTPUT_FILE, html, (err) => {
-    if (err) throw err;
+  fs.writeFile(OUTPUT_FILE, html, (writeError) => {
+    if (writeError) {
+      throw writeError;
+    }
+
     console.info('Test page built.');
   });
 });

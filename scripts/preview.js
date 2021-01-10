@@ -27,8 +27,8 @@ async function capture() {
     });
     await browser.close();
     console.log('Screenshot token');
-  } catch (err) {
-    console.error('Screenshot failed:', err);
+  } catch (error) {
+    console.error('Screenshot failed:', error);
     process.exit(1);
   }
 }
