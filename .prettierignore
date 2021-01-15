@@ -3,6 +3,6 @@
 #   https://github.com/simple-icons/simple-icons-font/pull/73
 *.md
 
-# Exclude generated files
-font
+# Generated files
+font/
 preview/testpage.html

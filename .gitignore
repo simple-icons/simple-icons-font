@@ -1,9 +1,7 @@
-# Node modules
+# Dependency directories
 node_modules/
 
-# Generated icon font and additional files
+# Generated files
 font/
 preview/testpage.html
-
-# Miscellaneous
 screenshot.png
