@@ -25,9 +25,9 @@
     "clean": "rm -rf font/ preview/testpage.html screenshot.png",
     "format": "prettier --write --single-quote .",
     "lint": "prettier --check --single-quote .",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pinst --disable && npm run build",
     "postinstall": "is-ci || husky install",
-    "postpublish": "npm run clean",
+    "postpublish": "pinst --enable && npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
   "devDependencies": {
@@ -36,6 +36,7 @@
     "clean-css": "4.2.3",
     "husky": "5.0.6",
     "is-ci": "2.0.0",
+    "pinst": "2.1.1",
     "prettier": "2.2.1",
     "pug": "3.0.0",
     "punycode": "2.1.1",
