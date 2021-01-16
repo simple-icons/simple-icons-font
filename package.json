@@ -25,8 +25,8 @@
     "clean": "rm -rf font/ preview/testpage.html screenshot.png",
     "format": "prettier --write --single-quote .",
     "lint": "prettier --check --single-quote .",
+    "prepare": "is-ci || husky install",
     "prepublishOnly": "npm run build",
-    "postinstall": "is-ci || husky install",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
