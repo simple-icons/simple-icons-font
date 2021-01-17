@@ -1,6 +1,6 @@
 {
   "name": "simple-icons-font",
-  "version": "4.6.1",
+  "version": "4.7.0",
   "description": "Icon font generated from https://simpleicons.org",
   "homepage": "https://www.simpleicons.org",
   "keywords": [
@@ -42,7 +42,7 @@
     "punycode": "2.1.1",
     "puppeteer": "5.5.0",
     "semver": "7.3.4",
-    "simple-icons": "4.6.0",
+    "simple-icons": "4.7.0",
     "svg2ttf": "5.0.0",
     "svgpath": "2.3.0",
     "ttf2woff": "2.0.2",
