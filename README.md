@@ -7,6 +7,11 @@
 Free SVG icon font for popular brands. See them all on one page at <a href="https://simpleicons.org">SimpleIcons.org</a>. Contributions, corrections & requests can be made on GitHub. Started by <a href="https://twitter.com/bathtype">Dan Leech</a>.</p>
 </p>
 
+<p align="center">
+<a href="https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop"><img src="https://img.shields.io/github/workflow/status/simple-icons/simple-icons-font/Verify/develop?logo=github" alt="Build status" /></a>
+<a href="https://www.npmjs.com/package/simple-icons-font"><img src="https://img.shields.io/npm/v/simple-icons-font?logo=npm" alt="NPM version" /></a>
+</p>
+
 ## Setup
 
 ### CDN Setup
@@ -56,15 +61,6 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
-## Status
-
-[![Build Status][build-status-image]][build-status-link]
-[![NPM version][npm-version-image]][npm-package-link]
-
-[build-status-image]: https://img.shields.io/github/workflow/status/simple-icons/simple-icons-font/Verify/develop?logo=github
-[build-status-link]: https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop
-[npm-version-image]: https://img.shields.io/npm/v/simple-icons-font?logo=npm
-[npm-package-link]: https://www.npmjs.com/package/simple-icons-font
 [latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
 [jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
 [unpkg-link]: https://unpkg.com/browse/simple-icons-font/
