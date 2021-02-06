@@ -26,7 +26,7 @@
     "format": "prettier --write --single-quote .",
     "lint": "prettier --check --single-quote .",
     "prepublishOnly": "pinst --disable && npm run build",
-    "postinstall": "is-ci || husky install",
+    "postinstall": "is-ci || node -e \"if (require('fs').existsSync('.git')){process.exit(1)}\" || husky install",
     "postpublish": "pinst --enable && npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
