@@ -29,6 +29,8 @@ jobs:
         run: |
           newVersion="$(node scripts/bump-version.js)"
           echo ::set-output name=NEW_VERSION::$newVersion
+      - name: Sanity check
+        run: npm run build
       - name: Commit updates
         run: |
           # Set up git credential
