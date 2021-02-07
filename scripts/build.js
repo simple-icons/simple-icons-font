@@ -12,6 +12,7 @@ const { ucs2 } = require('punycode/');
 const simpleIcons = require('simple-icons');
 const svg2ttf = require('svg2ttf');
 const SVGPath = require('svgpath');
+const ttf2eot = require('ttf2eot');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
 const util = require('util');
@@ -26,6 +27,7 @@ const CSS_OUTPUT_FILEPATH = path.join(DIST_DIR, 'simple-icons.css');
 const CSS_MIN_OUTPUT_FILEPATH = path.join(DIST_DIR, 'simple-icons.min.css');
 const SVG_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.svg');
 const TTF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.ttf');
+const EOT_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.eot');
 const WOFF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff');
 const WOFF2_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff2');
 
@@ -125,6 +127,13 @@ function buildSimpleIconsWoff2FontFile(ttfFileContent) {
   console.log(`'${WOFF2_OUTPUT_FILEPATH}' file built`);
 }
 
+function buildSimpleIconsEotFontFile(ttfFileContent) {
+  const ttf = new Uint8Array(ttfFileContent);
+  const eot = new Buffer.from(ttf2eot(ttf).buffer);
+  fs.writeFileSync(EOT_OUTPUT_FILEPATH, eot);
+  console.log(`'${EOT_OUTPUT_FILEPATH}' file built`);
+}
+
 function main() {
   if (!fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(DIST_DIR);
@@ -136,6 +145,7 @@ function main() {
   buildSimpleIconsMinCssFile(cssFileContent);
   buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
+  buildSimpleIconsEotFontFile(ttfFileContent);
 }
 
 main();

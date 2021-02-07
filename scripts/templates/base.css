@@ -2,7 +2,8 @@
   font-family: 'Simple Icons';
   src: url(SimpleIcons.woff) format('woff'),
     url(SimpleIcons.woff2) format('woff2'),
-    url(SimpleIcons.ttf) format('truetype');
+    url(SimpleIcons.ttf) format('truetype'),
+    url(SimpleIcons.eot) format('embedded-opentype');
 }
 
 .si {
