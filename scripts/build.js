@@ -15,6 +15,7 @@ const SVGPath = require('svgpath');
 const ttf2eot = require('ttf2eot');
 const ttf2woff = require('ttf2woff');
 const ttf2woff2 = require('ttf2woff2');
+const woff2otf = require('woff2otf');
 const util = require('util');
 
 const packageJson = require('./../package.json');
@@ -28,6 +29,7 @@ const CSS_MIN_OUTPUT_FILEPATH = path.join(DIST_DIR, 'simple-icons.min.css');
 const SVG_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.svg');
 const TTF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.ttf');
 const EOT_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.eot');
+const OTF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.otf');
 const WOFF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff');
 const WOFF2_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff2');
 
@@ -119,6 +121,7 @@ function buildSimpleIconsWoffFontFile(ttfFileContent) {
   const woff = new Buffer.from(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
   fs.writeFileSync(WOFF_OUTPUT_FILEPATH, woff);
   console.log(`'${WOFF_OUTPUT_FILEPATH}' file built`);
+  return woff;
 }
 
 function buildSimpleIconsWoff2FontFile(ttfFileContent) {
@@ -134,6 +137,12 @@ function buildSimpleIconsEotFontFile(ttfFileContent) {
   console.log(`'${EOT_OUTPUT_FILEPATH}' file built`);
 }
 
+function buildSimpleIconsOtfFontFile(woffFileContent) {
+  const otf = woff2otf(woffFileContent);
+  fs.writeFileSync(OTF_OUTPUT_FILEPATH, otf);
+  console.log(`'${OTF_OUTPUT_FILEPATH}' file built`);
+}
+
 function main() {
   if (!fs.existsSync(DIST_DIR)) {
     fs.mkdirSync(DIST_DIR);
@@ -143,9 +152,10 @@ function main() {
   const cssFileContent = buildSimpleIconsCssFile(unicodeHexBySlug);
   const ttfFileContent = buildSimpleIconsTtfFontFile(svgFileContent);
   buildSimpleIconsMinCssFile(cssFileContent);
-  buildSimpleIconsWoffFontFile(ttfFileContent);
+  const woffFileContent = buildSimpleIconsWoffFontFile(ttfFileContent);
   buildSimpleIconsWoff2FontFile(ttfFileContent);
   buildSimpleIconsEotFontFile(ttfFileContent);
+  buildSimpleIconsOtfFontFile(woffFileContent);
 }
 
 main();
