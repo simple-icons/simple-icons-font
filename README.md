@@ -10,6 +10,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 <p align="center">
 <a href="https://github.com/simple-icons/simple-icons-font/actions?query=workflow%3AVerify+branch%3Adevelop"><img src="https://img.shields.io/github/workflow/status/simple-icons/simple-icons-font/Verify/develop?logo=github" alt="Build status" /></a>
 <a href="https://www.npmjs.com/package/simple-icons-font"><img src="https://img.shields.io/npm/v/simple-icons-font?logo=npm" alt="NPM version" /></a>
+<a href="https://packagist.org/packages/simple-icons/simple-icons-font"><img src="https://img.shields.io/packagist/v/simple-icons/simple-icons-font?logo=packagist&logoColor=white" alt="Build status" /></a>
 </p>
 
 ## Setup
@@ -34,6 +35,16 @@ $ npm install simple-icons-font
 ```
 
 After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
+
+### PHP Setup
+
+The font is also available through our Packagist package. To install, simply run:
+
+```
+$ composer require simple-icons-font
+```
+
+The font can then be used by linking to the stylesheet in your HTML or PHP file (see example in [Manual Setup](#manual-setup)).
 
 ### Manual Setup
 
