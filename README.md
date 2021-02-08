@@ -35,6 +35,16 @@ $ npm install simple-icons-font
 
 After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
 
+### PHP Setup
+
+The font is also available through our Packagist package. To install, simply run:
+
+```
+$ composer require simple-icons-font
+```
+
+The font can then be used by linking to the stylesheet in your HTML or PHP file (see example in [Manual Setup](#manual-setup)).
+
 ### Manual Setup
 
 You can also [download the latest version of the package][latest-release] and copy the content of the `font` folder into your project. Then, reference the CSS file using a `link` tag in your HTML:
