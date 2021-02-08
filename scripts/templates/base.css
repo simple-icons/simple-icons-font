@@ -3,6 +3,7 @@
   src: url(SimpleIcons.woff) format('woff'),
     url(SimpleIcons.woff2) format('woff2'),
     url(SimpleIcons.ttf) format('truetype'),
+    url(SimpleIcons.otf) format('opentype'),
     url(SimpleIcons.eot) format('embedded-opentype');
 }
 
