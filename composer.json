@@ -1,0 +1,15 @@
+{
+  "name": "simple-icons/simple-icons-font",
+  "description": "Icon font generated from https://simpleicons.org",
+  "homepage": "https://simpleicons.org/",
+  "keywords": [
+    "svg",
+    "icons",
+    "font",
+    "typeface"
+  ],
+  "support": {
+    "issues": "https://github.com/simple-icons/simple-icons/issues"
+  },
+  "license": "CC0-1.0"
+}
