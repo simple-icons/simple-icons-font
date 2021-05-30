@@ -19,8 +19,15 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
+#### JSDeliver
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v4/font/simple-icons.min.css" type="text/css">
+```
+
+#### Unpkg
+
+```html
 <link rel="stylesheet" href="https://unpkg.com/simple-icons-font@4/font/simple-icons.min.css" type="text/css">
 ```
 
