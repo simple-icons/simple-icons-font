@@ -13,6 +13,8 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 <a href="https://packagist.org/packages/simple-icons/simple-icons-font"><img src="https://img.shields.io/packagist/v/simple-icons/simple-icons-font?logo=packagist&logoColor=white" alt="Build status" /></a>
 </p>
 
+> :information_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md) before using icons from Simple Icons.
+
 ## Setup
 
 ### CDN Setup
@@ -55,8 +57,6 @@ You can also [download the latest version of the package][latest-release] and co
 ```
 
 ## Usage
-
-> :information_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md) before using icons from Simple Icons.
 
 Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `si--color` class to apply the brand's color to the icon.
 
