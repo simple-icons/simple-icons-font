@@ -56,6 +56,8 @@ You can also [download the latest version of the package][latest-release] and co
 
 ## Usage
 
+> :information_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/develop/DISCLAIMER.md) before using icons from Simple Icons.
+
 Use any of the icons available in simple-icons by adding the following classes to a node in your HTML. Use the `si--color` class to apply the brand's color to the icon.
 
 ```html
