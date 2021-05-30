@@ -47,7 +47,7 @@ function buildSimpleIconsSvgFontFile() {
   let startUnicode = 0xea01;
   let glyphsContent = '';
 
-  for (let iconTitle in simpleIcons) {
+  for (let iconSlug in simpleIcons) {
     let nextUnicode = ucs2.decode(String.fromCodePoint(startUnicode++));
     let unicodeString = nextUnicode
       .map((point) => `&#x${point.toString(16).toUpperCase()};`)
@@ -56,7 +56,7 @@ function buildSimpleIconsSvgFontFile() {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons[iconTitle];
+    const icon = simpleIcons.Get(iconSlug);
     const verticalTransformedPath = SVGPath(icon.path)
       .scale(50, -50)
       .round(6)
