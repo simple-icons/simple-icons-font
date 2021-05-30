@@ -30,8 +30,8 @@ These examples use the latest major version. This means you won't receive any up
 
 The font is also available through our npm package. To install, simply run:
 
-```
-$ npm install simple-icons-font
+```shell
+npm install simple-icons-font
 ```
 
 After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
@@ -40,8 +40,8 @@ After installation, the icons font and stylesheet font can be found in `node_mod
 
 The font is also available through our Packagist package. To install, simply run:
 
-```
-$ composer require simple-icons-font
+```shell
+composer require simple-icons-font
 ```
 
 The font can then be used by linking to the stylesheet in your HTML or PHP file (see example in [Manual Setup](#manual-setup)).
