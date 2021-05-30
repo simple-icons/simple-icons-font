@@ -1,4 +1,13 @@
-# Keep only the icon font files
+# Ignore all files in root
 /*
+# Except the ones we want to publish
 !/font/
+!package.json
+!DISCLAIMER.md
+!README.md
+!LICENSE.md
+!index.js
+
+# But exclude the .svg font file, as per:
+# https://github.com/simple-icons/simple-icons-font/pull/45#discussion_r539539508
 /font/SimpleIcons.svg
