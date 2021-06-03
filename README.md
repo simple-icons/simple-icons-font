@@ -16,6 +16,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 ## Setup
 
 > :information_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md) before using icons from Simple Icons.
+
 ### CDN Setup
 
 The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
