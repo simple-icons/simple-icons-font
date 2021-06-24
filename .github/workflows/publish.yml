@@ -43,8 +43,7 @@ jobs:
         uses: actions-ecosystem/action-push-tag@v1
         with:
           tag: ${{ steps.get-version.outputs.version }}
-          message: ${{ steps.commit.outputs.git-message }}
-      - name: Create release
+      - name: Create GitHub release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
