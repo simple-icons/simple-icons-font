@@ -22,9 +22,16 @@ jobs:
           persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - name: Install dependencies
         run: npm ci
-      - name: Update simple-icons and package version
+      - name: Update simple-icons dependency and package version
         id: update
         run: |
           newVersion="$(node scripts/bump-version.js)"

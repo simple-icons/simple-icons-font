@@ -12,17 +12,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 12.x
-      - name: Cache node modules
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Build font
         run: npm run build
       - name: Upload font files
@@ -40,17 +38,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 12.x
-      - name: Cache node modules
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Check code style
         run: npm run lint
   testpage:
@@ -64,17 +60,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 12.x
-      - name: Cache node modules
+      - name: Cache dependencies
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Download font files
         uses: actions/download-artifact@v2
         with:
