@@ -6,6 +6,9 @@
     'group:all',
   ],
 
+  // Disable dependency dashboard
+  dependencyDashboard: false,
+
   // We will keep simple-icons up-to-date separately from renovate
   ignoreDeps: ['simple-icons'],
 
