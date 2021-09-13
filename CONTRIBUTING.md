@@ -35,6 +35,6 @@ This package is being versioned analog to the `simple-icons` package, the detail
 Additionally, patches may be used for non-breaking improvements to the font and major releases may be used to introduce breakings changes beyond removed icons.
 
 [github flow]: https://guides.github.com/introduction/flow/
-[new icon request]: https://github.com/simple-icons/simple-icons/issues/new?labels=new+icon&template=icon_request.md
+[new icon request]: https://github.com/simple-icons/simple-icons/issues/new?labels=new+icon&template=icon_request.yml&title=Request%3A+
 [NodeJS]: https://nodejs.org/en/download/
 [simple-icons versioning]: https://github.com/simple-icons/simple-icons/blob/develop/CONTRIBUTING.md#versioning
