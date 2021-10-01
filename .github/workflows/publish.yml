@@ -50,3 +50,5 @@ jobs:
         with:
           tag_name: ${{ steps.get-version.outputs.version }}
           release_name: Release ${{ steps.get-version.outputs.version }}
+          body: |
+            See https://github.com/simple-icons/simple-icons/releases/tag/${{ steps.get-version.outputs.version }}
