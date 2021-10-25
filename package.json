@@ -31,10 +31,10 @@
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
   "devDependencies": {
-    "@prettier/plugin-pug": "1.16.7",
+    "@prettier/plugin-pug": "1.17.1",
     "anywhere": "1.5.0",
-    "clean-css": "5.2.1",
-    "husky": "7.0.2",
+    "clean-css": "5.2.2",
+    "husky": "7.0.4",
     "is-ci": "3.0.0",
     "prettier": "2.4.1",
     "pug": "3.0.2",
