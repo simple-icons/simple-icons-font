@@ -22,6 +22,10 @@ jobs:
           persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12.x
       - name: Cache dependencies
         uses: actions/cache@v2
         with:
