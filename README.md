@@ -50,7 +50,7 @@ After installation, the icons font and stylesheet font can be found in `node_mod
 The font is also available through our Packagist package. To install, simply run:
 
 ```shell
-composer require simple-icons-font
+composer require simple-icons/simple-icons-font
 ```
 
 The font can then be used by linking to the stylesheet in your HTML or PHP file (see example in [Manual Setup](#manual-setup)).
