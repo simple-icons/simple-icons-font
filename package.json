@@ -39,7 +39,7 @@
     "prettier": "2.5.1",
     "pug": "3.0.2",
     "punycode": "2.1.1",
-    "puppeteer": "13.0.1",
+    "puppeteer": "13.1.2",
     "rimraf": "3.0.2",
     "semver": "7.3.5",
     "simple-icons": "6.8.0",
