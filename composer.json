@@ -9,7 +9,9 @@
     "typeface"
   ],
   "support": {
-    "issues": "https://github.com/simple-icons/simple-icons/issues"
+    "issues": "https://github.com/simple-icons/simple-icons-font/issues",
+    "source": "https://github.com/simple-icons/simple-icons-font",
+    "docs": "https://github.com/simple-icons/simple-icons-font#php-setup-"
   },
   "license": "CC0-1.0",
   "funding": [
