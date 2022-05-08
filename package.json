@@ -9,7 +9,6 @@
     "font",
     "typeface"
   ],
-  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/simple-icons/simple-icons-font.git"
@@ -23,6 +22,7 @@
     "type": "opencollective",
     "url": "https://opencollective.com/simple-icons"
   },
+  "type": "module",
   "scripts": {
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/build-testpage.js",

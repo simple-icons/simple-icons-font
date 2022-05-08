@@ -5,8 +5,11 @@
  * root of this repository.
  */
 
-const path = require('path');
-const puppeteer = require('puppeteer');
+import path from 'node:path';
+import puppeteer from 'puppeteer';
+import { fileURLToPath } from 'node:url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SCREENSHOT_PATH = path.join(__dirname, '..', 'screenshot.png');
 const TEST_PAGE_URL = 'http://localhost:8080/';
@@ -16,7 +19,7 @@ const VIEWPORT_720P = {
   deviceScaleFactor: 2,
 };
 
-async function capture() {
+(async () => {
   try {
     const browser = await puppeteer.launch({ defaultViewport: VIEWPORT_720P });
     const page = await browser.newPage();
@@ -31,6 +34,4 @@ async function capture() {
     console.error('Screenshot failed:', error);
     process.exit(1);
   }
-}
-
-capture();
+})();

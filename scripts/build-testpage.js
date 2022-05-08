@@ -4,14 +4,17 @@
  * Builds a test page to display the simple-icons-font.
  */
 
-const fs = require('fs');
-const pug = require('pug');
-const path = require('path');
-const simpleIcons = require('simple-icons');
+import fs from 'node:fs';
+import path from 'node:path';
+import pug from 'pug';
+import simpleIcons from 'simple-icons';
+import { fileURLToPath } from 'node:url';
 
-const BASE_PATH = path.join(__dirname, '..');
-const INPUT_FILE = path.join(BASE_PATH, 'preview', 'html', 'testpage.pug');
-const OUTPUT_FILE = path.join(BASE_PATH, 'preview', 'testpage.html');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const ROOT_DIR = path.resolve(__dirname, '..');
+const INPUT_FILE = path.join(ROOT_DIR, 'preview', 'html', 'testpage.pug');
+const OUTPUT_FILE = path.join(ROOT_DIR, 'preview', 'testpage.html');
 
 const attributedIcons = Object.values(simpleIcons).map((icon) => {
   return {
@@ -25,11 +28,6 @@ pug.renderFile(INPUT_FILE, { icons: attributedIcons }, (renderError, html) => {
     throw renderError;
   }
 
-  fs.writeFile(OUTPUT_FILE, html, (writeError) => {
-    if (writeError) {
-      throw writeError;
-    }
-
-    console.info('Test page built.');
-  });
+  fs.writeFileSync(OUTPUT_FILE, html);
+  console.info('Test page built.');
 });
