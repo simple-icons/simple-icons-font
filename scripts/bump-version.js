@@ -5,67 +5,54 @@
  * this package accordingly. Upon success, the new version is outputted.
  */
 
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const semver = require('semver');
+import { execSync } from 'node:child_process';
+import fs from 'fs';
+import path from 'path';
+import semver from 'semver';
+import { fileURLToPath } from 'node:url';
 
-const PACKAGE_JSON_FILE = path.resolve(__dirname, '..', 'package.json');
-const PACKAGE_LOCK_FILE = path.resolve(__dirname, '..', 'package-lock.json');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-function stringifyJson(object) {
+const ROOT_DIR = path.resolve(__dirname, '..');
+const PACKAGE_JSON_FILE = path.join(ROOT_DIR, 'package.json');
+const PACKAGE_LOCK_FILE = path.join(ROOT_DIR, 'package-lock.json');
+
+const PACKAGE_JSON = JSON.parse(fs.readFileSync(PACKAGE_JSON_FILE, 'utf8'));
+const PACKAGE_LOCK = JSON.parse(fs.readFileSync(PACKAGE_LOCK_FILE, 'utf8'));
+
+const stringifyJson = (object) => {
   return JSON.stringify(object, null, 2);
-}
+};
 
-function updateSimpleIconsDependency() {
-  try {
-    execSync('npm uninstall simple-icons');
-    execSync('npm install --save-dev --save-exact simple-icons');
-  } catch (error) {
-    return error;
+const getSimpleIconsDependencyLatestVersion = () => {
+  const versions = JSON.parse(
+    execSync('npm view simple-icons --json').toString(),
+  ).versions;
+  return versions[versions.length - 1];
+};
+
+const updateSimpleIconsDependency = () => {
+  execSync('npm uninstall simple-icons');
+  execSync('npm install --save-dev --save-exact simple-icons');
+};
+
+const main = () => {
+  const siLatestVersion = getSimpleIconsDependencyLatestVersion();
+  const siInstalledVersion = PACKAGE_JSON.devDependencies['simple-icons'];
+
+  if (semver.gt(siLatestVersion, siInstalledVersion)) {
+    PACKAGE_JSON.version = siLatestVersion;
+    PACKAGE_LOCK.version = siLatestVersion;
+
+    fs.writeFileSync(PACKAGE_JSON_FILE, `${stringifyJson(PACKAGE_JSON)}\n`);
+    fs.writeFileSync(PACKAGE_LOCK_FILE, `${stringifyJson(PACKAGE_LOCK)}\n`);
+
+    updateSimpleIconsDependency();
+
+    console.log(siLatestVersion);
+  } else {
+    console.error(`Version already exists (${siInstalledVersion})`);
   }
-}
-
-function updateVersionNumber() {
-  try {
-    const packageFileRaw = fs.readFileSync(PACKAGE_JSON_FILE).toString();
-    const packageLockRaw = fs.readFileSync(PACKAGE_LOCK_FILE).toString();
-
-    const packageFile = JSON.parse(packageFileRaw);
-    const packageLock = JSON.parse(packageLockRaw);
-
-    const currentVersion = packageFile.version;
-    const simpleIconsVersion = packageFile.devDependencies['simple-icons'];
-    if (semver.gt(simpleIconsVersion, currentVersion)) {
-      packageFile.version = simpleIconsVersion;
-      packageLock.version = simpleIconsVersion;
-    } else {
-      const error = new Error(`Version already exists (${currentVersion})`);
-      return [null, error];
-    }
-
-    fs.writeFileSync(PACKAGE_JSON_FILE, stringifyJson(packageFile) + '\n');
-    fs.writeFileSync(PACKAGE_LOCK_FILE, stringifyJson(packageLock) + '\n');
-    return [simpleIconsVersion, null];
-  } catch (error) {
-    return [null, error];
-  }
-}
-
-function main() {
-  const errorA = updateSimpleIconsDependency();
-  if (errorA) {
-    console.error('Failed to update simple-icons to latest version:', errorA);
-    process.exit(1);
-  }
-
-  const [newVersion, errorB] = updateVersionNumber();
-  if (errorB) {
-    console.error('Failed to version bump this package:', errorB);
-    process.exit(1);
-  }
-
-  console.log(newVersion);
-}
+};
 
 main();

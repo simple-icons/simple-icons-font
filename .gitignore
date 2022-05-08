@@ -7,3 +7,4 @@ node_modules/
 font/
 preview/testpage.html
 screenshot.png
+*.tgz

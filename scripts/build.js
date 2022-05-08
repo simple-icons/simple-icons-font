@@ -5,50 +5,57 @@
  * dependency.
  */
 
-const CleanCSS = require('clean-css');
-const fs = require('fs');
-const path = require('path');
-const { ucs2 } = require('punycode/');
-const simpleIcons = require('simple-icons');
-const svg2ttf = require('svg2ttf');
-const SVGPath = require('svgpath');
-const ttf2eot = require('ttf2eot');
-const ttf2woff = require('ttf2woff');
-const ttf2woff2 = require('ttf2woff2');
-const woff2otf = require('woff2otf');
-const util = require('util');
+import CleanCSS from 'clean-css';
+import fsSync, { promises as fs } from 'node:fs';
+import path from 'node:path';
+import punycode from 'punycode/punycode.js';
+import simpleIcons from 'simple-icons';
+import svg2ttf from 'svg2ttf';
+import SVGPath from 'svgpath';
+import ttf2eot from 'ttf2eot';
+import ttf2woff from 'ttf2woff';
+import ttf2woff2 from 'ttf2woff2';
+import woff2otf from 'woff2otf';
+import { fileURLToPath } from 'node:url';
+import util from 'util';
 
-const packageJson = require('./../package.json');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const UTF8 = 'utf8';
 
-const DIST_DIR = path.resolve(__dirname, '..', 'font');
+const ROOT_DIR = path.resolve(__dirname, '..');
+const DIST_DIR = path.join(ROOT_DIR, 'font');
 
-const CSS_OUTPUT_FILEPATH = path.join(DIST_DIR, 'simple-icons.css');
-const CSS_MIN_OUTPUT_FILEPATH = path.join(DIST_DIR, 'simple-icons.min.css');
-const SVG_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.svg');
-const TTF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.ttf');
-const EOT_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.eot');
-const OTF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.otf');
-const WOFF_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff');
-const WOFF2_OUTPUT_FILEPATH = path.join(DIST_DIR, 'SimpleIcons.woff2');
+const PACKAGE_JSON_FILE = path.join(ROOT_DIR, 'package.json');
+const PACKAGE_JSON = JSON.parse(fsSync.readFileSync(PACKAGE_JSON_FILE, UTF8));
+
+const CSS_OUTPUT_FILE = path.join(DIST_DIR, 'simple-icons.css');
+const CSS_MIN_OUTPUT_FILE = path.join(DIST_DIR, 'simple-icons.min.css');
+const SVG_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.svg');
+const TTF_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.ttf');
+const EOT_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.eot');
+const OTF_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.otf');
+const WOFF_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.woff');
+const WOFF2_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.woff2');
 
 const CSS_BASE_FILE = path.resolve(__dirname, 'templates', 'base.css');
-const SVG_TEMPLATE_FILEPATH = path.join(__dirname, 'templates', 'font.svg');
+const SVG_TEMPLATE_FILE = path.join(__dirname, 'templates', 'font.svg');
 
-function cssDecodeUnicode(value) {
+const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
-}
+};
 
-function buildSimpleIconsSvgFontFile() {
+const buildSimpleIconsSvgFontFile = async () => {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
   let startUnicode = 0xea01;
   let glyphsContent = '';
 
   for (let iconSlug in simpleIcons) {
-    let nextUnicode = ucs2.decode(String.fromCodePoint(startUnicode++));
+    let nextUnicode = punycode.ucs2.decode(
+      String.fromCodePoint(startUnicode++),
+    );
     let unicodeString = nextUnicode
       .map((point) => `&#x${point.toString(16).toUpperCase()};`)
       .join('');
@@ -71,91 +78,144 @@ function buildSimpleIconsSvgFontFile() {
     };
   }
 
-  const svgFontTemplate = fs.readFileSync(SVG_TEMPLATE_FILEPATH, UTF8);
+  const svgFontTemplate = await fs.readFile(SVG_TEMPLATE_FILE, UTF8);
   const svgFileContent = util.format(svgFontTemplate, glyphsContent);
-  fs.writeFileSync(SVG_OUTPUT_FILEPATH, svgFileContent);
-  console.log(`'${SVG_OUTPUT_FILEPATH}' file built`);
+  await fs.writeFile(SVG_OUTPUT_FILE, svgFileContent);
+  console.log(`'${SVG_OUTPUT_FILE}' file built`);
 
   return { unicodeHexBySlug, svgFileContent };
-}
+};
 
-function buildSimpleIconsCssFile(unicodeHexBySlug) {
-  let cssFileContent = fs.readFileSync(CSS_BASE_FILE);
+const buildSimpleIconsCssFile = (unicodeHexBySlug) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      let cssFileContent = await fs.readFile(CSS_BASE_FILE);
 
-  for (let slug in unicodeHexBySlug) {
-    let icon = unicodeHexBySlug[slug];
+      for (let slug in unicodeHexBySlug) {
+        let icon = unicodeHexBySlug[slug];
 
-    cssFileContent += `
+        cssFileContent += `
 .si-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
 .si-${slug}.si--color::before { color: #${icon.hex}; }`;
-  }
+      }
 
-  fs.writeFileSync(CSS_OUTPUT_FILEPATH, cssFileContent);
-  console.log(`'${CSS_OUTPUT_FILEPATH}' file built`);
+      await fs.writeFile(CSS_OUTPUT_FILE, cssFileContent);
+      console.log(`'${CSS_OUTPUT_FILE}' file built`);
 
-  return cssFileContent;
-}
-
-function buildSimpleIconsMinCssFile(cssFileContent) {
-  const cssMinifiedFile = new CleanCSS({
-    compatibility: 'ie7',
-  }).minify(cssFileContent);
-
-  fs.writeFileSync(CSS_MIN_OUTPUT_FILEPATH, cssMinifiedFile.styles);
-  console.log(`'${CSS_MIN_OUTPUT_FILEPATH}' file built`);
-}
-
-function buildSimpleIconsTtfFontFile(svgFileContent) {
-  const ttf = svg2ttf(svgFileContent, {
-    version: `Version ${packageJson.version.split('.').slice(0, 2).join('.')}`,
-    description: packageJson.description,
-    url: packageJson.homepage,
+      resolve(cssFileContent);
+    } catch (error) {
+      reject(error);
+    }
   });
-  const ttfFileContent = new Buffer.from(ttf.buffer);
-  fs.writeFileSync(TTF_OUTPUT_FILEPATH, ttfFileContent);
-  console.log(`'${TTF_OUTPUT_FILEPATH}' file built`);
-  return ttfFileContent;
-}
 
-function buildSimpleIconsWoffFontFile(ttfFileContent) {
-  const woff = new Buffer.from(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
-  fs.writeFileSync(WOFF_OUTPUT_FILEPATH, woff);
-  console.log(`'${WOFF_OUTPUT_FILEPATH}' file built`);
-  return woff;
-}
+const buildSimpleIconsMinCssFile = (cssFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const cssMinifiedFile = new CleanCSS({
+        compatibility: 'ie7',
+      }).minify(cssFileContent);
 
-function buildSimpleIconsWoff2FontFile(ttfFileContent) {
-  const woff2 = ttf2woff2(ttfFileContent);
-  fs.writeFileSync(WOFF2_OUTPUT_FILEPATH, woff2);
-  console.log(`'${WOFF2_OUTPUT_FILEPATH}' file built`);
-}
+      await fs.writeFile(CSS_MIN_OUTPUT_FILE, cssMinifiedFile.styles);
+      console.log(`'${CSS_MIN_OUTPUT_FILE}' file built`);
 
-function buildSimpleIconsEotFontFile(ttfFileContent) {
-  const ttf = new Uint8Array(ttfFileContent);
-  const eot = new Buffer.from(ttf2eot(ttf).buffer);
-  fs.writeFileSync(EOT_OUTPUT_FILEPATH, eot);
-  console.log(`'${EOT_OUTPUT_FILEPATH}' file built`);
-}
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
 
-function buildSimpleIconsOtfFontFile(woffFileContent) {
-  const otf = woff2otf(woffFileContent);
-  fs.writeFileSync(OTF_OUTPUT_FILEPATH, otf);
-  console.log(`'${OTF_OUTPUT_FILEPATH}' file built`);
-}
+const buildSimpleIconsTtfFontFile = (svgFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const ttf = svg2ttf(svgFileContent, {
+        version: `Version ${PACKAGE_JSON.version
+          .split('.')
+          .slice(0, 2)
+          .join('.')}`,
+        description: PACKAGE_JSON.description,
+        url: PACKAGE_JSON.homepage,
+      });
+      const ttfFileContent = new Buffer.from(ttf.buffer);
+      await fs.writeFile(TTF_OUTPUT_FILE, ttfFileContent);
+      console.log(`'${TTF_OUTPUT_FILE}' file built`);
+      resolve(ttfFileContent);
+    } catch (error) {
+      reject(error);
+    }
+  });
 
-function main() {
-  if (!fs.existsSync(DIST_DIR)) {
-    fs.mkdirSync(DIST_DIR);
+const buildSimpleIconsWoffFontFile = (ttfFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const woff = new Buffer.from(
+        ttf2woff(new Uint8Array(ttfFileContent)).buffer,
+      );
+      await fs.writeFile(WOFF_OUTPUT_FILE, woff);
+      console.log(`'${WOFF_OUTPUT_FILE}' file built`);
+      resolve(woff);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+const buildSimpleIconsWoff2FontFile = (ttfFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const woff2 = ttf2woff2(ttfFileContent);
+      await fs.writeFile(WOFF2_OUTPUT_FILE, woff2);
+      console.log(`'${WOFF2_OUTPUT_FILE}' file built`);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+const buildSimpleIconsEotFontFile = (ttfFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const ttf = new Uint8Array(ttfFileContent);
+      const eot = new Buffer.from(ttf2eot(ttf).buffer);
+      await fs.writeFile(EOT_OUTPUT_FILE, eot);
+      console.log(`'${EOT_OUTPUT_FILE}' file built`);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+const buildSimpleIconsOtfFontFile = (woffFileContent) =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const otf = woff2otf(woffFileContent);
+      await fs.writeFile(OTF_OUTPUT_FILE, otf);
+      console.log(`'${OTF_OUTPUT_FILE}' file built`);
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+const main = async () => {
+  if (!fsSync.existsSync(DIST_DIR)) {
+    await fs.mkdir(DIST_DIR);
   }
 
-  const { unicodeHexBySlug, svgFileContent } = buildSimpleIconsSvgFontFile();
-  const cssFileContent = buildSimpleIconsCssFile(unicodeHexBySlug);
-  const ttfFileContent = buildSimpleIconsTtfFontFile(svgFileContent);
-  buildSimpleIconsMinCssFile(cssFileContent);
-  const woffFileContent = buildSimpleIconsWoffFontFile(ttfFileContent);
-  buildSimpleIconsWoff2FontFile(ttfFileContent);
-  buildSimpleIconsEotFontFile(ttfFileContent);
-  buildSimpleIconsOtfFontFile(woffFileContent);
-}
+  const { unicodeHexBySlug, svgFileContent } =
+    await buildSimpleIconsSvgFontFile();
+
+  Promise.all([
+    buildSimpleIconsCssFile(unicodeHexBySlug),
+    buildSimpleIconsTtfFontFile(svgFileContent),
+  ]).then(([cssFileContent, ttfFileContent]) => {
+    Promise.all([
+      buildSimpleIconsWoffFontFile(ttfFileContent),
+      buildSimpleIconsMinCssFile(cssFileContent),
+      buildSimpleIconsWoff2FontFile(ttfFileContent),
+      buildSimpleIconsEotFontFile(ttfFileContent),
+    ]).then(async ([woffFileContent]) => {
+      await buildSimpleIconsOtfFontFile(woffFileContent);
+    });
+  });
+};
 
 main();
