@@ -52,7 +52,7 @@ const buildSimpleIconsSvgFontFile = async () => {
   let startUnicode = 0xea01;
   let glyphsContent = '';
 
-  for (const siIcon in simpleIcons) {
+  for (const si in simpleIcons) {
     const nextUnicode = punycode.ucs2.decode(
       String.fromCodePoint(startUnicode++),
     );
@@ -63,7 +63,7 @@ const buildSimpleIconsSvgFontFile = async () => {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons[siIcon];
+    const icon = simpleIcons[si];
     const verticalTransformedPath = SVGPath(icon.path)
       .scale(50, -50)
       .round(6)
