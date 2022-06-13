@@ -9,7 +9,7 @@ import CleanCSS from 'clean-css';
 import fsSync, { promises as fs } from 'node:fs';
 import path from 'node:path';
 import punycode from 'punycode/punycode.js';
-import simpleIcons from 'simple-icons';
+import * as simpleIcons from 'simple-icons/icons';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
 import ttf2eot from 'ttf2eot';
@@ -52,18 +52,18 @@ const buildSimpleIconsSvgFontFile = async () => {
   let startUnicode = 0xea01;
   let glyphsContent = '';
 
-  for (let iconSlug in simpleIcons) {
-    let nextUnicode = punycode.ucs2.decode(
+  for (const si in simpleIcons) {
+    const nextUnicode = punycode.ucs2.decode(
       String.fromCodePoint(startUnicode++),
     );
-    let unicodeString = nextUnicode
+    const unicodeString = nextUnicode
       .map((point) => `&#x${point.toString(16).toUpperCase()};`)
       .join('');
     if (usedUnicodes.includes(unicodeString)) {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons.Get(iconSlug);
+    const icon = simpleIcons[si];
     const verticalTransformedPath = SVGPath(icon.path)
       .scale(50, -50)
       .round(6)
