@@ -30,4 +30,5 @@ i.si {
   padding: 4px;
   font-size: 32px;
   cursor: help;
+  border: 1px dashed gray;
 }
