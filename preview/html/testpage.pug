@@ -16,6 +16,11 @@ body
     button.background-mode Dark background
     button.icons-color Colorless icons
 
-  p
+  p.grid
     each icon in icons
       i.si.si--color(class='si-' + icon.slug, title=icon.name)
+
+  p.paragraph
+    | An icon like #[i.si.si--color.si-github(title='Github')] inside a paragraph.
+  p.paragraph
+    | An icon like #[em #[i.si.si--color.si-github(title='Github')]] in italics inside a paragraph.

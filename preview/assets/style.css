@@ -19,15 +19,21 @@ body.dark {
   cursor: pointer;
 }
 
-p {
-  margin-left: -4px;
-  margin-right: -4px;
-}
-
 i.si {
   display: inline-block;
+  cursor: help;
+}
+
+p.grid {
+  font-size: 32px;
+}
+
+p.grid i.si {
   margin: 0 4px;
   padding: 4px;
-  font-size: 32px;
-  cursor: help;
+  border: 1px dashed gray;
+}
+
+p.paragraph {
+  font-size: 18px;
 }
