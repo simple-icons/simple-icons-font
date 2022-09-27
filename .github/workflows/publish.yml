@@ -64,7 +64,23 @@ jobs:
           tag="${{ steps.get-version.outputs.version }}"
           git tag -a "${tag}" -m ""
           git push origin "${tag}"
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: Create GitHub release
+        id: create-release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -73,3 +89,8 @@ jobs:
           release_name: Release ${{ steps.get-version.outputs.version }}
           body: |
             See https://github.com/simple-icons/simple-icons/releases/tag/${{ steps.get-version.outputs.version }}
+      - uses: shogo82148/actions-upload-release-asset@v1
+        name: Upload release assets
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_path: font/*
