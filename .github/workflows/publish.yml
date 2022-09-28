@@ -82,8 +82,6 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Compress font files
-        run: zip -r font/simple-icons-font-${{ steps.get-version.outputs.version }}.zip font/
       - name: Create GitHub release
         if: github.ref == 'refs/heads/master'
         id: create-release
@@ -95,6 +93,10 @@ jobs:
           release_name: Release ${{ steps.get-version.outputs.version }}
           body: |
             See https://github.com/simple-icons/simple-icons/releases/tag/${{ steps.get-version.outputs.version }}
+      - name: Compress release files
+        run: |
+          cp node_modules/simple-icons/DISCLAIMER.md DISCLAIMER.md
+          zip -r font/simple-icons-font-${{ steps.get-version.outputs.version }}.zip font/
       - uses: shogo82148/actions-upload-release-asset@v1
         if: github.ref == 'refs/heads/master'
         name: Upload release assets
@@ -108,4 +110,4 @@ jobs:
           path: |
             font/*.zip
             LICENSE.md
-            node_modules/simple-icons/DISCLAIMER.md
+            DISCLAIMER.md
