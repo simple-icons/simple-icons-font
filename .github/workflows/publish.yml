@@ -82,7 +82,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Compress font files
-        run: zip -r simple-icons-font-${{ steps.get-version.outputs.version }}.zip font/
+        run: zip -r font/simple-icons-font-${{ steps.get-version.outputs.version }}.zip font/
       - name: Create GitHub release
         if: github.ref == 'refs/heads/master'
         id: create-release
