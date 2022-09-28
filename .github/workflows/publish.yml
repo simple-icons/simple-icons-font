@@ -93,10 +93,9 @@ jobs:
           release_name: Release ${{ steps.get-version.outputs.version }}
           body: |
             See https://github.com/simple-icons/simple-icons/releases/tag/${{ steps.get-version.outputs.version }}
-      - name: Compress release files
+      - name: Prepare release assets
         run: |
           cp node_modules/simple-icons/DISCLAIMER.md DISCLAIMER.md
-          zip -r font/simple-icons-font-${{ steps.get-version.outputs.version }}.zip font/
       - uses: shogo82148/actions-upload-release-asset@v1
         if: github.ref == 'refs/heads/master'
         name: Upload release assets
@@ -108,6 +107,6 @@ jobs:
         with:
           name: simple-icons-font-${{ steps.get-version.outputs.version }}
           path: |
-            font/*.zip
+            font/*
             LICENSE.md
             DISCLAIMER.md
