@@ -105,4 +105,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: simple-icons-font-${{ steps.get-version.outputs.version }}
-          path: font/*.zip
+          path: |
+            font/*.zip
+            LICENSE.md
+            node_modules/simple-icons/DISCLAIMER.md
