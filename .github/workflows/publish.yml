@@ -104,5 +104,5 @@ jobs:
       - name: Upload compressed fonts ZIP
         uses: actions/upload-artifact@v3
         with:
-          name: simple-icons-font-${{ steps.get-version.outputs.version }}.zip
+          name: simple-icons-font-${{ steps.get-version.outputs.version }}
           path: font/*.zip
