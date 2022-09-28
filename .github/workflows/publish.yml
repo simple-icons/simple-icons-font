@@ -61,6 +61,7 @@ jobs:
           git add README.md
           git commit -m 'Strip README dark theme image links'
       - name: Create and push git tag
+        if: github.ref == 'refs/heads/master'
         run: |
           set -e
           tag="${{ steps.get-version.outputs.version }}"
