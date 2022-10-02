@@ -8,6 +8,9 @@ on: workflow_dispatch
 #        https://api.github.com/repos/simple-icons/simple-icons-font/actions/workflows/auto-release.yml/dispatches
 # Replacing <token> by a personal access token with scope `public_repo`
 
+permissions:
+  contents: write
+
 jobs:
   auto-release:
     name: Automated release
