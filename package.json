@@ -1,6 +1,6 @@
 {
   "name": "simple-icons-font",
-  "version": "8.3.0",
+  "version": "8.4.0",
   "description": "Icon font generated from https://simpleicons.org",
   "homepage": "https://www.simpleicons.org",
   "keywords": [
@@ -35,18 +35,18 @@
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
   "devDependencies": {
-    "@prettier/plugin-pug": "2.3.0",
+    "@prettier/plugin-pug": "2.4.1",
     "anywhere": "1.6.0",
-    "clean-css": "5.3.1",
+    "clean-css": "5.3.2",
     "husky": "8.0.3",
     "is-ci": "3.0.1",
-    "prettier": "2.8.1",
+    "prettier": "2.8.3",
     "pug": "3.0.2",
-    "punycode": "2.1.1",
-    "puppeteer": "19.4.1",
-    "rimraf": "3.0.2",
+    "punycode": "2.3.0",
+    "puppeteer": "19.5.2",
+    "rimraf": "4.1.1",
     "semver": "7.3.8",
-    "simple-icons": "8.3.0",
+    "simple-icons": "8.4.0",
     "svg2ttf": "6.0.3",
     "svgpath": "2.6.0",
     "ttf2eot": "3.1.0",
