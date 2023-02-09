@@ -42,7 +42,7 @@ jobs:
         id: update
         run: |
           newVersion="$(node scripts/bump-version.js)"
-          echo "new-version=$newVersion"
+          echo "new-version=$newVersion" >> $GITHUB_OUTPUT
       - name: Sanity check
         run: npm run build
       - name: Commit updates
