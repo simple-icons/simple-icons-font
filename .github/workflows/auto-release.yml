@@ -42,7 +42,7 @@ jobs:
         id: update
         run: |
           newVersion="$(node scripts/bump-version.js)"
-          echo ::set-output name=NEW_VERSION::$newVersion
+          echo "new-version=$newVersion"
       - name: Sanity check
         run: npm run build
       - name: Commit updates
@@ -57,7 +57,7 @@ jobs:
       - name: Merge develop into master
         run: |
           git checkout master
-          git merge develop --no-ff -m "Release ${{ steps.update.outputs.NEW_VERSION }}"
+          git merge develop --no-ff -m "Release ${{ steps.update.outputs.new-version }}"
       - name: Push version bump
         run: |
           # Set up remote using a Personal Access Token
