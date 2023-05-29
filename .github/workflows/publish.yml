@@ -34,9 +34,11 @@ jobs:
           strict: true
       - name: Install dependencies
         run: npm ci
+      - name: Build NodeJS package
+        run: npm run build
       - name: Deploy to NPM
         if: github.ref == 'refs/heads/master'
-        uses: JS-DevTools/npm-publish@v1
+        uses: JS-DevTools/npm-publish@v2
         with:
           token: ${{ secrets.NPM_TOKEN }}
   github:
