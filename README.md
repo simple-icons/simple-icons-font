@@ -1,5 +1,5 @@
 <p align="center">
-<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/assets/readme/simpleicons-white.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/simpleicons.svg"><img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/simpleicons.svg" alt="Simple Icons" width=70></picture>
+<img src="https://cdn.simpleicons.org/simpleicons/000/fff" alt="Node" width=70 />
 <h3 align="center">Simple Icons: <em>Icon font</em></h3>
 <p align="center">
 Free SVG icon font for popular brands. See them all on one page at <a href="https://simpleicons.org">SimpleIcons.org</a>. Contributions, corrections & requests can be made on GitHub.</p>
@@ -19,7 +19,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][unpkg-link]. Simply use the `simple-icons-font` NPM package and specify a version in the URL like the following:
 
-#### JSDeliver
+#### JSDelivr
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v5/font/simple-icons.min.css" type="text/css">
@@ -33,7 +33,7 @@ The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][u
 
 These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However this may cause an icon to disappear if it has been removed in the latest version.
 
-### Node Setup <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/assets/readme/nodedotjs-white.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/nodedotjs.svg"><img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/nodedotjs.svg" alt="Node" align=left width=24></picture>
+### Node Setup <img src="https://cdn.simpleicons.org/nodedotjs/000/fff" alt="Node" align=left width=24>
 
 The font is also available through our npm package. To install, simply run:
 
@@ -43,7 +43,7 @@ npm install simple-icons-font
 
 After installation, the icons font and stylesheet font can be found in `node_modules/simple-icons-font/font`. You can use your favorite bundling tool to include them into your project.
 
-### PHP Setup <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/assets/readme/php-white.svg"><source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/php.svg"><img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/php.svg" alt="Php" align=left width=24 height=24></picture>
+### PHP Setup <img src="https://cdn.simpleicons.org/php/000/fff" alt="PHP" align=left width=24>
 
 The font is also available through our Packagist package. To install, simply run:
 
