@@ -13,7 +13,7 @@ Free SVG icon font for popular brands. See them all on one page at <a href="http
 
 ## Setup
 
-> :information_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md) before using icons from Simple Icons.
+> :information\_source: We ask that all users read our [legal disclaimer](https://github.com/simple-icons/simple-icons/blob/master/DISCLAIMER.md) before using icons from Simple Icons.
 
 ### CDN Setup
 
@@ -80,5 +80,7 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
 [latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
+
 [jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
+
 [unpkg-link]: https://unpkg.com/browse/simple-icons-font/
