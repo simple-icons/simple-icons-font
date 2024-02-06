@@ -30,7 +30,7 @@
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
-    "prepare": "is-ci || husky install",
+    "prepare": "is-ci || husky",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
   },
