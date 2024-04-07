@@ -47,6 +47,11 @@ jobs:
     name: GitHub release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
       - name: Get release version
@@ -56,8 +61,8 @@ jobs:
           echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
       - name: Configure GIT credentials
         run: |
-          git config user.name "${GITHUB_ACTOR}"
-          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "simple-icons[bot]"
+          git config user.email "simple-icons[bot]@users.noreply.github.com"
       - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
@@ -102,7 +107,7 @@ jobs:
         id: create-release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           tag_name: ${{ steps.get-version.outputs.version }}
           release_name: Release ${{ steps.get-version.outputs.version }}
