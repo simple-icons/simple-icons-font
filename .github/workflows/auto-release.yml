@@ -8,14 +8,16 @@ on: workflow_dispatch
 #        https://api.github.com/repos/simple-icons/simple-icons-font/actions/workflows/auto-release.yml/dispatches
 # Replacing <token> by a personal access token with scope `public_repo`
 
-permissions:
-  contents: write
-
 jobs:
   auto-release:
     name: Automated release
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -25,10 +27,10 @@ jobs:
           persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
-      - name: Use Node.js 16.x
+      - name: Use Node.js 20.x
         uses: actions/setup-node@v4
         with:
-          node-version: 16.x
+          node-version: 20.x
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -52,8 +54,8 @@ jobs:
       - name: Commit updates
         run: |
           # Set up git credential
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
+          git config --global user.email "simple-icons[bot]@users.noreply.github.com"
+          git config --global user.name "simple-icons[bot]"
 
           # Create a version bump commit
           git add .
@@ -66,7 +68,7 @@ jobs:
         run: |
           # Set up remote using a Personal Access Token
           git remote remove origin
-          git remote add origin https://${{secrets.RELEASE_TOKEN}}@github.com/simple-icons/simple-icons-font.git
+          git remote add origin https://${{ steps.app-token.outputs.token }}@github.com/simple-icons/simple-icons-font.git
 
           # Push develop first, to prevent conflicts with parallel activity
           git push origin develop
