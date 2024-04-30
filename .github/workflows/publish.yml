@@ -80,7 +80,7 @@ jobs:
       - name: Commit README updates
         run: |
           git add README.md
-          git commit -m 'Update README CDN urls'
+          git diff-index --quiet HEAD || git commit -m 'Update README CDN urls'
       - name: Create and push git tag
         if: github.ref == 'refs/heads/master'
         run: |
