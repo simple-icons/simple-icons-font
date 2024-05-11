@@ -29,21 +29,21 @@ jobs:
         run: npm run build
       - name: Update README CDN URLs
         run: node scripts/update-cdn-urls.js
-      - name: Deploy to NPM
-        if: github.ref == 'refs/heads/master'
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
+      # - name: Deploy to NPM
+      #   if: github.ref == 'refs/heads/master'
+      #   uses: JS-DevTools/npm-publish@v3
+      #   with:
+      #     token: ${{ secrets.NPM_TOKEN }}
   github:
     name: GitHub release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        if: github.ref == 'refs/heads/master'
-        with:
-          app-id: ${{ vars.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+      # - uses: actions/create-github-app-token@v1
+      #   id: app-token
+      #   if: github.ref == 'refs/heads/master'
+      #   with:
+      #     app-id: ${{ vars.BOT_APP_ID }}
+      #     private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
       - name: Get release version
