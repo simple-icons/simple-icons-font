@@ -49,7 +49,7 @@ const cssDecodeUnicode = (value) => {
 const buildSimpleIconsSvgFontFile = async () => {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
-  let startUnicode = 0xea01;
+  let startUnicode = 0x3400;
   let glyphsContent = '';
 
   for (const si in simpleIcons) {
