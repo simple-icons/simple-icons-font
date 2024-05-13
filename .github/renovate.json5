@@ -1,4 +1,5 @@
 {
+  repositories: ['simple-icons/simple-icons-font'],
   extends: [
     'config:base',
 
