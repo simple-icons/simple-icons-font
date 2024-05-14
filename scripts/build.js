@@ -65,7 +65,7 @@ const buildSimpleIconsSvgFontFile = async () => {
 
     const icon = simpleIcons[si];
     const verticalTransformedPath = SVGPath(icon.path)
-      .translate(0, -24)
+      .translate(0, -26)
       .scale(50, -50)
       .round(6)
       .toString();
