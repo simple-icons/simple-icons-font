@@ -13,11 +13,6 @@ jobs:
     name: Automated release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.BOT_APP_ID }}
-          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -68,7 +63,7 @@ jobs:
         run: |
           # Set up remote using a Personal Access Token
           git remote remove origin
-          git remote add origin https://${{ steps.app-token.outputs.token }}@github.com/simple-icons/simple-icons-font.git
+          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/simple-icons/simple-icons-font.git
 
           # Push develop first, to prevent conflicts with parallel activity
           git push origin develop
