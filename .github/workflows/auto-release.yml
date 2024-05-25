@@ -49,8 +49,8 @@ jobs:
       - name: Commit updates
         run: |
           # Set up git credential
-          git config --global user.email "simple-icons[bot]@users.noreply.github.com"
-          git config --global user.name "simple-icons[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
 
           # Create a version bump commit
           git add .
