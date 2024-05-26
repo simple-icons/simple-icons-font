@@ -1,4 +1,5 @@
 {
+  repositories: ['simple-icons/simple-icons-font'],
   extends: [
     'config:base',
 
@@ -8,6 +9,15 @@
 
   // Disable dependency dashboard
   dependencyDashboard: false,
+
+  // Use our labelling system
+  labels: ['dependencies'],
+
+  // We generally always want the major version
+  separateMajorMinor: false,
+
+  // We manually update digest dependencies (eg. hashes in Github actions)
+  digest: { enabled: false },
 
   // We will keep simple-icons up-to-date separately from renovate
   ignoreDeps: ['simple-icons'],
@@ -20,17 +30,5 @@
 
     // Explicitly enable lockfile maintenance
     enabled: true,
-
-    // This schedule should be the same as the general schedule!
-    schedule: 'on the 2nd and 4th day instance on sunday after 11pm',
   },
-
-  // Use our labelling system
-  labels: ['dependencies'],
-
-  // Schedule the PRs to interleave with our release schedule
-  schedule: 'on the 2nd and 4th day instance on sunday after 11pm',
-
-  // We generally always want the major version
-  separateMajorMinor: false,
 }
