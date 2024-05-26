@@ -63,7 +63,7 @@ jobs:
         run: |
           # Set up remote using a Personal Access Token
           git remote remove origin
-          git remote add origin https://${{ secrets.GITHUB_TOKEN }}@github.com/simple-icons/simple-icons-font.git
+          git remote add origin https://${{ secrets.RELEASE_TOKEN }}@github.com/simple-icons/simple-icons-font.git
 
           # Push develop first, to prevent conflicts with parallel activity
           git push origin develop
