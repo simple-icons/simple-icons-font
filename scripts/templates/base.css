@@ -1,15 +1,31 @@
 @font-face {
-  font-family: 'Simple Icons';
+  font-family: 'Simple Icons Regular';
   src:
-    url(SimpleIcons.woff) format('woff'),
-    url(SimpleIcons.woff2) format('woff2'),
-    url(SimpleIcons.ttf) format('truetype'),
-    url(SimpleIcons.otf) format('opentype'),
-    url(SimpleIcons.eot) format('embedded-opentype');
+    url(woff/SimpleIcons-Regular.woff) format('woff'),
+    url(woff2/SimpleIcons-Regular.woff2) format('woff2'),
+    url(ttf/SimpleIcons-Regular.ttf) format('truetype'),
+    url(otf/SimpleIcons-Regular.otf) format('opentype'),
+    url(eot/SimpleIcons-Regular.eot) format('embedded-opentype');
+}
+
+@font-face {
+  font-family: 'Simple Icons Squared';
+  src:
+    url(woff/SimpleIcons-Squared.woff) format('woff'),
+    url(woff2/SimpleIcons-Squared.woff2) format('woff2'),
+    url(ttf/SimpleIcons-Squared.ttf) format('truetype'),
+    url(otf/SimpleIcons-Squared.otf) format('opentype'),
+    url(eot/SimpleIcons-Squared.eot) format('embedded-opentype');
 }
 
 .si {
   font-style: normal;
-  font-family: 'Simple Icons', sans-serif;
+  font-family: 'Simple Icons Regular', sans-serif;
+  vertical-align: middle;
+}
+
+.si-squared {
+  font-style: normal;
+  font-family: 'Simple Icons Squared', sans-serif;
   vertical-align: middle;
 }
