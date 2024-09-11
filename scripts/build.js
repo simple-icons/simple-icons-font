@@ -10,6 +10,7 @@ import fsSync, { promises as fs } from 'node:fs';
 import path from 'node:path';
 import punycode from 'punycode/punycode.js';
 import * as simpleIcons from 'simple-icons/icons';
+import { svgPathBbox } from 'svg-path-bbox';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
 import ttf2eot from 'ttf2eot';
@@ -46,6 +47,19 @@ const cssDecodeUnicode = (value) => {
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
 };
 
+const convertToAspectRatioViewbox = (path) => {
+  const pathInstance = SVGPath(path);
+  const [x0, y0, x1, y1] = svgPathBbox(pathInstance);
+  const width = x1 - x0;
+  const height = y1 - y0;
+  const scale = 24 / height;
+  const pathRescale = width > height ? pathInstance.scale(scale) : pathInstance;
+  const [offsetX, offsetY] = svgPathBbox(pathRescale);
+  const pathReset = pathRescale.translate(-offsetX, -offsetY);
+  const [x0Reset, , x1Reset] = svgPathBbox(pathReset);
+  return { pathReset, horizAdvX: ((x1Reset - x0Reset) / 24) * 1200 };
+};
+
 const buildSimpleIconsSvgFontFile = async () => {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
@@ -64,13 +78,14 @@ const buildSimpleIconsSvgFontFile = async () => {
     }
 
     const icon = simpleIcons[si];
-    const verticalTransformedPath = SVGPath(icon.path)
+    const { pathReset, horizAdvX } = convertToAspectRatioViewbox(icon.path);
+    const verticalTransformedPath = pathReset
       .translate(0, -24)
       .scale(50, -50)
       .round(6)
       .toString();
 
-    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200"/>`;
+    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="${horizAdvX}"/>`;
     usedUnicodes.push(unicodeString);
 
     unicodeHexBySlug[icon.slug] = {
