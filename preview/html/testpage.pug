@@ -15,6 +15,7 @@ body
   .buttons-list
     button.background-mode Dark background
     button.icons-color Colorless icons
+    button.icons-style Fit
 
   p.grid
     each icon in icons
@@ -24,3 +25,7 @@ body
     | An icon like #[i.si.si--color.si-github(title='Github')] inside a paragraph.
   p.paragraph
     | An icon like #[em #[i.si.si--color.si-github(title='Github')]] in italics inside a paragraph.
+  p.paragraph
+    | The icon in regular style #[i.si.si--color.si-go.style-immutable(title='Go')] in a paragraph.
+  p.paragraph
+    | The wide icon in fit style #[i.si-fit.si--color.si-go.style-immutable(title='Go')] in a paragraph.
