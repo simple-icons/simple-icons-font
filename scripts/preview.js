@@ -21,7 +21,10 @@ const VIEWPORT_720P = {
 
 (async () => {
   try {
-    const browser = await puppeteer.launch({ defaultViewport: VIEWPORT_720P });
+    const browser = await puppeteer.launch({
+      defaultViewport: VIEWPORT_720P,
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     await page.goto(TEST_PAGE_URL);
     await page.screenshot({
