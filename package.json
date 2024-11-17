@@ -26,13 +26,14 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/build-testpage.js",
+    "serve:testpage": "serve -p 3000 --no-clipboard --config preview/serve.json",
     "clean": "rimraf font/ preview/testpage.html DISCLAIMER.md screenshot.png",
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
     "prepare": "is-ci || husky",
     "postpublish": "npm run clean",
-    "test": "npm run build:testpage && serve -p 3000"
+    "test": "npm run build:testpage && npm run serve:testpage"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "3.0.0",
