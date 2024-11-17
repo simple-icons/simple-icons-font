@@ -26,17 +26,17 @@
   "scripts": {
     "build": "node scripts/build.js",
     "build:testpage": "npm run build && node scripts/build-testpage.js",
+    "serve:testpage": "serve -p 3000 --no-clipboard --config preview/serve.json",
     "clean": "rimraf font/ preview/testpage.html DISCLAIMER.md screenshot.png",
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
     "prepare": "is-ci || husky",
     "postpublish": "npm run clean",
-    "test": "npm run build:testpage && anywhere -h localhost -d . -f /preview/testpage.html"
+    "test": "npm run build:testpage && npm run serve:testpage"
   },
   "devDependencies": {
     "@prettier/plugin-pug": "3.0.0",
-    "anywhere": "1.6.0",
     "clean-css": "5.3.3",
     "husky": "9.0.11",
     "is-ci": "3.0.1",
@@ -46,6 +46,7 @@
     "puppeteer": "22.8.1",
     "rimraf": "5.0.7",
     "semver": "7.6.2",
+    "serve": "14.2.3",
     "simple-icons": "13.17.0",
     "svg2ttf": "6.0.3",
     "svgpath": "2.6.0",

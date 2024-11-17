@@ -85,7 +85,7 @@ jobs:
       - name: Build test page
         run: node scripts/build-testpage.js
       - name: Serve testpage
-        run: ./node_modules/.bin/anywhere -s -p 8080 -d . -f /preview/testpage.html &
+        run: npx serve --config preview/serve.json -p 8080 &
       - name: Take screenshot of testpage
         run: node scripts/preview.js
       - name: Upload testpage screenshot
