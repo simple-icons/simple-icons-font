@@ -9,6 +9,8 @@ jobs:
   npm:
     name: NPM Package
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -34,6 +36,7 @@ jobs:
         uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.NPM_TOKEN }}
+          provenance: true
   github:
     name: GitHub release
     runs-on: ubuntu-latest
