@@ -10,6 +10,7 @@ import fsSync, { promises as fs } from 'node:fs';
 import path from 'node:path';
 import punycode from 'punycode/punycode.js';
 import * as simpleIcons from 'simple-icons/icons';
+import { getIconsData, titleToSlug } from 'simple-icons/sdk';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
 import ttf2eot from 'ttf2eot';
@@ -46,13 +47,19 @@ const cssDecodeUnicode = (value) => {
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
 };
 
+const icons = await getIconsData();
+const iconKeys = icons.map((icon) => {
+  const slug = icon.slug || titleToSlug(icon.title);
+  return 'si' + slug.at(0).toUpperCase() + slug.slice(1);
+});
+
 const buildSimpleIconsSvgFontFile = async () => {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
   let startUnicode = 0xea01;
   let glyphsContent = '';
 
-  for (const si in simpleIcons) {
+  for (const key of iconKeys) {
     const nextUnicode = punycode.ucs2.decode(
       String.fromCodePoint(startUnicode++),
     );
@@ -63,7 +70,7 @@ const buildSimpleIconsSvgFontFile = async () => {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons[si];
+    const icon = simpleIcons[key];
     const verticalTransformedPath = SVGPath(icon.path)
       .translate(0, -24)
       .scale(50, -50)
