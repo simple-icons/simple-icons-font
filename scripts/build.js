@@ -49,7 +49,7 @@ const cssDecodeUnicode = (value) => {
 
 const icons = await getIconsData();
 const iconKeys = icons.map((icon) => {
-  const slug = icon.slug ?? titleToSlug(icon.title);
+  const slug = icon.slug || titleToSlug(icon.title);
   return 'si' + slug.at(0).toUpperCase() + slug.slice(1);
 });
 
