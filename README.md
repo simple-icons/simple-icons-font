@@ -91,7 +91,7 @@ cd simple-icons-font
 npm install
 ```
 
-2. Use environment variable `SI_FONT_SLUGS_FILTER` to filter icons to include:
+2. Use the environment variable `SI_FONT_SLUGS_FILTER` to filter icons to include:
 
 ```shell
 SI_FONT_SLUGS_FILTER=github,simpleicons npm run build
