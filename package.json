@@ -48,6 +48,7 @@
     "semver": "7.6.3",
     "serve": "14.2.3",
     "simple-icons": "14.2.0",
+    "svg-path-bbox": "2.1.0",
     "svg2ttf": "6.0.3",
     "svgpath": "2.6.0",
     "ttf2eot": "3.1.0",

@@ -1,8 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
   const $body = document.querySelector('body');
-  const $icons = document.getElementsByClassName('si');
+  const $icons = document.getElementsByTagName('i');
   const $backgroundModeButton = document.querySelector('.background-mode');
   const $iconsColorButton = document.querySelector('.icons-color');
+  const $iconsStyleButton = document.querySelector('.icons-style');
 
   // Background dark/light mode toggler
   $backgroundModeButton.addEventListener('click', () => {
@@ -24,6 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < $icons.length; i++) {
       $icons[i].classList.toggle('si--color');
+    }
+  });
+
+  // Icons style toggle
+  $iconsStyleButton.addEventListener('click', () => {
+    const isSquared = $icons[0].classList.contains('si-squared');
+    if (isSquared) {
+      $iconsStyleButton.innerText = 'Regular';
+    } else {
+      $iconsStyleButton.innerText = 'Squared';
+    }
+
+    for (let i = 0; i < $icons.length; i++) {
+      if ($icons[i].classList.contains('style-immutable')) {
+        continue;
+      }
+      if (isSquared) {
+        $icons[i].classList.remove('si-squared');
+        $icons[i].classList.add('si');
+      } else {
+        $icons[i].classList.remove('si');
+        $icons[i].classList.add('si-squared');
+      }
     }
   });
 });
