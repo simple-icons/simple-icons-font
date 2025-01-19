@@ -79,6 +79,38 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
+## Custom Builds
+
+You can specify which icons need to be build for a smaller file size.
+
+1. Clone and install dependencies:
+
+```shell
+git clone git@github.com:simple-icons/simple-icons-font.git
+cd simple-icons-font
+npm install
+```
+
+2. Use the environment variable `SI_FONT_SLUGS_FILTER` to filter icons to include:
+
+```shell
+SI_FONT_SLUGS_FILTER=github,simpleicons npm run build
+```
+
+Next environment variables are available to customize the build:
+
+- `SI_FONT_SLUGS_FILTER`: Comma separated string of slugs to include in the build. See [all slugs].
+- `SI_FONT_PRESERVE_UNICODES`: By default, the build will retain the same unicode of an icon as the full build. You can set it to `false` to disable this.
+
+For example, if you set `SI_FONT_PRESERVE_UNICODES` to `false`, the unicode will still start at `0xea01` and keep increasing even you skipped some icons:
+
+```shell
+SI_FONT_SLUGS_FILTER=github,simpleicons SI_FONT_PRESERVE_UNICODES=false npm run build
+#=> github      \u{EA01}
+#=> simpleicons \u{EA02}
+```
+
 [latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
 [jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/
 [unpkg-link]: https://unpkg.com/browse/simple-icons-font/
+[all slugs]: https://github.com/simple-icons/simple-icons/blob/develop/slugs.md
