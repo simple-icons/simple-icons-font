@@ -31,7 +31,7 @@
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
-    "prepare": "is-ci || husky",
+    "prepare": "husky",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && npm run serve:testpage"
   },
@@ -39,7 +39,6 @@
     "@prettier/plugin-pug": "3.4.0",
     "clean-css": "5.3.3",
     "husky": "9.1.7",
-    "is-ci": "4.1.0",
     "prettier": "3.5.3",
     "pug": "3.0.3",
     "punycode": "2.3.1",
