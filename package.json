@@ -31,7 +31,7 @@
     "format": "prettier --write .",
     "lint": "prettier --check .",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
-    "prepare": "husky",
+    "prepare": "node -e 'process.exit(process.env.CI ? 0 : 1)' || husky",
     "postpublish": "npm run clean",
     "test": "npm run build:testpage && npm run serve:testpage"
   },
