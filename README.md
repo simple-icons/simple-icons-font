@@ -103,7 +103,7 @@ Next environment variables are available to customize the build:
 
 ## Versioning policy
 
-The font ensures that the unicode value of each icon will not change between releases. But as the unicode UTF-16 range is limited, we cannot guarantee that each unicode value will not change between all major releases.
+The font ensures that the unicode value of each icon will not change between releases. But as the unicode UTF-32 range is limited, we cannot guarantee that each unicode value will not change between all major releases.
 
 If we reach the limit, which is very unlikely, we will have to change the unicode values of the icons, and the font will not be backwards compatible. In that case, we will advice it in the release notes.
 

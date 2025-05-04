@@ -27,9 +27,9 @@ const UTF8 = 'utf8';
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'font');
-const MIN_UNICODE = 59905;
-const MAX_UNICODE = 1112063;
-const RESERVED_UNICODES = 3000;
+const MIN_UNICODE = 262144; // range not reserved by the Unicode spec
+const MAX_UNICODE = 544767;
+const UNICODES_MARGIN = 3000;
 const UNICODE_START = MIN_UNICODE;
 const UNICODE_RANGE = MAX_UNICODE - MIN_UNICODE;
 
@@ -78,17 +78,13 @@ const fileExists = async (fpath) => {
  *
  * Note that when a slug is removed, the unicodes that are missing now will
  * not be used again. This could lead to a situation where the map has grown
- * beyond the number of available unicodes, which are 1052158. This number
- * if computed from `1112063 - 59905` where:
- *
- *  - 1112063 is the maximum unicode value for a glyph in a UTF-16 encoding.
- *  - 59905   is the first unicode value used prevent conflicts with other fonts.
+ * beyond the number of available unicodes.
  *
  * In the case of a collision, the hashes file must be removed and built again,
  * which will lead to a new set of unicodes. This must be done manually and
  * published to the changelog in a breaking major version. A warning will be
- * triggered if the number of slugs exceeds the maximum available minus a convenient
- * number of reserved unicodes to prevent collisions.
+ * triggered if the number of slugs exceeds the maximum available minus a
+ * convenient offset of reserved unicodes.
  */
 const buildData = async () => {
   const unicodesBySlugFile = path.join(ROOT_DIR, 'unicodes.json');
@@ -163,7 +159,7 @@ const buildData = async () => {
   }
 
   const numberOfSlugs = Object.keys(dataBySlug).length;
-  const maxNumberOfSlugs = UNICODE_RANGE - RESERVED_UNICODES;
+  const maxNumberOfSlugs = UNICODE_RANGE - UNICODES_MARGIN;
   if (numberOfSlugs > maxNumberOfSlugs) {
     const warningMessage =
       `[WARNING] The number of unicodes (${numberOfSlugs}) exceeds the maximum` +
@@ -187,7 +183,7 @@ const buildData = async () => {
   if (!siFontSlugs.size) {
     await fs.writeFile(
       unicodesBySlugFile,
-      `${JSON.stringify(unicodesBySlug, null, 2)}\n`,
+      `${JSON.stringify(unicodesBySlug, null, '\t')}\n`,
     );
   }
 
