@@ -24,6 +24,7 @@ import util from 'util';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const UTF8 = 'utf8';
+const START_UNICODE = 0xea01;
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'font');
@@ -39,6 +40,8 @@ const EOT_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.eot');
 const OTF_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.otf');
 const WOFF_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.woff');
 const WOFF2_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.woff2');
+const DATA_JSON_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.json');
+const DATA_JSON_MIN_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.min.json');
 
 const CSS_BASE_FILE = path.resolve(__dirname, 'templates', 'base.css');
 const SVG_TEMPLATE_FILE = path.join(__dirname, 'templates', 'font.svg');
@@ -57,7 +60,7 @@ const icons = await getIconsData();
 const buildSimpleIconsSvgFontFile = async () => {
   const usedUnicodes = [];
   const unicodeHexBySlug = [];
-  let startUnicode = 0xea01;
+  let startUnicode = START_UNICODE;
   let glyphsContent = '';
 
   for (const iconData of icons) {
@@ -141,6 +144,34 @@ const buildSimpleIconsMinCssFile = (cssFileContent) =>
     }
   });
 
+const buildSimpleIconsJsonFile = () => {
+  new Promise(async (resolve, reject) => {
+    try {
+      const iconsWithSlugs = icons.map(({ title, slug, ...rest }, index) => ({
+        title,
+        slug: getIconSlug({ title, slug }),
+        code: (START_UNICODE + index).toString(16),
+        ...rest,
+      }));
+      const jsonFileContent = JSON.stringify(iconsWithSlugs, null, '\t');
+      const minJsonFileContent = JSON.stringify(iconsWithSlugs);
+
+      await Promise.all([
+        fs.writeFile(DATA_JSON_OUTPUT_FILE, jsonFileContent).then(() => {
+          console.log(`'${DATA_JSON_OUTPUT_FILE}' file built`);
+        }),
+        fs.writeFile(DATA_JSON_MIN_OUTPUT_FILE, minJsonFileContent).then(() => {
+          console.log(`'${DATA_JSON_MIN_OUTPUT_FILE}' file built`);
+        }),
+      ]);
+
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
 const buildSimpleIconsTtfFontFile = (svgFileContent) =>
   new Promise(async (resolve, reject) => {
     try {
@@ -223,6 +254,7 @@ const main = async () => {
   Promise.all([
     buildSimpleIconsCssFile(unicodeHexBySlug),
     buildSimpleIconsTtfFontFile(svgFileContent),
+    buildSimpleIconsJsonFile(),
   ]).then(([cssFileContent, ttfFileContent]) => {
     Promise.all([
       buildSimpleIconsWoffFontFile(ttfFileContent),
