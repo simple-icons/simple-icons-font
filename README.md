@@ -100,15 +100,12 @@ SI_FONT_SLUGS_FILTER=github,simpleicons npm run build
 Next environment variables are available to customize the build:
 
 - `SI_FONT_SLUGS_FILTER`: Comma separated string of slugs to include in the build. See [all slugs].
-- `SI_FONT_PRESERVE_UNICODES`: By default, the build will retain the same unicode of an icon as the full build. You can set it to `false` to disable this.
 
-For example, if you set `SI_FONT_PRESERVE_UNICODES` to `false`, the unicode will still start at `0xea01` and keep increasing even you skipped some icons:
+## Versioning policy
 
-```shell
-SI_FONT_SLUGS_FILTER=github,simpleicons SI_FONT_PRESERVE_UNICODES=false npm run build
-#=> github      \u{EA01}
-#=> simpleicons \u{EA02}
-```
+The font ensures that the unicode value of each icon will not change between releases. But as the unicode UTF-16 range is limited, we cannot guarantee that each unicode value will not change between all major releases.
+
+If we reach the limit, which is very unlikely, we will have to change the unicode values of the icons, and the font will not be backwards compatible. In that case, we will advice it in the release notes.
 
 [latest-release]: https://github.com/simple-icons/simple-icons-font/releases/latest
 [jsdelivr-link]: https://www.jsdelivr.com/package/npm/simple-icons-font/

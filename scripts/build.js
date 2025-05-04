@@ -10,7 +10,7 @@ import fsSync, { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import punycode from 'punycode/punycode.js';
-import * as simpleIcons from 'simple-icons/icons';
+import * as simpleIcons from 'simple-icons';
 import { getIconsData, getIconSlug } from 'simple-icons/sdk';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
@@ -27,6 +27,11 @@ const UTF8 = 'utf8';
 
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'font');
+const MIN_UNICODE = 59905;
+const MAX_UNICODE = 1112063;
+const RESERVED_UNICODES = 3000;
+const UNICODE_START = MIN_UNICODE;
+const UNICODE_RANGE = MAX_UNICODE - MIN_UNICODE;
 
 const PACKAGE_JSON_FILE = path.join(ROOT_DIR, 'package.json');
 const PACKAGE_JSON = JSON.parse(fsSync.readFileSync(PACKAGE_JSON_FILE, UTF8));
@@ -43,56 +48,165 @@ const WOFF2_OUTPUT_FILE = path.join(DIST_DIR, 'SimpleIcons.woff2');
 const CSS_BASE_FILE = path.resolve(__dirname, 'templates', 'base.css');
 const SVG_TEMPLATE_FILE = path.join(__dirname, 'templates', 'font.svg');
 
+const { SI_FONT_SLUGS_FILTER = '' } = process.env;
+const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
+
 const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
 };
 
-const { SI_FONT_SLUGS_FILTER = '', SI_FONT_PRESERVE_UNICODES } = process.env;
-const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
-const siFontPreseveUnicodes = SI_FONT_PRESERVE_UNICODES !== 'false';
+/**
+ * Check if a file exists.
+ * @param {string} fpath File path to check.
+ * @returns {Promise<boolean>} True if the file exists, false otherwise.
+ */
+const fileExists = async (fpath) => {
+  try {
+    await fs.access(fpath);
+    return true;
+  } catch {
+    return false;
+  }
+};
 
-const icons = await getIconsData();
+/**
+ * Build the data needed for the font.
+ *
+ * To guarantee that the unicodes are unique between executions, we need to
+ * load the previous slugs with their unicodes computed via hash + mapping.
+ *
+ * Note that when a slug is removed, the unicodes that are missing now will
+ * not be used again. This could lead to a situation where the map has grown
+ * beyond the number of available unicodes, which are 1052158. This number
+ * if computed from `1112063 - 59905` where:
+ *
+ *  - 1112063 is the maximum unicode value for a glyph in a UTF-16 encoding.
+ *  - 59905   is the first unicode value used prevent conflicts with other fonts.
+ *
+ * In the case of a collision, the hashes file must be removed and built again,
+ * which will lead to a new set of unicodes. This must be done manually and
+ * published to the changelog in a breaking major version. A warning will be
+ * triggered if the number of slugs exceeds the maximum available minus a convenient
+ * number of reserved unicodes to prevent collisions.
+ */
+const buildData = async () => {
+  const unicodesBySlugFile = path.join(ROOT_DIR, 'unicodes.json');
+  const unicodesBySlug = (await fileExists(unicodesBySlugFile))
+    ? JSON.parse(await fs.readFile(unicodesBySlugFile, UTF8))
+    : {};
 
-const buildSimpleIconsSvgFontFile = async () => {
-  const usedUnicodes = [];
-  const unicodeHexBySlug = [];
-  let startUnicode = 0xea01;
-  let glyphsContent = '';
+  const usedUnicodes = Object.values(unicodesBySlug);
+  const dataBySlug = [];
 
-  for (const iconData of icons) {
+  /**
+   * Computes the FNV-1a hash of a string.
+   * @param {string} string_
+   * @returns
+   */
+  const fnv1aHash = (string_) => {
+    let hash = 0x811c9dc5; // initial seed (offset basis)
+    for (let i = 0; i < string_.length; i++) {
+      hash ^= string_.charCodeAt(i);
+      hash = (hash * 0x01000193) >>> 0; // multiply by FNV prime
+    }
+    return hash;
+  };
+
+  /**
+   * Assigns a unique and persistent number to a slug.
+   * @param {*} slug Slug to be converted to unicode.
+   * @returns
+   */
+  const slugToUnicode = (slug) => {
+    let attempt = 0;
+    let candidate, hash;
+
+    while (true) {
+      const input = attempt === 0 ? slug : `${slug}${attempt}`;
+      hash = fnv1aHash(input);
+      candidate = UNICODE_START + (hash % UNICODE_RANGE);
+
+      if (!usedUnicodes.includes(candidate)) {
+        usedUnicodes.push(candidate);
+        unicodesBySlug[slug] = candidate;
+        return candidate;
+      }
+
+      attempt++;
+    }
+  };
+
+  const iconsData = await getIconsData();
+  for (const iconData of iconsData) {
     const iconSlug = getIconSlug(iconData);
-    const key = 'si' + iconSlug.at(0).toUpperCase() + iconSlug.slice(1);
+    const iconKey = 'si' + iconSlug.at(0).toUpperCase() + iconSlug.slice(1);
+    const icon = simpleIcons[iconKey];
 
     if (siFontSlugs.size && !siFontSlugs.has(iconSlug)) {
-      if (siFontPreseveUnicodes) startUnicode++;
       continue;
     }
 
-    const nextUnicode = punycode.ucs2.decode(
-      String.fromCodePoint(startUnicode++),
-    );
-    const unicodeString = nextUnicode
+    const unicode = unicodesBySlug.hasOwnProperty(iconSlug)
+      ? unicodesBySlug[iconSlug]
+      : slugToUnicode(iconSlug);
+    const unicodeString = punycode.ucs2
+      .decode(String.fromCodePoint(unicode))
       .map((point) => `&#x${point.toString(16).toUpperCase()};`)
       .join('');
-    if (usedUnicodes.includes(unicodeString)) {
-      throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
+
+    dataBySlug[iconSlug] = {
+      unicodeString,
+      hex: iconData.hex,
+      path: icon.path,
+    };
+  }
+
+  const numberOfSlugs = Object.keys(dataBySlug).length;
+  const maxNumberOfSlugs = UNICODE_RANGE - RESERVED_UNICODES;
+  if (numberOfSlugs > maxNumberOfSlugs) {
+    const warningMessage =
+      `[WARNING] The number of unicodes (${numberOfSlugs}) exceeds the maximum` +
+      ` available to guarantee that there will not be unicode collisions in the` +
+      `  next major version (${maxNumberOfSlugs}).\n` +
+      `Please, remove the ${unicodesBySlugFile} file in the next major version` +
+      ` and publish that the unicodes have been changed in the CHANGELOG.\n`;
+
+    let prefix = '';
+    if (process.env.GITHUB_ACTIONS) {
+      prefix = '::warning file=unicodes.json::';
     }
 
-    const icon = simpleIcons[key];
-    const verticalTransformedPath = SVGPath(icon.path)
+    // TODO: save the maximum allowed major version in a file and exit before
+    //       building if the version has been reached.
+
+    console.error(`${prefix}${warningMessage}`);
+  }
+
+  // Save the unicodes by slug to a file
+  if (!siFontSlugs.size) {
+    await fs.writeFile(
+      unicodesBySlugFile,
+      JSON.stringify(unicodesBySlug, null, 2),
+    );
+  }
+
+  return dataBySlug;
+};
+
+const buildSimpleIconsSvgFontFile = async (dataBySlug) => {
+  let glyphsContent = '';
+
+  for (const iconSlug in dataBySlug) {
+    const { unicodeString, path } = dataBySlug[iconSlug];
+
+    const verticalTransformedPath = SVGPath(path)
       .translate(0, -24)
       .scale(50, -50)
       .round(6)
       .toString();
 
-    glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200"/>`;
-    usedUnicodes.push(unicodeString);
-
-    unicodeHexBySlug[icon.slug] = {
-      unicode: unicodeString,
-      hex: icon.hex,
-    };
+    glyphsContent += `<glyph glyph-name="${iconSlug}" unicode="${unicodeString}" d="${verticalTransformedPath}" horiz-adv-x="1200"/>`;
   }
 
   const svgFontTemplate = await fs.readFile(SVG_TEMPLATE_FILE, UTF8);
@@ -100,20 +214,19 @@ const buildSimpleIconsSvgFontFile = async () => {
   await fs.writeFile(SVG_OUTPUT_FILE, svgFileContent);
   console.log(`'${SVG_OUTPUT_FILE}' file built`);
 
-  return { unicodeHexBySlug, svgFileContent };
+  return svgFileContent;
 };
 
-const buildSimpleIconsCssFile = (unicodeHexBySlug) =>
+const buildSimpleIconsCssFile = (dataBySlug) =>
   new Promise(async (resolve, reject) => {
     try {
       let cssFileContent = await fs.readFile(CSS_BASE_FILE);
 
-      for (let slug in unicodeHexBySlug) {
-        let icon = unicodeHexBySlug[slug];
-
+      for (const slug in dataBySlug) {
+        const { unicodeString, hex } = dataBySlug[slug];
         cssFileContent += `
-.si-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
-.si-${slug}.si--color::before { color: #${icon.hex}; }`;
+.si-${slug}::before { content: "${cssDecodeUnicode(unicodeString)}"; }
+.si-${slug}.si--color::before { color: #${hex}; }`;
       }
 
       await fs.writeFile(CSS_OUTPUT_FILE, cssFileContent);
@@ -217,11 +330,12 @@ const main = async () => {
     await fs.mkdir(DIST_DIR);
   }
 
-  const { unicodeHexBySlug, svgFileContent } =
-    await buildSimpleIconsSvgFontFile();
+  const dataBySlug = await buildData();
+
+  const svgFileContent = await buildSimpleIconsSvgFontFile(dataBySlug);
 
   Promise.all([
-    buildSimpleIconsCssFile(unicodeHexBySlug),
+    buildSimpleIconsCssFile(dataBySlug),
     buildSimpleIconsTtfFontFile(svgFileContent),
   ]).then(([cssFileContent, ttfFileContent]) => {
     Promise.all([

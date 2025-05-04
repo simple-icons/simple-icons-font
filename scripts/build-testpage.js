@@ -18,7 +18,7 @@ const INPUT_FILE = path.join(ROOT_DIR, 'preview', 'html', 'testpage.pug');
 const OUTPUT_FILE = path.join(ROOT_DIR, 'preview', 'testpage.html');
 
 const { SI_FONT_SLUGS_FILTER = '' } = process.env;
-const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(','));
+const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
 
 const iconsData = await getIconsData();
 const icons = iconsData
