@@ -22,7 +22,7 @@ jobs:
           persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
-      - name: Use Node.js 20.x
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
