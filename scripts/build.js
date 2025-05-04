@@ -170,7 +170,7 @@ const buildData = async () => {
       ` available to guarantee that there will not be unicode collisions in the` +
       `  next major version (${maxNumberOfSlugs}).\n` +
       `Please, remove the ${unicodesBySlugFile} file in the next major version` +
-      ` and publish that the unicodes have been changed in the CHANGELOG.\n`;
+      ` and publish in the CHANGELOG that the unicodes have been changed.\n`;
 
     let prefix = '';
     if (process.env.GITHUB_ACTIONS) {
