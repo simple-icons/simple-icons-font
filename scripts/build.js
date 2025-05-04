@@ -187,7 +187,7 @@ const buildData = async () => {
   if (!siFontSlugs.size) {
     await fs.writeFile(
       unicodesBySlugFile,
-      JSON.stringify(unicodesBySlug, null, 2),
+      `${JSON.stringify(unicodesBySlug, null, 2)}\n`,
     );
   }
 
