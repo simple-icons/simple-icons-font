@@ -6,6 +6,7 @@
 !DISCLAIMER.md
 !README.md
 !LICENSE.md
+!unicodes.json
 
 # But exclude the .svg font file, as per:
 # https://github.com/simple-icons/simple-icons-font/pull/45#discussion_r539539508
