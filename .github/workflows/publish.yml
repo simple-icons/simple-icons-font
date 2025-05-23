@@ -84,6 +84,10 @@ jobs:
         run: |
           git add README.md
           git diff-index --quiet HEAD || git commit -m 'Update README CDN urls'
+      - name: Commit unicodes updates
+        run: |
+          git add unicodes.json
+          git diff-index --quiet HEAD || git commit -m 'Update unicodes'
       - name: Create and push git tag
         if: github.ref == 'refs/heads/master'
         run: |
