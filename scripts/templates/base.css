@@ -8,8 +8,24 @@
     url(SimpleIcons.eot) format('embedded-opentype');
 }
 
+@font-face {
+  font-family: 'Simple Icons Fit';
+  src:
+    url(SimpleIcons-Fit.woff) format('woff'),
+    url(SimpleIcons-Fit.woff2) format('woff2'),
+    url(SimpleIcons-Fit.ttf) format('truetype'),
+    url(SimpleIcons-Fit.otf) format('opentype'),
+    url(SimpleIcons-Fit.eot) format('embedded-opentype');
+}
+
 .si {
   font-style: normal;
   font-family: 'Simple Icons', sans-serif;
+  vertical-align: middle;
+}
+
+.si-fit {
+  font-style: normal;
+  font-family: 'Simple Icons Fit', sans-serif;
   vertical-align: middle;
 }

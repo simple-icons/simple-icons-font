@@ -77,6 +77,13 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 <i class="si si-simpleicons si--color"></i>
 ```
 
+Or use the fit style font, all font will rendered in the same height:
+
+```html
+<i class="si-fit si-simpleicons"></i>
+<i class="si-fit si-simpleicons si--color"></i>
+```
+
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
 
 ## Custom Builds
