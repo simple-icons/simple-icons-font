@@ -137,7 +137,12 @@ const buildSimpleIconsSvgFontFile = async (style) => {
   }
 
   const svgFontTemplate = await fs.readFile(SVG_TEMPLATE_FILE, UTF8);
-  const svgFileContent = util.format(svgFontTemplate, style, glyphsContent);
+  const svgFileContent = util.format(
+    svgFontTemplate,
+    style === REGULAR_STYLE_NAME ? '' : ` ${style}`, // font id
+    style, // font style
+    glyphsContent,
+  );
   const svgFilename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${SVG_EXTENSION_NAME}`;
   await fs.writeFile(path.join(DIST_DIR, svgFilename), svgFileContent);
   console.log(`'${svgFilename}' file built`);
