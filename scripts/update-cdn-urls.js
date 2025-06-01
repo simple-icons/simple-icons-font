@@ -7,11 +7,8 @@
 import process from 'node:process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { getDirnameFromImportMeta } from 'simple-icons/sdk';
 
-const __dirname = getDirnameFromImportMeta(import.meta.url);
-
-const rootDir = path.resolve(__dirname, '..');
+const rootDir = path.resolve(import.meta.dirname, '..');
 const packageJsonFile = path.resolve(rootDir, 'package.json');
 const readmeFile = path.resolve(rootDir, 'README.md');
 
