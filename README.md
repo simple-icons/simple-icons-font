@@ -22,16 +22,26 @@ The font can be served from a CDN such as [JSDelivr][jsdelivr-link] or [Unpkg][u
 #### JSDelivr
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v14/font/simple-icons.min.css" type="text/css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-icons-font@v15/font/simple-icons.min.css" type="text/css">
 ```
 
 #### Unpkg
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v14/font/simple-icons.min.css" type="text/css">
+<link rel="stylesheet" href="https://unpkg.com/simple-icons-font@v15/font/simple-icons.min.css" type="text/css">
 ```
 
 These examples use the latest major version. This means you won't receive any updates following the next major release. You can use `@latest` instead to receive updates indefinitely. However this may cause an icon to disappear if it has been removed in the latest version.
+
+### Homebrew Setup <img src="https://cdn.simpleicons.org/homebrew/000/fff" alt="Homebrew" align=left width=24>
+
+The font is also available through Homebrew Cask. To install, simply run:
+
+```shell
+brew install font-simple-icons
+```
+
+After installation, the font will be available in your system's font library, and you can use it in any application that supports custom fonts.
 
 ### Node Setup <img src="https://cdn.simpleicons.org/nodedotjs/000/fff" alt="Node" align=left width=24>
 
