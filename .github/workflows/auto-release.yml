@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Update README CDN URLs
-        # Update CDN URLs in the README
+        # Update CDN URLs in README
         run: node scripts/update-cdn-urls.js
       - name: Update simple-icons dependency and package version
         id: update
