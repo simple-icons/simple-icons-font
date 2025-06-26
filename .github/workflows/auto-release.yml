@@ -49,13 +49,17 @@ jobs:
     needs: get-releases
     if: needs.get-releases.outputs.si != needs.get-releases.outputs.lib
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          token: ${{ steps.app-token.outputs.token }}
           # Ensure we are checked out on the develop branch
           ref: develop
-          # Ensure custom credentials are used when pushing
-          persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
       - name: Use Node.js
@@ -75,15 +79,14 @@ jobs:
           echo "new-version=$new_version" >> $GITHUB_OUTPUT
       - name: Sanity check
         run: npm run build
+      - name: Configure GIT credentials
+        run: |
+          git config user.name "simple-icons[bot]"
+          git config user.email "simple-icons[bot]@users.noreply.github.com"
       - name: Commit updates
         run: |
-          # Set up git credential
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-          # Create a version bump commit
           git add .
-          git commit -m "Version bump"
+          git commit -m "Bump version"
       - name: Merge develop into master
         run: |
           git checkout master
