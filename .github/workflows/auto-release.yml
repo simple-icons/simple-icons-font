@@ -20,6 +20,7 @@ jobs:
     outputs:
       is-fork: ${{ steps.check.outputs.is-fork }}
     steps:
+      - uses: actions/checkout@v4
       - uses: ./.github/actions/check-is-fork
         id: check
         with:
