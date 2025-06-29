@@ -1,60 +1,92 @@
 name: Automated Releases
-on: workflow_dispatch
-
-# This Workflow is triggered through the GitHub API:
-#   curl -X Post \
-#        -H "Authorization: Bearer <token>" \
-#        -d '{"ref":"develop"}' \
-#        https://api.github.com/repos/simple-icons/simple-icons-font/actions/workflows/auto-release.yml/dispatches
-# Replacing <token> by a personal access token with scope `public_repo`
+on:
+  # This Workflow is triggered through the GitHub API:
+  #   curl -X Post \
+  #        -H "Authorization: Bearer <token>" \
+  #        -d '{"ref":"develop"}' \
+  #        https://api.github.com/repos/simple-icons/simple-icons-font/actions/workflows/auto-release.yml/dispatches
+  # Replacing <token> by a personal access token with scope `public_repo`
+  workflow_dispatch:
+  # It is also triggered on a schedule, every Tuesday, Thursday, and Saturday at midnight UTC.
+  # This is to ensure that the fonts are released regularly, if, for some reason, the
+  # previous workflow dispatch failed to trigger a release.
+  schedule:
+    - cron: 0 0 * * 2,4,6
 
 jobs:
+  check-is-fork:
+    name: Check if running in a fork
+    runs-on: ubuntu-latest
+    outputs:
+      is-fork: ${{ steps.check.outputs.is-fork }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/check-is-fork
+        id: check
+        with:
+          in-fork-message: 'Auto release only can be executed in the main repository, skipping.'
+  get-releases:
+    name: Get release versions
+    runs-on: ubuntu-latest
+    needs: check-is-fork
+    if: needs.check-is-fork.outputs.is-fork != 'true'
+    outputs:
+      si: ${{ steps.get-releases.outputs.si }}
+      lib: ${{ steps.get-releases.outputs.lib }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: develop
+      - name: Compare release versions
+        id: get-releases
+        run: |
+          simple_icons_version="$(curl --retry 15 -s https://api.github.com/repos/simple-icons/simple-icons/releases/latest | jq -r .tag_name)"
+          echo "si=$simple_icons_version" >> $GITHUB_OUTPUT
+          echo "lib=$(cat package.json | grep '"version":' | cut -d'"' -f4)" >> $GITHUB_OUTPUT
   auto-release:
     name: Automated release
     runs-on: ubuntu-latest
+    needs: get-releases
+    if: needs.get-releases.outputs.si != needs.get-releases.outputs.lib
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          token: ${{ steps.app-token.outputs.token }}
           # Ensure we are checked out on the develop branch
           ref: develop
-          # Ensure custom credentials are used when pushing
-          persist-credentials: false
           # Fetch everything so we can checkout master
           fetch-depth: 0
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Update README CDN URLs
-        run: |
-          # Update the CDN URLs in the README
-          node scripts/update-cdn-urls.js
+        # Update CDN URLs in README
+        run: node scripts/update-cdn-urls.js
       - name: Update simple-icons dependency and package version
         id: update
         run: |
-          newVersion="$(node scripts/bump-version.js)"
-          echo "new-version=$newVersion" >> $GITHUB_OUTPUT
+          new_version="$(node scripts/bump-version.js)"
+          echo "new-version=$new_version" >> $GITHUB_OUTPUT
       - name: Sanity check
         run: npm run build
+      - name: Configure GIT credentials
+        run: |
+          git config user.name "simple-icons[bot]"
+          git config user.email "simple-icons[bot]@users.noreply.github.com"
       - name: Commit updates
         run: |
-          # Set up git credential
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-
-          # Create a version bump commit
           git add .
-          git commit -m "Version bump"
+          git commit -m "Bump version"
       - name: Merge develop into master
         run: |
           git checkout master
