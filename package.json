@@ -1,6 +1,6 @@
 {
   "name": "simple-icons-font",
-  "version": "15.9.0",
+  "version": "15.10.0",
   "description": "Icon font generated from https://simpleicons.org",
   "homepage": "https://www.simpleicons.org",
   "keywords": [
@@ -46,7 +46,7 @@
     "rimraf": "6.0.1",
     "semver": "7.7.1",
     "serve": "14.2.4",
-    "simple-icons": "15.9.0",
+    "simple-icons": "15.10.0",
     "svg-path-bbox": "2.1.0",
     "svg2ttf": "6.0.3",
     "svgpath": "2.6.0",
