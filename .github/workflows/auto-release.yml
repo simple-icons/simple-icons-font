@@ -20,7 +20,7 @@ jobs:
     outputs:
       is-fork: ${{ steps.check.outputs.is-fork }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: ./.github/actions/check-is-fork
         id: check
         with:
@@ -34,7 +34,7 @@ jobs:
       si: ${{ steps.get-releases.outputs.si }}
       lib: ${{ steps.get-releases.outputs.lib }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: develop
       - name: Compare release versions
@@ -55,7 +55,7 @@ jobs:
           app-id: ${{ vars.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ steps.app-token.outputs.token }}
           # Ensure we are checked out on the develop branch
@@ -63,9 +63,9 @@ jobs:
           # Fetch everything so we can checkout master
           fetch-depth: 0
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 22.x
+          node-version: 24
           cache: npm
       - name: Install dependencies
         run: npm ci
