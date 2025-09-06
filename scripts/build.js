@@ -10,8 +10,7 @@ import fsSync, { promises as fs } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import punycode from 'punycode/punycode.js';
-import * as simpleIcons from 'simple-icons/icons';
-import { getIconsData, getIconSlug } from 'simple-icons/sdk';
+import * as simpleIcons from 'simple-icons';
 import { svgPathBbox } from 'svg-path-bbox';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
@@ -63,7 +62,14 @@ const { SI_FONT_SLUGS_FILTER = '', SI_FONT_PRESERVE_UNICODES } = process.env;
 const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
 const siFontPreseveUnicodes = SI_FONT_PRESERVE_UNICODES !== 'false';
 
-const icons = await getIconsData();
+const icons = await (async () => {
+  // TODO: on Node.js v24 -> `import icons from 'simple-icons/icons.json' with { type: 'json' }`
+  const rawIcons = await fs.readFile(
+    './node_modules/simple-icons/data/simple-icons.json',
+    UTF8,
+  );
+  return JSON.parse(rawIcons);
+})();
 
 const verticalTransform = (pathInstance) =>
   pathInstance.translate(0, -24).scale(50, -50).round(6).toString();
@@ -106,10 +112,10 @@ const buildSimpleIconsSvgFontFile = async (style) => {
   let glyphsContent = '';
 
   for (const iconData of icons) {
-    const iconSlug = getIconSlug(iconData);
-    const key = 'si' + iconSlug.at(0).toUpperCase() + iconSlug.slice(1);
+    const key =
+      'si' + iconData.slug.at(0).toUpperCase() + iconData.slug.slice(1);
 
-    if (siFontSlugs.size && !siFontSlugs.has(iconSlug)) {
+    if (siFontSlugs.size && !siFontSlugs.has(iconData.slug)) {
       if (siFontPreseveUnicodes) startUnicode++;
       continue;
     }
@@ -196,7 +202,7 @@ const buildSimpleIconsJsonFile = () => {
     try {
       const iconsWithSlugs = icons.map(({ title, slug, ...rest }, index) => ({
         title,
-        slug: getIconSlug({ title, slug }),
+        slug,
         code: (START_UNICODE + index).toString(16),
         ...rest,
       }));
