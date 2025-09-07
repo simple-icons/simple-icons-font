@@ -13,11 +13,11 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 22.x
+          node-version: 24
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -59,9 +59,9 @@ jobs:
           git config user.name "simple-icons[bot]"
           git config user.email "simple-icons[bot]@users.noreply.github.com"
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 22.x
+          node-version: 24
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
