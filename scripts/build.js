@@ -11,6 +11,7 @@ import path from 'node:path';
 import process from 'node:process';
 import punycode from 'punycode/punycode.js';
 import * as simpleIcons from 'simple-icons';
+import iconsData from 'simple-icons/icons.json' with { type: 'json' };
 import { svgPathBbox } from 'svg-path-bbox';
 import svg2ttf from 'svg2ttf';
 import SVGPath from 'svgpath';
@@ -18,15 +19,12 @@ import ttf2eot from 'ttf2eot';
 import ttf2woff from 'ttf2woff';
 import ttf2woff2 from 'ttf2woff2';
 import woff2otf from 'woff2otf';
-import { fileURLToPath } from 'node:url';
 import util from 'util';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const UTF8 = 'utf8';
 const START_UNICODE = 0xea01;
 
-const ROOT_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = path.resolve(import.meta.dirname, '..');
 const DIST_DIR = path.join(ROOT_DIR, 'font');
 
 const PACKAGE_JSON_FILE = path.join(ROOT_DIR, 'package.json');
@@ -50,8 +48,16 @@ const FIT_STYLE_NAME = 'Fit';
 
 const TARGET_STYLES = [REGULAR_STYLE_NAME, FIT_STYLE_NAME];
 
-const CSS_BASE_FILE = path.resolve(__dirname, 'templates', 'base.css');
-const SVG_TEMPLATE_FILE = path.join(__dirname, 'templates', 'font.svg');
+const CSS_BASE_FILE = path.resolve(
+  import.meta.dirname,
+  'templates',
+  'base.css',
+);
+const SVG_TEMPLATE_FILE = path.join(
+  import.meta.dirname,
+  'templates',
+  'font.svg',
+);
 
 const cssDecodeUnicode = (value) => {
   // &#xF26E; -> \f26e
@@ -61,15 +67,6 @@ const cssDecodeUnicode = (value) => {
 const { SI_FONT_SLUGS_FILTER = '', SI_FONT_PRESERVE_UNICODES } = process.env;
 const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
 const siFontPreseveUnicodes = SI_FONT_PRESERVE_UNICODES !== 'false';
-
-const icons = await (async () => {
-  // TODO: on Node.js v24 -> `import icons from 'simple-icons/icons.json' with { type: 'json' }`
-  const rawIcons = await fs.readFile(
-    './node_modules/simple-icons/data/simple-icons.json',
-    UTF8,
-  );
-  return JSON.parse(rawIcons);
-})();
 
 const verticalTransform = (pathInstance) =>
   pathInstance.translate(0, -24).scale(50, -50).round(6).toString();
@@ -111,7 +108,7 @@ const buildSimpleIconsSvgFontFile = async (style) => {
   let startUnicode = START_UNICODE;
   let glyphsContent = '';
 
-  for (const iconData of icons) {
+  for (const iconData of iconsData) {
     const key =
       'si' + iconData.slug.at(0).toUpperCase() + iconData.slug.slice(1);
 
@@ -200,12 +197,14 @@ const buildSimpleIconsMinCssFile = (cssFileContent) =>
 const buildSimpleIconsJsonFile = () => {
   new Promise(async (resolve, reject) => {
     try {
-      const iconsWithSlugs = icons.map(({ title, slug, ...rest }, index) => ({
-        title,
-        slug,
-        code: (START_UNICODE + index).toString(16),
-        ...rest,
-      }));
+      const iconsWithSlugs = iconsData.map(
+        ({ title, slug, ...rest }, index) => ({
+          title,
+          slug,
+          code: (START_UNICODE + index).toString(16),
+          ...rest,
+        }),
+      );
       const jsonFileContent = JSON.stringify(iconsWithSlugs, null, '\t');
       const minJsonFileContent = JSON.stringify(iconsWithSlugs);
 
