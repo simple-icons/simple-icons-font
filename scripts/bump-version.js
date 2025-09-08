@@ -9,11 +9,8 @@ import { execSync } from 'node:child_process';
 import fs from 'fs';
 import path from 'path';
 import semver from 'semver';
-import { fileURLToPath } from 'node:url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const ROOT_DIR = path.resolve(__dirname, '..');
+const ROOT_DIR = path.resolve(import.meta.dirname, '..');
 const PACKAGE_JSON_FILE = path.join(ROOT_DIR, 'package.json');
 const PACKAGE_LOCK_FILE = path.join(ROOT_DIR, 'package-lock.json');
 

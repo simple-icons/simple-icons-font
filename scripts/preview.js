@@ -7,11 +7,8 @@
 
 import path from 'node:path';
 import puppeteer from 'puppeteer';
-import { fileURLToPath } from 'node:url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const SCREENSHOT_PATH = path.join(__dirname, '..', 'screenshot.png');
+const SCREENSHOT_PATH = path.join(import.meta.dirname, '..', 'screenshot.png');
 const TEST_PAGE_URL = 'http://localhost:8080/';
 const VIEWPORT_720P = {
   height: 720,
