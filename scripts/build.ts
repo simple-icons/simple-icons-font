@@ -20,6 +20,7 @@ import ttf2woff from 'ttf2woff';
 import ttf2woff2 from 'ttf2woff2';
 import woff2otf from 'woff2otf';
 import util from 'util';
+import { type FontStyle, type UnicodeHexBySlug } from './types.ts';
 
 const UTF8 = 'utf8';
 const START_UNICODE = 0xea01;
@@ -46,7 +47,7 @@ const WOFF2_EXTENSION_NAME = '.woff2';
 const REGULAR_STYLE_NAME = 'Regular';
 const FIT_STYLE_NAME = 'Fit';
 
-const TARGET_STYLES = [REGULAR_STYLE_NAME, FIT_STYLE_NAME];
+const TARGET_STYLES: FontStyle[] = [REGULAR_STYLE_NAME, FIT_STYLE_NAME];
 
 const CSS_BASE_FILE = path.resolve(
   import.meta.dirname,
@@ -59,7 +60,7 @@ const SVG_TEMPLATE_FILE = path.join(
   'font.svg',
 );
 
-const cssDecodeUnicode = (value) => {
+const cssDecodeUnicode = (value: string) => {
   // &#xF26E; -> \f26e
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
 };
@@ -68,10 +69,10 @@ const { SI_FONT_SLUGS_FILTER = '', SI_FONT_PRESERVE_UNICODES } = process.env;
 const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
 const siFontPreseveUnicodes = SI_FONT_PRESERVE_UNICODES !== 'false';
 
-const verticalTransform = (pathInstance) =>
+const verticalTransform = (pathInstance: typeof SVGPath) =>
   pathInstance.translate(0, -24).scale(50, -50).round(6).toString();
 
-const convertToAspectRatioViewbox = (pathInstance) => {
+const convertToAspectRatioViewbox = (pathInstance: typeof SVGPath) => {
   const [x0, y0, x1, y1] = svgPathBbox(pathInstance);
   const width = x1 - x0;
   const height = y1 - y0;
@@ -86,7 +87,7 @@ const convertToAspectRatioViewbox = (pathInstance) => {
   };
 };
 
-const transform = (pathInstance, style) => {
+const transform = (pathInstance: typeof SVGPath, style: FontStyle) => {
   switch (style) {
     case REGULAR_STYLE_NAME: {
       return { path: verticalTransform(pathInstance), horizAdvX: 1200 };
@@ -99,18 +100,19 @@ const transform = (pathInstance, style) => {
   }
 };
 
-const getStyleSuffix = (style) =>
+const getStyleSuffix = (style: FontStyle) =>
   `${style === REGULAR_STYLE_NAME ? '' : `-${style}`}`;
 
-const buildSimpleIconsSvgFontFile = async (style) => {
-  const usedUnicodes = [];
-  const unicodeHexBySlug = [];
+const buildSimpleIconsSvgFontFile = async (style: FontStyle) => {
+  const usedUnicodes: string[] = [];
+  const unicodeHexBySlug: UnicodeHexBySlug = {};
   let startUnicode = START_UNICODE;
   let glyphsContent = '';
 
   for (const iconData of iconsData) {
-    const key =
-      'si' + iconData.slug.at(0).toUpperCase() + iconData.slug.slice(1);
+    const key = ('si' +
+      iconData.slug.at(0)!.toUpperCase() +
+      iconData.slug.slice(1)) as keyof typeof simpleIcons;
 
     if (siFontSlugs.size && !siFontSlugs.has(iconData.slug)) {
       if (siFontPreseveUnicodes) startUnicode++;
@@ -127,7 +129,7 @@ const buildSimpleIconsSvgFontFile = async (style) => {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons[key];
+    const icon = simpleIcons[key] as simpleIcons.SimpleIcon;
     const { path, horizAdvX } = transform(SVGPath(icon.path), style);
 
     glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${path}" horiz-adv-x="${horizAdvX}"/>`;
@@ -153,13 +155,15 @@ const buildSimpleIconsSvgFontFile = async (style) => {
   return { unicodeHexBySlug, svgFileContent };
 };
 
-const buildSimpleIconsCssFile = (unicodeHexBySlug) =>
+const buildSimpleIconsCssFile = (
+  unicodeHexBySlug: UnicodeHexBySlug,
+): Promise<string> =>
   new Promise(async (resolve, reject) => {
     try {
-      let cssFileContent = await fs.readFile(CSS_BASE_FILE);
+      let cssFileContent = await fs.readFile(CSS_BASE_FILE, 'utf8');
 
       for (let slug in unicodeHexBySlug) {
-        let icon = unicodeHexBySlug[slug];
+        let icon = unicodeHexBySlug[slug]!;
 
         cssFileContent += `
 .si-${slug}::before { content: "${cssDecodeUnicode(icon.unicode)}"; }
@@ -175,8 +179,8 @@ const buildSimpleIconsCssFile = (unicodeHexBySlug) =>
     }
   });
 
-const buildSimpleIconsMinCssFile = (cssFileContent) =>
-  new Promise(async (resolve, reject) => {
+const buildSimpleIconsMinCssFile = (cssFileContent: string) =>
+  new Promise<void>(async (resolve, reject) => {
     try {
       const cssMinifiedFile = new CleanCSS({
         compatibility: 'ie7',
@@ -194,8 +198,8 @@ const buildSimpleIconsMinCssFile = (cssFileContent) =>
     }
   });
 
-const buildSimpleIconsJsonFile = () => {
-  new Promise(async (resolve, reject) => {
+const buildSimpleIconsJsonFile = async () => {
+  new Promise<void>(async (resolve, reject) => {
     try {
       const iconsWithSlugs = iconsData.map(
         ({ title, slug, ...rest }, index) => ({
@@ -234,7 +238,10 @@ const buildSimpleIconsJsonFile = () => {
   });
 };
 
-const buildSimpleIconsTtfFontFile = (svgFileContent, style) =>
+const buildSimpleIconsTtfFontFile = (
+  svgFileContent: string,
+  style: FontStyle,
+): Promise<Buffer<ArrayBufferLike>> =>
   new Promise(async (resolve, reject) => {
     try {
       const ttf = svg2ttf(svgFileContent, {
@@ -245,7 +252,7 @@ const buildSimpleIconsTtfFontFile = (svgFileContent, style) =>
         description: PACKAGE_JSON.description,
         url: PACKAGE_JSON.homepage,
       });
-      const ttfFileContent = new Buffer.from(ttf.buffer);
+      const ttfFileContent = Buffer.from(ttf.buffer);
       const filename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${TTF_EXTENSION_NAME}`;
       await fs.writeFile(path.join(DIST_DIR, filename), ttfFileContent);
       console.log(`'${filename}' file built`);
@@ -255,12 +262,13 @@ const buildSimpleIconsTtfFontFile = (svgFileContent, style) =>
     }
   });
 
-const buildSimpleIconsWoffFontFile = (ttfFileContent, style) =>
+const buildSimpleIconsWoffFontFile = (
+  ttfFileContent: Buffer<ArrayBufferLike>,
+  style: FontStyle,
+): Promise<Buffer<ArrayBufferLike>> =>
   new Promise(async (resolve, reject) => {
     try {
-      const woff = new Buffer.from(
-        ttf2woff(new Uint8Array(ttfFileContent)).buffer,
-      );
+      const woff = Buffer.from(ttf2woff(new Uint8Array(ttfFileContent)).buffer);
       const filename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${WOFF_EXTENSION_NAME}`;
       await fs.writeFile(path.join(DIST_DIR, filename), woff);
       console.log(`'${filename}' file built`);
@@ -270,8 +278,11 @@ const buildSimpleIconsWoffFontFile = (ttfFileContent, style) =>
     }
   });
 
-const buildSimpleIconsWoff2FontFile = (ttfFileContent, style) =>
-  new Promise(async (resolve, reject) => {
+const buildSimpleIconsWoff2FontFile = (
+  ttfFileContent: Buffer<ArrayBufferLike>,
+  style: FontStyle,
+) =>
+  new Promise<void>(async (resolve, reject) => {
     try {
       const woff2 = ttf2woff2(ttfFileContent);
       const filename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${WOFF2_EXTENSION_NAME}`;
@@ -283,11 +294,14 @@ const buildSimpleIconsWoff2FontFile = (ttfFileContent, style) =>
     }
   });
 
-const buildSimpleIconsEotFontFile = (ttfFileContent, style) =>
-  new Promise(async (resolve, reject) => {
+const buildSimpleIconsEotFontFile = (
+  ttfFileContent: Buffer<ArrayBufferLike>,
+  style: FontStyle,
+) =>
+  new Promise<void>(async (resolve, reject) => {
     try {
       const ttf = new Uint8Array(ttfFileContent);
-      const eot = new Buffer.from(ttf2eot(ttf).buffer);
+      const eot = Buffer.from(ttf2eot(ttf).buffer);
       const filename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${EOT_EXTENSION_NAME}`;
       await fs.writeFile(path.join(DIST_DIR, filename), eot);
       console.log(`'${filename}' file built`);
@@ -297,8 +311,11 @@ const buildSimpleIconsEotFontFile = (ttfFileContent, style) =>
     }
   });
 
-const buildSimpleIconsOtfFontFile = (woffFileContent, style) =>
-  new Promise(async (resolve, reject) => {
+const buildSimpleIconsOtfFontFile = (
+  woffFileContent: Buffer<ArrayBufferLike>,
+  style: FontStyle,
+) =>
+  new Promise<void>(async (resolve, reject) => {
     try {
       const otf = woff2otf(woffFileContent);
       const filename = `${OUTPUT_FILE_NAME}${getStyleSuffix(style)}${OTF_EXTENSION_NAME}`;
@@ -310,7 +327,7 @@ const buildSimpleIconsOtfFontFile = (woffFileContent, style) =>
     }
   });
 
-const build = async (style) => {
+const build = async (style: FontStyle) => {
   const { unicodeHexBySlug, svgFileContent } =
     await buildSimpleIconsSvgFontFile(style);
 
@@ -338,7 +355,7 @@ const main = async () => {
   );
 
   await buildSimpleIconsJsonFile();
-  const cssFileContent = await buildSimpleIconsCssFile(unicodeHexBySlug);
+  const cssFileContent = await buildSimpleIconsCssFile(unicodeHexBySlug!);
   await buildSimpleIconsMinCssFile(cssFileContent);
 };
 

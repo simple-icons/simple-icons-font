@@ -24,12 +24,13 @@
   },
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.js",
-    "build:testpage": "npm run build && node scripts/build-testpage.js",
+    "build": "node scripts/build.ts",
+    "build:testpage": "npm run build && node scripts/build-testpage.ts",
     "serve:testpage": "serve -p 3000 --no-clipboard --config preview/serve.json",
     "clean": "rimraf font/ preview/testpage.html DISCLAIMER.md screenshot.png",
     "format": "prettier --write .",
     "lint": "prettier --check .",
+    "tscheck": "tsc",
     "prepublishOnly": "npm run build && cp node_modules/simple-icons/DISCLAIMER.md ./",
     "prepare": "node -e 'process.exit(process.env.CI ? 0 : 1)' || husky",
     "postpublish": "npm run clean",
@@ -37,6 +38,14 @@
   },
   "devDependencies": {
     "@prettier/plugin-pug": "3.4.0",
+    "@sindresorhus/tsconfig": "8.0.1",
+    "@types/clean-css": "4.2.11",
+    "@types/pug": "2.0.10",
+    "@types/punycode": "2.1.4",
+    "@types/semver": "7.7.1",
+    "@types/svg2ttf": "5.0.3",
+    "@types/ttf2eot": "2.0.2",
+    "@types/ttf2woff": "2.0.4",
     "clean-css": "5.3.3",
     "husky": "9.1.7",
     "prettier": "3.5.3",
@@ -53,6 +62,7 @@
     "ttf2eot": "3.1.0",
     "ttf2woff": "3.0.0",
     "ttf2woff2": "6.0.1",
+    "typescript": "5.9.2",
     "woff2otf": "1.0.0"
   }
 }

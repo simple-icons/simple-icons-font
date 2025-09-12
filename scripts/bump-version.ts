@@ -6,8 +6,8 @@
  */
 
 import { execSync } from 'node:child_process';
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import semver from 'semver';
 
 const ROOT_DIR = path.resolve(import.meta.dirname, '..');
@@ -17,7 +17,7 @@ const PACKAGE_LOCK_FILE = path.join(ROOT_DIR, 'package-lock.json');
 const PACKAGE_JSON = JSON.parse(fs.readFileSync(PACKAGE_JSON_FILE, 'utf8'));
 const PACKAGE_LOCK = JSON.parse(fs.readFileSync(PACKAGE_LOCK_FILE, 'utf8'));
 
-const stringifyJson = (object) => {
+const stringifyJson = (object: unknown) => {
   return JSON.stringify(object, null, 2);
 };
 

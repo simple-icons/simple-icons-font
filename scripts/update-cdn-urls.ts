@@ -12,8 +12,8 @@ const rootDir = path.resolve(import.meta.dirname, '..');
 const packageJsonFile = path.resolve(rootDir, 'package.json');
 const readmeFile = path.resolve(rootDir, 'README.md');
 
-const getMajorVersion = (version) => {
-  const majorVersionAsString = version.split('.')[0];
+const getMajorVersion = (version: string) => {
+  const majorVersionAsString = version.split('.')[0]!;
   return parseInt(majorVersionAsString);
 };
 
@@ -22,7 +22,7 @@ const getManifest = async () => {
   return JSON.parse(manifestRaw);
 };
 
-const updateVersionIfNecessary = async (majorVersion) => {
+const updateVersionIfNecessary = async (majorVersion: number) => {
   return (await fs.readFile(readmeFile, 'utf8')).replace(
     /simple-icons-font@v[0-9]+/g,
     `simple-icons-font@v${majorVersion}`,
