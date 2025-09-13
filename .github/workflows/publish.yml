@@ -30,7 +30,7 @@ jobs:
       - name: Build NodeJS package
         run: npm run build
       - name: Update README CDN URLs
-        run: node scripts/update-cdn-urls.js
+        run: node scripts/update-cdn-urls.ts
       - name: Deploy to NPM
         if: github.ref == 'refs/heads/master'
         uses: JS-DevTools/npm-publish@v3
@@ -74,7 +74,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Update README CDN URLs
-        run: node scripts/update-cdn-urls.js
+        run: node scripts/update-cdn-urls.ts
       # Commits that will only be included in the tag
       - name: Commit font
         run: |
