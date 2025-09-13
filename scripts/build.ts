@@ -11,6 +11,7 @@ import path from 'node:path';
 import process from 'node:process';
 import punycode from 'punycode/punycode.js';
 import * as simpleIcons from 'simple-icons';
+import { type SimpleIcon } from 'simple-icons';
 import iconsData from 'simple-icons/icons.json' with { type: 'json' };
 import { svgPathBbox } from 'svg-path-bbox';
 import svg2ttf from 'svg2ttf';
@@ -129,7 +130,7 @@ const buildSimpleIconsSvgFontFile = async (style: FontStyle) => {
       throw Error(`Unicodes must be unique. Found '${unicodeString}' repeated`);
     }
 
-    const icon = simpleIcons[key] as simpleIcons.SimpleIcon;
+    const icon = simpleIcons[key] as SimpleIcon;
     const { path, horizAdvX } = transform(SVGPath(icon.path), style);
 
     glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${path}" horiz-adv-x="${horizAdvX}"/>`;
@@ -160,7 +161,7 @@ const buildSimpleIconsCssFile = (
 ): Promise<string> =>
   new Promise(async (resolve, reject) => {
     try {
-      let cssFileContent = await fs.readFile(CSS_BASE_FILE, 'utf8');
+      let cssFileContent = await fs.readFile(CSS_BASE_FILE, UTF8);
 
       for (let slug in unicodeHexBySlug) {
         let icon = unicodeHexBySlug[slug]!;

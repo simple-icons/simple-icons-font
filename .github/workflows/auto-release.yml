@@ -71,11 +71,11 @@ jobs:
         run: npm ci
       - name: Update README CDN URLs
         # Update CDN URLs in README
-        run: node scripts/update-cdn-urls.js
+        run: node scripts/update-cdn-urls.ts
       - name: Update simple-icons dependency and package version
         id: update
         run: |
-          new_version="$(node scripts/bump-version.js)"
+          new_version="$(node scripts/bump-version.ts)"
           echo "new-version=$new_version" >> $GITHUB_OUTPUT
       - name: Sanity check
         run: npm run build
