@@ -10,7 +10,7 @@ jobs:
     name: NPM Package
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
+      id-token: write # for OIDC authentication
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -33,10 +33,7 @@ jobs:
         run: node scripts/update-cdn-urls.ts
       - name: Deploy to NPM
         if: github.ref == 'refs/heads/master'
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          provenance: true
+        run: npm publish
   github:
     name: GitHub release
     runs-on: ubuntu-latest
