@@ -10,33 +10,24 @@ jobs:
     name: NPM Package
     runs-on: ubuntu-latest
     permissions:
-      id-token: write
+      id-token: write # for OIDC authentication
     steps:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 24
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version-file: .node-version
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Build NodeJS package
         run: npm run build
       - name: Update README CDN URLs
-        run: node scripts/update-cdn-urls.js
+        run: node scripts/update-cdn-urls.ts
       - name: Deploy to NPM
         if: github.ref == 'refs/heads/master'
-        uses: JS-DevTools/npm-publish@v3
-        with:
-          token: ${{ secrets.NPM_TOKEN }}
-          provenance: true
+        run: npm publish
   github:
     name: GitHub release
     runs-on: ubuntu-latest
@@ -61,20 +52,14 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v5
         with:
-          node-version: 24
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version-file: .node-version
+          cache: npm
       - name: Install dependencies
         run: npm ci
       - name: Build
         run: npm run build
       - name: Update README CDN URLs
-        run: node scripts/update-cdn-urls.js
+        run: node scripts/update-cdn-urls.ts
       # Commits that will only be included in the tag
       - name: Commit font
         run: |
