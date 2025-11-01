@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: npm
@@ -39,7 +39,7 @@ jobs:
           app-id: ${{ vars.BOT_APP_ID }}
           private-key: ${{ secrets.BOT_PRIVATE_KEY }}
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Get release version
         id: get-version
         run: |
@@ -50,7 +50,7 @@ jobs:
           git config user.name "simple-icons[bot]"
           git config user.email "simple-icons[bot]@users.noreply.github.com"
       - name: Use Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: .node-version
           cache: npm
@@ -98,7 +98,7 @@ jobs:
           upload_url: ${{ steps.create-release.outputs.upload_url }}
           asset_path: simple-icons-font-${{ steps.get-version.outputs.version }}.zip
       - name: Upload compressed fonts ZIP
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: simple-icons-font-${{ steps.get-version.outputs.version }}
           path: simple-icons-font-${{ steps.get-version.outputs.version }}.zip
