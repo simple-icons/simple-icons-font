@@ -87,11 +87,18 @@ Where `[ICON NAME]` is replaced by the icon name, for example:
 <i class="si si-simpleicons si--color"></i>
 ```
 
-Or use the fit style font, all font will rendered in the same height:
+Or use the fit style font. It keeps all icons at the same height while allowing wider icons to use wider glyphs:
 
 ```html
 <i class="si-fit si-simpleicons"></i>
 <i class="si-fit si-simpleicons si--color"></i>
+```
+
+Or use the code style font for code or monospace layouts. It uses the same height-based scaling as the fit style and rounds icon widths to fixed-width steps so icons align more predictably with text columns:
+
+```html
+<i class="si-code si-simpleicons"></i>
+<i class="si-code si-simpleicons si--color"></i>
 ```
 
 In this example we use the `<i>` tag, but any inline HTML tag should work as you expect.
