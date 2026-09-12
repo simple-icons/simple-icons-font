@@ -25,7 +25,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.ts",
-    "build:testpage": "npm run build && node scripts/build-testpage.ts",
+    "build:testpage": "node scripts/build-testpage.ts",
     "serve:testpage": "serve -p 3000 --no-clipboard --config preview/serve.json",
     "clean": "rimraf font/ preview/testpage.html DISCLAIMER.md screenshot.png",
     "format": "prettier --write .",

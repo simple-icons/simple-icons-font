@@ -7,10 +7,15 @@ body.dark {
   color: #fff;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .buttons-list {
   display: flex;
-  justify-content: space-around;
-  width: 250px;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
   margin-bottom: 25px;
 }
 
@@ -19,8 +24,36 @@ body.dark {
   cursor: pointer;
 }
 
+.icon-search {
+  box-sizing: border-box;
+  width: min(280px, 100%);
+  padding: 5px 8px;
+}
+
+.icons-count {
+  min-width: 70px;
+  white-space: nowrap;
+}
+
+.icons-style {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.icons-style label {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  cursor: pointer;
+}
+
 i.si,
-i.si-fit {
+i.si-fit,
+i.si-code {
   display: inline-block;
   cursor: help;
 }
@@ -29,11 +62,8 @@ p.grid {
   font-size: 32px;
 }
 
-p.grid i.si,
-p.grid i.si-fit {
-  margin: 0 4px;
-  padding: 4px;
-  border: 1px dashed gray;
+.empty-search {
+  font-size: 18px;
 }
 
 p.paragraph {
