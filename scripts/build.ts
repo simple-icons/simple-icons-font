@@ -47,8 +47,13 @@ const WOFF2_EXTENSION_NAME = '.woff2';
 
 const REGULAR_STYLE_NAME = 'Regular';
 const FIT_STYLE_NAME = 'Fit';
+const CODE_STYLE_NAME = 'Code';
 
-const TARGET_STYLES: FontStyle[] = [REGULAR_STYLE_NAME, FIT_STYLE_NAME];
+const TARGET_STYLES: FontStyle[] = [
+  REGULAR_STYLE_NAME,
+  FIT_STYLE_NAME,
+  CODE_STYLE_NAME,
+];
 
 const CSS_BASE_FILE = path.resolve(
   import.meta.dirname,
@@ -66,6 +71,11 @@ const cssDecodeUnicode = (value: string) => {
   return value.replace('&#x', '\\').replace(';', '').toLowerCase();
 };
 
+const roundToDecimals = (value: number, decimals = 4) => {
+  const factor = 10 ** decimals;
+  return Math.round(value * factor) / factor;
+};
+
 const { SI_FONT_SLUGS_FILTER = '', SI_FONT_PRESERVE_UNICODES } = process.env;
 const siFontSlugs = new Set(SI_FONT_SLUGS_FILTER.split(',').filter(Boolean));
 const siFontPreseveUnicodes = SI_FONT_PRESERVE_UNICODES !== 'false';
@@ -75,16 +85,53 @@ const verticalTransform = (pathInstance: typeof SVGPath) =>
 
 const convertToAspectRatioViewbox = (pathInstance: typeof SVGPath) => {
   const [x0, y0, x1, y1] = svgPathBbox(pathInstance);
-  const width = x1 - x0;
-  const height = y1 - y0;
+  const width = roundToDecimals(x1 - x0);
+  const height = roundToDecimals(y1 - y0);
   const scale = 24 / height;
   const pathRescale = width > height ? pathInstance.scale(scale) : pathInstance;
-  const [offsetX, offsetY] = svgPathBbox(pathRescale);
-  const pathReset = pathRescale.translate(-offsetX, -offsetY);
-  const [x0Reset, , x1Reset] = svgPathBbox(pathReset);
+  const [offsetX, offsetY, rescaledX1, rescaledY1] = svgPathBbox(pathRescale);
+  const rescaledPath = pathRescale.toString();
+  const rescaledHeight = rescaledY1 - offsetY;
+  const actualWidth = roundToDecimals((rescaledX1 - offsetX) * 50);
+  const fitHorizAdvX = actualWidth;
+  const fitHorizontalPadding = 0;
+  const codeHorizAdvX = Math.max(Math.round(actualWidth / 600) * 600, 600);
+  const codeScale = Math.min(codeHorizAdvX / actualWidth, 1);
+  const codeHorizontalPadding =
+    (codeHorizAdvX - actualWidth * codeScale) / 2 / 50;
+  const codeVerticalPadding =
+    codeScale < 1 ? (24 - rescaledHeight * codeScale) / 2 : 0;
+
+  console.log({
+    width,
+    height,
+    scale,
+    offsetX,
+    offsetY,
+    actualWidth,
+    fitHorizAdvX,
+    codeHorizAdvX,
+  });
+
   return {
-    path: verticalTransform(pathReset),
-    horizAdvX: ((x1Reset - x0Reset) / 24) * 1200,
+    Fit: {
+      path: verticalTransform(
+        SVGPath(rescaledPath).translate(
+          -offsetX + fitHorizontalPadding,
+          -offsetY,
+        ),
+      ),
+      horizAdvX: fitHorizAdvX,
+    },
+    Code: {
+      path: verticalTransform(
+        SVGPath(rescaledPath)
+          .translate(-offsetX, -offsetY)
+          .scale(codeScale)
+          .translate(codeHorizontalPadding, codeVerticalPadding),
+      ),
+      horizAdvX: codeHorizAdvX,
+    },
   };
 };
 
@@ -93,8 +140,9 @@ const transform = (pathInstance: typeof SVGPath, style: FontStyle) => {
     case REGULAR_STYLE_NAME: {
       return { path: verticalTransform(pathInstance), horizAdvX: 1200 };
     }
-    case FIT_STYLE_NAME: {
-      return convertToAspectRatioViewbox(pathInstance);
+    case FIT_STYLE_NAME:
+    case CODE_STYLE_NAME: {
+      return convertToAspectRatioViewbox(pathInstance)[style];
     }
     default:
       throw new Error(`Invalid style: ${style}`);
@@ -136,10 +184,7 @@ const buildSimpleIconsSvgFontFile = async (style: FontStyle) => {
     glyphsContent += `<glyph glyph-name="${icon.slug}" unicode="${unicodeString}" d="${path}" horiz-adv-x="${horizAdvX}"/>`;
     usedUnicodes.push(unicodeString);
 
-    unicodeHexBySlug[icon.slug] = {
-      unicode: unicodeString,
-      hex: icon.hex,
-    };
+    unicodeHexBySlug[icon.slug] = { unicode: unicodeString, hex: icon.hex };
   }
 
   const svgFontTemplate = await fs.readFile(SVG_TEMPLATE_FILE, UTF8);
@@ -183,9 +228,9 @@ const buildSimpleIconsCssFile = (
 const buildSimpleIconsMinCssFile = (cssFileContent: string) =>
   new Promise<void>(async (resolve, reject) => {
     try {
-      const cssMinifiedFile = new CleanCSS({
-        compatibility: 'ie7',
-      }).minify(cssFileContent);
+      const cssMinifiedFile = new CleanCSS({ compatibility: 'ie7' }).minify(
+        cssFileContent,
+      );
 
       await fs.writeFile(
         path.join(DIST_DIR, OUTPUT_CSS_MIN_NAME),
