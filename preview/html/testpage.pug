@@ -15,11 +15,33 @@ body
   .buttons-list
     button.background-mode Dark background
     button.icons-color Colorless icons
-    button.icons-style Fit
+    input.icon-search(
+      type='search',
+      placeholder='Search icons',
+      aria-label='Search icons',
+      autocomplete='off'
+    )
+    span.icons-count(aria-live='polite')= icons.length + ' icons'
+    fieldset.icons-style(aria-label='Icon style')
+      label
+        input(type='radio', name='icons-style', value='si', checked)
+        | Regular
+      label
+        input(type='radio', name='icons-style', value='si-fit')
+        | Fit
+      label
+        input(type='radio', name='icons-style', value='si-code')
+        | Code
 
   p.grid
     each icon in icons
-      i.si.si--color(class='si-' + icon.slug, title=icon.title)
+      i.si.si--color(
+        class='si-' + icon.slug,
+        title=icon.title,
+        data-title=icon.title,
+        data-slug=icon.slug
+      )
+  p.empty-search(hidden) No icons found.
 
   p.paragraph
     | An icon like #[i.si.si--color.si-github(title='Github')] inside a paragraph.
@@ -29,3 +51,5 @@ body
     | The icon in regular style #[i.si.si--color.si-go.style-immutable(title='Go')] in a paragraph.
   p.paragraph
     | The wide icon in fit style #[i.si-fit.si--color.si-go.style-immutable(title='Go')] in a paragraph.
+  p.paragraph
+    | The icon in code style #[i.si-code.si--color.si-go.style-immutable(title='Go')] in a paragraph.
