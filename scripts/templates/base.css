@@ -18,6 +18,16 @@
     url(SimpleIcons-Fit.eot) format('embedded-opentype');
 }
 
+@font-face {
+  font-family: 'Simple Icons Code';
+  src:
+    url(SimpleIcons-Code.woff) format('woff'),
+    url(SimpleIcons-Code.woff2) format('woff2'),
+    url(SimpleIcons-Code.ttf) format('truetype'),
+    url(SimpleIcons-Code.otf) format('opentype'),
+    url(SimpleIcons-Code.eot) format('embedded-opentype');
+}
+
 .si {
   font-style: normal;
   font-family: 'Simple Icons', sans-serif;
@@ -27,5 +37,11 @@
 .si-fit {
   font-style: normal;
   font-family: 'Simple Icons Fit', sans-serif;
+  vertical-align: middle;
+}
+
+.si-code {
+  font-style: normal;
+  font-family: 'Simple Icons Code', sans-serif;
   vertical-align: middle;
 }
